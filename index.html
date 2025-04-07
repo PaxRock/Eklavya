@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Eklavya</title>
+    <style>
+        /* Bringing back the original fonts but loading with display=swap for better performance */
+        @import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Bebas+Neue&family=Press+Start+2P&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --primary-color: #0a84ff;
+            --accent-color: #ff3d00;
+            --dark-bg: #0a0e17;
+            --card-bg: rgba(16, 23, 41, 0.85);
+            --card-border: rgba(0, 132, 255, 0.3);
+            --text-glow: 0 0 10px rgba(0, 132, 255, 0.8);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            min-height: 100vh;
+            max-height: 100vh;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            line-height: 1.6;
+            overflow: hidden;
+            position: relative;
+        }
+
+        html {
+            overflow: hidden;
+            height: 100%;
+        }
+
+        /* Enhanced Background with tech texture - but optimized */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000000 0%, #0a0e17 40%, #101729 70%, #162040 100%);
+            z-index: -2;
+        }
+
+        /* Tech grid lines - optimized with less opacity */
+        .tech-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 132, 255, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 132, 255, 0.08) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            animation: gridPulse 15s infinite alternate ease-in-out;
+            will-change: opacity, background-size;
+        }
+
+        @keyframes gridPulse {
+            0% {
+                opacity: 0.2;
+                background-size: 50px 50px;
+            }
+            100% {
+                opacity: 0.4;
+                background-size: 51px 51px;
+            }
+        }
+
+        /* Simplified film overlay - less resource intensive */
+        .film-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            z-index: -1;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        /* Optimized lens flare effect */
+        .lens-flare {
+            display: none;
+        }
+
+        /* Animated stars - optimized for mobile */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: starGlow 4s infinite alternate;
+            will-change: opacity;
+        }
+
+        @keyframes starGlow {
+            0% {
+                opacity: 0.4;
+            }
+            100% {
+                opacity: 0.9;
+            }
+        }
+
+        /* Simplified shooting stars - fewer but more impactful */
+        .shooting-star {
+            display: none;
+        }
+
+        @keyframes shoot {
+            0% {
+                display: none;
+            }
+            100% {
+                display: none;
+            }
+        }
+
+        /* Energy beam effect - simplified */
+        .energy-beam {
+            display: none;
+        }
+
+        /* Restored cinematic title effect */
+        .heading-container {
+            text-align: center;
+            position: relative;
+            margin: 0;
+            margin-top: 2rem;
+            width: 100%;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .heading {
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            font-family: 'Russo One', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #4dabf7;
+            position: relative;
+            margin: 0;
+            padding: 0 1rem;
+            animation: titleReveal 2s ease-out forwards;
+            transform: perspective(1200px) rotateX(20deg);
+            will-change: transform, opacity;
+            line-height: 1.2;
+            text-shadow: 
+                0 0 20px rgba(77, 171, 247, 0.7),
+                0 0 40px rgba(77, 171, 247, 0.5),
+                0 0 60px rgba(77, 171, 247, 0.3);
+        }
+
+        .heading span {
+            display: inline;
+        }
+
+        @keyframes titleReveal {
+            0% {
+                opacity: 0;
+                transform: perspective(1200px) rotateX(40deg) translateY(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: perspective(1200px) rotateX(20deg) translateY(0);
+            }
+        }
+
+        /* Remove the gradient background and glow effect */
+        .heading::before {
+            display: none;
+        }
+
+        /* Heading accent line */
+        .heading-accent {
+            width: 150px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+            margin: 1rem auto;
+            position: relative;
+        }
+
+        /* Performance optimization for all devices */
+        @media (prefers-reduced-motion: reduce) {
+            .tech-grid, .lens-flare, .particle, .energy-beam, 
+            .hero-element, .heading::before, .heading-accent::before,
+            .epic-button::before, .heading, .epic-button {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+        /* Epic button for CTA */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0;
+            width: 100%;
+            perspective: 1000px;
+        }
+
+        .buttons-row {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .epic-button {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(45deg, #0a84ff, #0b5cb2);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            animation: buttonReveal 1.5s ease-out forwards;
+            transform: perspective(800px) rotateX(10deg);
+            will-change: transform;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        @keyframes buttonReveal {
+            0% {
+                opacity: 0;
+                transform: perspective(800px) rotateX(30deg) translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: perspective(800px) rotateX(10deg) translateY(0);
+            }
+        }
+
+        .epic-button:hover {
+            transform: perspective(800px) rotateX(10deg) translateY(-3px) scale(1.03);
+            background: linear-gradient(45deg, #0b5cb2, #0a84ff);
+        }
+
+        /* Remove button shimmer effect */
+        .epic-button::before {
+            display: none;
+        }
+
+        /* Remove hero elements CSS */
+        .hero-elements {
+            display: none;
+        }
+
+        .hero-circle {
+            display: none;
+        }
+
+        .hero-ring {
+            display: none;
+        }
+
+        @keyframes rotate {
+            0% {
+                display: none;
+            }
+            100% {
+                display: none;
+            }
+        }
+
+        /* Remove hero elements media queries */
+        @media (max-width: 768px) {
+            .heading-container {
+                margin-top: -3rem;
+            }
+            
+            .heading {
+                font-size: clamp(4rem, 10vw, 6rem);
+                letter-spacing: 3px;
+                transform: perspective(1200px) rotateX(20deg) scaleY(1.2);
+                line-height: 1.1;
+                padding: 0 1rem;
+                margin: 0;
+            }
+
+            .heading span {
+                display: block;
+                margin-bottom: 0.2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .heading-container {
+                margin-top: -2.5rem;
+            }
+            
+            .heading {
+                font-size: clamp(3.8rem, 9.5vw, 5.5rem);
+                letter-spacing: 2px;
+                transform: perspective(1200px) rotateX(20deg) scaleY(1.3);
+                line-height: 1.1;
+                padding: 0 0.8rem;
+                margin: 0;
+            }
+
+            .heading span {
+                display: block;
+                margin-bottom: 0.2em;
+            }
+
+            .buttons-row {
+                gap: 1rem;
+            }
+            
+            .epic-button {
+                padding: 0.8rem 2rem;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .buttons-row {
+                width: 90%;
+                gap: 1.5rem;
+            }
+            
+            .epic-button {
+                flex: 0 1 calc(33.333% - 2rem);
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* Developer credit - Minecraft style */
+        .developer-credit {
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            color: #aaaaaa;
+            text-shadow: 2px 2px #000000;
+            z-index: 1000;
+            cursor: default;
+            padding: 0.5rem 1rem;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 2px solid #555555;
+            border-radius: 4px;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .developer-credit:hover {
+            transform: translateX(-50%) scale(1.1);
+            color: #ffffff;
+            border-color: #888888;
+        }
+
+        @media (max-width: 480px) {
+            .developer-credit {
+                font-size: 0.6rem;
+                top: 0.7rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+
+        /* Add styles for the subtitle */
+        .subtitle {
+            font-family: 'Russo One', sans-serif;
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: #4dabf7;
+            text-align: center;
+            margin-top: 3rem;
+            margin-bottom: 2rem;
+            opacity: 0.85;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(77, 171, 247, 0.4);
+            animation: subtitleFade 1.5s ease-out forwards;
+            transform: perspective(800px) rotateX(10deg);
+        }
+
+        @keyframes subtitleFade {
+            0% {
+                opacity: 0;
+                transform: perspective(800px) rotateX(30deg) translateY(20px);
+            }
+            100% {
+                opacity: 0.85;
+                transform: perspective(800px) rotateX(10deg) translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .subtitle {
+                font-size: clamp(0.9rem, 2.2vw, 1.2rem);
+                margin-top: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Developer credit -->
+    <div class="developer-credit">By Pranav Anuvadia</div>
+    
+    <!-- Background elements -->
+    <div class="bg-gradient"></div>
+    <div class="tech-grid"></div>
+    <div class="film-overlay"></div>
+    <div class="lens-flare"></div>
+    
+    <!-- Stars effect -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- Energy beam effect -->
+    <div class="energy-beam"></div>
+    
+    <!-- Main content -->
+    <div class="heading-container">
+        <h1 class="heading" data-text="PROJECT EKLAVYA"><span>PROJECT</span> <span>EKLAVYA</span></h1>
+        <div class="heading-accent"></div>
+    </div>
+    
+    <div class="button-container">
+        <h2 class="subtitle">Select your semester</h2>
+        <div class="buttons-row">
+            <a href="sem.html" class="epic-button">SEMESTER I</a>
+            <a href="sem2.html" class="epic-button">SEMESTER II</a>
+            <a href="sem3.html" class="epic-button">SEMESTER III</a>
+            <a href="sem4.html" class="epic-button">SEMESTER IV</a>
+            <a href="sem5.html" class="epic-button">SEMESTER V</a>
+            <a href="sem6.html" class="epic-button">SEMESTER VI</a>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Dynamic title effect
+            const heading = document.querySelector('.heading');
+            heading.setAttribute('data-text', heading.textContent);
+            
+            // Create stars with better performance
+            const starsContainer = document.getElementById('stars');
+            
+            // Detect if we're on mobile for performance optimization
+            const isMobile = window.innerWidth < 768;
+            const starCount = isMobile ? 65 : 120;
+            
+            // Use document fragment for better performance
+            const fragment = document.createDocumentFragment();
+            
+            // Create regular stars
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                // Vary size for more natural look
+                const size = 1 + Math.random() * 2;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.opacity = 0.3 + Math.random() * 0.7;
+                // Stagger animations
+                star.style.animationDelay = Math.random() * 5 + 's';
+                fragment.appendChild(star);
+            }
+            
+            starsContainer.appendChild(fragment);
+        });
+    </script>
+</body>
+</html>

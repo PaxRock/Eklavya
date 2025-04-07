@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMT - Project Eklavya</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --primary-color: #0a84ff;
+            --accent-color: #ff3d00;
+            --dark-bg: #0a0e17;
+            --card-bg: rgba(16, 23, 41, 0.85);
+            --card-border: rgba(0, 132, 255, 0.3);
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --text-glow: 0 0 10px rgba(0, 132, 255, 0.8);
+            --border-radius: 8px;
+            --header-gradient: linear-gradient(45deg, var(--primary-color), #0b5cb2);
+            --button-gradient: linear-gradient(45deg, var(--primary-color), #0b5cb2);
+            --back-button-gradient: linear-gradient(45deg, var(--accent-color), #d32f2f);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Enhanced Background with tech texture */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000000 0%, #0a0e17 40%, #101729 70%, #162040 100%);
+            z-index: -2;
+        }
+
+        /* Tech grid lines */
+        .tech-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 132, 255, 0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 132, 255, 0.15) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            animation: gridPulse 10s infinite alternate ease-in-out;
+        }
+
+        @keyframes gridPulse {
+            0% {
+                opacity: 0.3;
+                background-size: 50px 50px;
+            }
+            100% {
+                opacity: 0.6;
+                background-size: 52px 52px;
+            }
+        }
+
+        /* Cinematic overlay with film texture */
+        .film-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
+            z-index: -1;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* Stars background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            width: 2px;
+            height: 2px;
+            opacity: 0.7;
+            animation: twinkle 4s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.7;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Spaceships */
+        .spaceship {
+            position: absolute;
+            width: 30px;
+            height: 15px;
+            z-index: 1;
+            pointer-events: none;
+            filter: drop-shadow(0 0 10px rgba(0, 132, 255, 0.8));
+            animation: flySpaceship 20s linear infinite;
+        }
+
+        @keyframes flySpaceship {
+            0% {
+                transform: translate(-30px, 0) rotate(0deg);
+            }
+            100% {
+                transform: translate(calc(100vw + 30px), 0) rotate(0deg);
+            }
+        }
+
+        /* Lens flare effect */
+        .lens-flare {
+            position: fixed;
+            top: -150px;
+            right: -150px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle at center, rgba(0, 132, 255, 0.5) 0%, rgba(0, 132, 255, 0.2) 20%, transparent 70%);
+            z-index: -1;
+            opacity: 0.7;
+            filter: blur(30px);
+            animation: flareMove 20s infinite alternate ease-in-out;
+        }
+
+        @keyframes flareMove {
+            0% {
+                transform: translate(0, 0);
+                opacity: 0.3;
+            }
+            100% {
+                transform: translate(-100px, 100px);
+                opacity: 0.5;
+            }
+        }
+
+        /* Card container */
+        .card-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            padding: 2.5rem;
+            max-width: 1800px;
+            margin: 0 auto;
+            width: 100%;
+            align-items: start;
+            animation: fadeInUp 1s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            transform-style: preserve-3d;
+            min-width: 320px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        .card-header {
+            background: var(--header-gradient);
+            color: white;
+            padding: 2.2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-title {
+            font-size: 2.4rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            line-height: 1.2;
+            font-family: 'Russo One', sans-serif;
+        }
+
+        .card-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .card-content {
+            padding: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .file-info {
+            background: rgba(0, 132, 255, 0.15);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            transition: var(--transition);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .file-name {
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+        }
+
+        .file-description {
+            color: #a0a0a0;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .card-footer {
+            padding: 1.5rem;
+            background: rgba(10, 20, 40, 0.6);
+            text-align: center;
+            border-top: 1px solid rgba(0, 132, 255, 0.2);
+        }
+
+        .view-button {
+            padding: 14px 35px;
+            font-size: 1.1rem;
+            background: var(--button-gradient);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 132, 255, 0.3);
+            font-family: 'Bebas Neue', sans-serif;
+        }
+
+        .view-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 132, 255, 0.5);
+        }
+
+        /* Button energy effect */
+        .view-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                top: -150%;
+                left: -150%;
+            }
+            100% {
+                top: 50%;
+                left: 50%;
+            }
+        }
+
+        .back-button {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.7rem 1.5rem;
+            background: var(--back-button-gradient);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(255, 61, 0, 0.4);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 61, 0, 0.6);
+        }
+
+        .heading {
+            font-size: 3.5rem;
+            font-family: 'Russo One', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            margin: 3rem 0 3rem 0;
+            text-align: center;
+            background: linear-gradient(to bottom, #ffffff, #4dabf7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+            text-shadow: var(--text-glow);
+            position: relative;
+            transform: perspective(800px) rotateX(10deg);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .card-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 3rem;
+                padding: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .heading {
+                font-size: 3rem;
+                letter-spacing: 4px;
+                margin: 2.5rem 0 2.5rem 0;
+            }
+            
+            .card-container {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+                gap: 2rem;
+            }
+            
+            .card-title {
+                font-size: 1.8rem;
+            }
+
+            .card-content {
+                padding: 1.5rem;
+            }
+
+            .card-header {
+                padding: 1.5rem;
+            }
+            
+            /* Reduce animations for better performance */
+            .star {
+                animation-duration: 8s;
+            }
+            
+            /* Simplify spaceship paths */
+            .spaceship {
+                animation-duration: 25s;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .heading {
+                font-size: 2.5rem;
+                letter-spacing: 3px;
+                margin: 2rem 0 2rem 0;
+            }
+            
+            .card-title {
+                font-size: 1.5rem;
+            }
+
+            .card-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .file-name {
+                font-size: 1.1rem;
+            }
+
+            .file-description {
+                font-size: 0.9rem;
+            }
+
+            .card-content {
+                padding: 1.2rem;
+            }
+            
+            .back-button {
+                padding: 0.6rem 1.2rem;
+                font-size: 1.1rem;
+            }
+            
+            /* Further optimize performance */
+            .spaceship {
+                width: 20px;
+                height: 10px;
+            }
+            
+            /* Reduce grid complexity */
+            .tech-grid {
+                background-size: 60px 60px;
+            }
+        }
+
+        /* Performance optimization for all devices */
+        @media (prefers-reduced-motion) {
+            .star, .spaceship, .tech-grid, .lens-flare, .view-button::before, .container::before {
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background elements -->
+    <div class="bg-gradient"></div>
+    <div class="tech-grid"></div>
+    <div class="film-overlay"></div>
+    <div class="lens-flare"></div>
+    
+    <!-- Stars -->
+    <div class="stars" id="stars"></div>
+    
+    <a href="sem2.html" class="back-button">Back</a>
+    <h1 class="heading">AMT</h1>
+    <div class="card-container">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Applied Mathematics</h2>
+                <p class="card-subtitle">Semester II Subject</p>
+            </div>
+            <div class="card-content">
+                <div class="file-info">
+                    <div class="file-name">Applied Mathematics Question Bank PT1 2025</div>
+                    <div class="file-description">Question bank for Applied Mathematics PT1 examination 2025</div>
+                </div>
+                <p class="card-text">
+                    Click the button below to download the Applied Mathematics Question Bank for PT1 2025.
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="files/amt/AMT QB PT1.pdf" class="view-button" download>Download Question Bank</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Applied Mathematics</h2>
+                <p class="card-subtitle">Semester II Subject</p>
+            </div>
+            <div class="card-content">
+                <div class="file-info">
+                    <div class="file-name">Applied Mathematics Tutorial 1<br><br></div>
+                    <div class="file-description">Tutorial for Applied Mathematics Tutorial 1<br><br></div>
+                </div>
+                <p class="card-text">
+                    Click the button below to download the Applied Mathematics Tutorial for 1.
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="files/amt/Sem2-tut1.pdf" class="view-button" download>Download Tutorial 1</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Applied Mathematics</h2>
+                <p class="card-subtitle">Semester II Subject</p>
+            </div>
+            <div class="card-content">
+                <div class="file-info">
+                    <div class="file-name">Applied Mathematics Tutorial 2<br><br></div>
+                    <div class="file-description">Tutorial for Applied Mathematics Tutorial 2<br><br></div>
+                </div>
+                <p class="card-text">
+                    Click the button below to download the Applied Mathematics Tutorial for 2.
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="files/amt/Sem2-tut2.pdf" class="view-button" download>Download Tutorial 2</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Applied Mathematics</h2>
+                <p class="card-subtitle">Semester II Subject</p>
+            </div>
+            <div class="card-content">
+                <div class="file-info">
+                    <div class="file-name">Applied Mathematics Tutorial 3<br><br></div>
+                    <div class="file-description">Tutorial for Applied Mathematics Tutorial 3<br><br></div>
+                </div>
+                <p class="card-text">
+                    Click the button below to download the Applied Mathematics Tutorial for 3.
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="files/amt/Sem2-tut3.pdf" class="view-button" download>Download Tutorial 3</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Applied Mathematics</h2>
+                <p class="card-subtitle">Semester II Subject</p>
+            </div>
+            <div class="card-content">
+                <div class="file-info">
+                    <div class="file-name">Applied Mathematics Tutorial 4<br><br></div>
+                    <div class="file-description">Tutorial for Applied Mathematics Tutorial 4<br><br></div>
+                </div>
+                <p class="card-text">
+                    Click the button below to download the Applied Mathematics Tutorial for 4.
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="files/amt/Sem2-tut4.pdf" class="view-button" download>Download Tutorial 4</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Applied Mathematics</h2>
+                <p class="card-subtitle">Semester II Subject</p>
+            </div>
+            <div class="card-content">
+                <div class="file-info">
+                    <div class="file-name">Applied Mathematics Tutorial 5<br><br></div>
+                    <div class="file-description">Tutorial for Applied Mathematics Tutorial 5<br><br></div>
+                </div>
+                <p class="card-text">
+                    Click the button below to download the Applied Mathematics Tutorial for 5.
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="files/amt/Sem2-tut5.pdf" class="view-button" download>Download Tutorial 5</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Applied Mathematics</h2>
+                <p class="card-subtitle">Semester II Subject</p>
+            </div>
+            <div class="card-content">
+                <div class="file-info">
+                    <div class="file-name">Applied Mathematics Tutorial 6<br><br></div>
+                    <div class="file-description">Tutorial for Applied Mathematics Tutorial 6<br><br></div>
+                </div>
+                <p class="card-text">
+                    Click the button below to download the Applied Mathematics Tutorial for 6.
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="files/amt/Sem2-tut6.pdf" class="view-button" download>Download Tutorial 6</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Applied Mathematics</h2>
+                <p class="card-subtitle">Semester II Subject</p>
+            </div>
+            <div class="card-content">
+                <div class="file-info">
+                    <div class="file-name">Applied Mathematics Tutorial 7<br><br></div>
+                    <div class="file-description">Tutorial for Applied Mathematics Tutorial 7<br><br></div>
+                </div>
+                <p class="card-text">
+                    Click the button below to download the Applied Mathematics Tutorial for 7.
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="files/amt/Sem2-tut7.pdf" class="view-button" download>Download Tutorial 7</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Applied Mathematics</h2>
+                <p class="card-subtitle">Semester II Subject</p>
+            </div>
+            <div class="card-content">
+                <div class="file-info">
+                    <div class="file-name">Applied Mathematics Tutorial 8<br><br></div>
+                    <div class="file-description">Tutorial for Applied Mathematics Tutorial 8<br><br></div>
+                </div>
+                <p class="card-text">
+                    Click the button below to download the Applied Mathematics Tutorial for 8.
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="files/amt/Sem2-tut8.pdf" class="view-button" download>Download Tutorial 8</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Applied Mathematics</h2>
+                <p class="card-subtitle">Semester II Subject</p>
+            </div>
+            <div class="card-content">
+                <div class="file-info">
+                    <div class="file-name">Applied Mathematics Tutorial 9<br><br></div>
+                    <div class="file-description">Tutorial for Applied Mathematics Tutorial 9<br><br></div>
+                </div>
+                <p class="card-text">
+                    Click the button below to download the Applied Mathematics Tutorial for 9.
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="files/amt/Sem2-tut9.pdf" class="view-button" download>Download Tutorial 9</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Applied Mathematics</h2>
+                <p class="card-subtitle">Semester II Subject</p>
+            </div>
+            <div class="card-content">
+                <div class="file-info">
+                    <div class="file-name">Applied Mathematics Tutorial 10<br><br></div>
+                    <div class="file-description">Tutorial for Applied Mathematics Tutorial 10<br><br></div>
+                </div>
+                <p class="card-text">
+                    Click the button below to download the Applied Mathematics Tutorial for 10.
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="files/amt/Sem2-tut10.pdf" class="view-button" download>Download Tutorial 10</a>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Create stars
+            const starsContainer = document.getElementById('stars');
+            const isMobile = window.innerWidth < 768;
+            const isLandscape = window.innerWidth < 768 && window.innerHeight < window.innerWidth;
+            
+            // Adjust star count based on orientation
+            let starCount;
+            if (isMobile) {
+                starCount = isLandscape ? 100 : 65;
+            } else {
+                starCount = 120;
+            }
+            
+            const fragment = document.createDocumentFragment();
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                const size = 1 + Math.random() * 2;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.opacity = 0.3 + Math.random() * 0.7;
+                star.style.animationDelay = Math.random() * 5 + 's';
+                fragment.appendChild(star);
+            }
+            
+            starsContainer.appendChild(fragment);
+            
+            // Handle orientation changes
+            window.addEventListener('resize', () => {
+                const newIsLandscape = window.innerWidth < 768 && window.innerHeight < window.innerWidth;
+                if (newIsLandscape !== isLandscape) {
+                    // Clear existing stars
+                    starsContainer.innerHTML = '';
+                    
+                    // Recreate stars with new count
+                    const newStarCount = window.innerWidth < 768 ? (newIsLandscape ? 100 : 65) : 120;
+                    const newFragment = document.createDocumentFragment();
+                    
+                    for (let i = 0; i < newStarCount; i++) {
+                        const star = document.createElement('div');
+                        star.classList.add('star');
+                        star.style.top = Math.random() * 100 + '%';
+                        star.style.left = Math.random() * 100 + '%';
+                        const size = 1 + Math.random() * 2;
+                        star.style.width = size + 'px';
+                        star.style.height = size + 'px';
+                        star.style.opacity = 0.3 + Math.random() * 0.7;
+                        star.style.animationDelay = Math.random() * 5 + 's';
+                        newFragment.appendChild(star);
+                    }
+                    
+                    starsContainer.appendChild(newFragment);
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
