@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Eklavya</title>
     <link rel="icon" type="image/png" href="files/logo/logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Bringing back the original fonts but loading with display=swap for better performance */
         @import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Bebas+Neue&family=Press+Start+2P&display=swap');
@@ -438,11 +440,276 @@
                 margin-bottom: 1.5rem;
             }
         }
+      
+
+
+        /* Notification Button Styles */
+        .notification-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1000;
+        }
+
+        .notification-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0a84ff, #0b5cb2);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(10, 132, 255, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            border: none;
+            outline: none;
+        }
+
+        .notification-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(10, 132, 255, 0.6);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 20px;
+            height: 20px;
+            background-color: #ff3d00;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Notification Popup Styles */
+        .notification-popup {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            width: 350px;
+            max-height: 500px;
+            background: rgba(16, 23, 41, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 132, 255, 0.3);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            transform: translateY(-20px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .notification-popup.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .notification-header {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: #4dabf7;
+            letter-spacing: 1px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .close-btn:hover {
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .notification-content {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .notification-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background: rgba(0, 132, 255, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #0a84ff;
+            transition: all 0.2s ease;
+        }
+
+        .notification-item:hover {
+            background: rgba(0, 132, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .notification-item.unread {
+            background: rgba(0, 132, 255, 0.2);
+            border-left: 3px solid #ff3d00;
+        }
+
+        .notification-message {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .notification-time {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .no-notifications {
+            padding: 30px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-style: italic;
+        }
+
+        
+
+        
+       
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 132, 255, 0.3);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 132, 255, 0.5);
+        }
+
+        @media (max-width: 480px) {
+            .notification-btn {
+            width: 40px;
+            height: 40px;
+            font-size: 0.9rem;
+            }
+            .notification-badge {
+            width: 16px;
+            height: 16px;
+            font-size: 8px;
+            }
+            .notification-popup {
+                width: 280px;
+                right: 10px;
+            }
+            .notification-header {
+                padding: 10px;
+        }
+            .notification-title {
+                font-size: 1.2rem;
+            }
+            .close-btn {
+                font-size: 1rem;
+            }
+            .notification-item {
+                padding: 10px 12px;
+            }
+            .notification-message {
+                font-size: 0.8rem;
+            }
+            .notification-time {
+                font-size: 0.6rem;
+            }
+            .no-notifications {
+                padding: 20px;
+                font-size: 0.8rem;
+            }
+            .notification-container {
+                top: 0.5rem;
+                right: 0.7rem;
+            }
+
+            .notification-btn {
+                transform-origin: center;
+            }
+
+            .notification-btn:hover {
+                transform: scale(1.1);
+            }
+
+            .notification-popup {
+                right: 10px;
+                transform: translateY(-20px);
+            }
+
+            .notification-popup.active {
+                transform: translateY(0);
+            }
+
+        }
+
+        
     </style>
 </head>
 <body>
     <!-- Developer credit -->
     <div class="developer-credit">By Pranav Anuvadia</div>
+    
+    <!-- Notification Button -->
+    <div class="notification-container">
+        <button class="notification-btn" id="notificationBtn">
+            <i class="fas fa-envelope"></i>
+            <div class="notification-badge" id="notificationBadge" style="display: none;">0</div>
+        </button>
+    </div>
+    
+    <!-- Notification Popup -->
+    <div class="notification-popup" id="notificationPopup">
+        <div class="notification-header">
+            <div class="notification-title">Notifications</div>
+            <button class="close-btn" id="closePopup">&times;</button>
+        </div>
+        <div class="notification-content" id="notificationContent">
+            <!-- Notifications will be added here dynamically -->
+        </div>
+    </div>
     
     <!-- Background elements -->
     <div class="bg-gradient"></div>
@@ -465,12 +732,12 @@
     <div class="button-container">
         <h2 class="subtitle">Select your semester</h2>
         <div class="buttons-row">
-            <a href="sem.html" class="epic-button">SEMESTER I</a>
-            <a href="sem2.html" class="epic-button">SEMESTER II</a>
-            <a href="sem3.html" class="epic-button">SEMESTER III</a>
-            <a href="sem4.html" class="epic-button">SEMESTER IV</a>
-            <a href="sem5.html" class="epic-button">SEMESTER V</a>
-            <a href="sem6.html" class="epic-button">SEMESTER VI</a>
+            <a href="/sem1/sem.html" class="epic-button">SEMESTER I</a>
+            <a href="/sem2/sem2.html" class="epic-button">SEMESTER II</a>
+            <a href="/sem3/sem3.html" class="epic-button">SEMESTER III</a>
+            <a href="/sem4/sem4.html" class="epic-button">SEMESTER IV</a>
+            <a href="/sem5/sem5.html" class="epic-button">SEMESTER V</a>
+            <a href="/sem6/sem6.html" class="epic-button">SEMESTER VI</a>
         </div>
     </div>
     
@@ -507,6 +774,112 @@
             }
             
             starsContainer.appendChild(fragment);
+            
+            // Notification System
+            const notificationBtn = document.getElementById('notificationBtn');
+            const notificationBadge = document.getElementById('notificationBadge');
+            const notificationPopup = document.getElementById('notificationPopup');
+            const notificationContent = document.getElementById('notificationContent');
+            const closePopup = document.getElementById('closePopup');
+            
+            // Define your notifications directly in the code
+            let notifications = [
+                {
+                    id: 1,
+                    message: "Welcome to Project Eklavya! Start exploring now.",
+                    //time: "1 week ago",
+                    read: true
+                 }
+                //,
+                 //{
+                    // id: 2,
+                    // message: "New semester resources are available. Check them out!",
+                     //time: "3 days ago",
+                    // read: false
+                // },
+                
+
+            ];
+            
+            // Track unread notifications
+            let unreadCount = notifications.filter(n => !n.read).length;
+            
+            // Initialize notification system
+            function initNotifications() {
+                updateBadge();
+                renderNotifications();
+            }
+            
+            // Update badge count
+            function updateBadge() {
+                unreadCount = notifications.filter(n => !n.read).length;
+                if (unreadCount > 0) {
+                    notificationBadge.style.display = "flex";
+                    notificationBadge.textContent = unreadCount;
+                } else {
+                    notificationBadge.style.display = "none";
+                }
+            }
+            
+            // Render notifications in popup
+            function renderNotifications() {
+                notificationContent.innerHTML = '';
+                
+                if (notifications.length === 0) {
+                    notificationContent.innerHTML = '<div class="no-notifications">No messages here</div>';
+                    return;
+                }
+                
+                notifications.forEach(notification => {
+                    const notificationElement = document.createElement('div');
+                    notificationElement.className = `notification-item ${notification.read ? '' : 'unread'}`;
+                    notificationElement.innerHTML = `
+                        <div class="notification-message">${notification.message}</div>
+                        
+                    `;//div class="notification-time">${notification.time}</div> you can add time if needed
+                    
+                    // Mark as read when clicked
+                    notificationElement.addEventListener('click', () => {
+                        if (!notification.read) {
+                            notification.read = true;
+                            notificationElement.classList.remove('unread');
+                            updateBadge();
+                        }
+                    });
+                    
+                    notificationContent.appendChild(notificationElement);
+                });
+            }
+            
+            // Event listeners
+            notificationBtn.addEventListener('click', () => {
+                notificationPopup.classList.toggle('active');
+                
+                // Mark all as read when opening
+                if (notificationPopup.classList.contains('active')) {
+                    notifications = notifications.map(n => ({...n, read: true}));
+                    updateBadge();
+                    renderNotifications();
+                }
+            });
+            
+            closePopup.addEventListener('click', () => {
+                notificationPopup.classList.remove('active');
+            });
+            
+            // Close popup when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!notificationPopup.contains(e.target) && 
+                    !notificationBtn.contains(e.target) &&
+                    notificationPopup.classList.contains('active')) {
+                    notificationPopup.classList.remove('active');
+                }
+            });
+
+            
+            
+            // Initialize
+            initNotifications();
         });
     </script>
 </body>

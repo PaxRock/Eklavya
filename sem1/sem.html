@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semester IV - Project Eklavya</title>
+    <title>Semester I - Project Eklavya</title>
     <link rel="icon" type="image/png" href="files/logo/logo.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Bebas+Neue&family=Press+Start+2P&display=swap');
@@ -15,15 +15,18 @@
         }
 
         :root {
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --primary-color: #0a84ff;
             --accent-color: #ff3d00;
             --dark-bg: #0a0e17;
+            --card-bg: rgba(16, 23, 41, 0.85);
+            --card-border: rgba(0, 132, 255, 0.3);
+            --text-glow: 0 0 10px rgba(0, 132, 255, 0.8);
         }
 
         body {
             margin: 0;
             padding: 0;
-            height: 100vh;
             min-height: 100vh;
             max-height: 100vh;
             font-family: sans-serif;
@@ -99,58 +102,6 @@
             animation: starGlow 4s infinite alternate;
         }
 
-        .message {
-            font-size: clamp(2rem, 6vw, 3.5rem);
-            font-family: 'Press Start 2P', cursive;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: #b388ff;
-            text-align: center;
-            margin: 0;
-            padding: 0 1rem;
-            animation: messageReveal 2s ease-out forwards;
-            transform: perspective(1200px) rotateX(20deg);
-            line-height: 1.4;
-            text-shadow: 
-                0 0 20px rgba(179, 136, 255, 0.7),
-                0 0 40px rgba(179, 136, 255, 0.5),
-                0 0 60px rgba(179, 136, 255, 0.3);
-        }
-
-        .loading-dots {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            background: #b388ff;
-            border-radius: 50%;
-            animation: dotPulse 1.5s infinite;
-        }
-
-        .dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes dotPulse {
-            0%, 100% {
-                transform: scale(0.5);
-                opacity: 0.3;
-            }
-            50% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
         @keyframes starGlow {
             0% { opacity: 0.4; }
             100% { opacity: 0.9; }
@@ -164,6 +115,35 @@
             100% {
                 opacity: 0.4;
                 background-size: 51px 51px;
+            }
+        }
+
+        .message {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-family: 'Press Start 2P', cursive;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #ff3d00;
+            text-align: center;
+            margin: 0;
+            padding: 0 1rem;
+            animation: messageReveal 2s ease-out forwards;
+            transform: perspective(1200px) rotateX(20deg);
+            line-height: 1.4;
+            text-shadow: 
+                0 0 20px rgba(255, 61, 0, 0.7),
+                0 0 40px rgba(255, 61, 0, 0.5),
+                0 0 60px rgba(255, 61, 0, 0.3);
+        }
+
+        @keyframes messageReveal {
+            0% {
+                opacity: 0;
+                transform: perspective(1200px) rotateX(40deg) translateY(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: perspective(1200px) rotateX(20deg) translateY(0);
             }
         }
 
@@ -190,17 +170,6 @@
             background: linear-gradient(45deg, #b71c1c, #ff3d00);
         }
 
-        @keyframes messageReveal {
-            0% {
-                opacity: 0;
-                transform: perspective(1200px) rotateX(40deg) translateY(-30px);
-            }
-            100% {
-                opacity: 1;
-                transform: perspective(1200px) rotateX(20deg) translateY(0);
-            }
-        }
-
         @keyframes buttonReveal {
             0% {
                 opacity: 0;
@@ -214,98 +183,19 @@
 
         @media (max-width: 768px) {
             .message {
-                font-size: clamp(1.8rem, 6vw, 3rem);
-                padding: 0 0.5rem;
-            }
-            
-            .dot {
-                width: 10px;
-                height: 10px;
-            }
-            
-            .back-button {
-                font-size: 1.2rem;
-                padding: 0.6rem 1.5rem;
-                margin-top: 2rem;
-            }
-            
-            .developer-credit {
-                font-size: clamp(0.5rem, 1.2vw, 0.7rem);
-                bottom: 15px;
+                font-size: clamp(3rem, 8vw, 5rem);
+                padding: 0 1.5rem;
             }
         }
 
-        /* Orientation-specific styles */
-        @media (max-width: 768px) and (orientation: landscape) {
+        @media (max-width: 480px) {
             .message {
-                font-size: clamp(1.5rem, 4vw, 2.5rem);
-                margin-bottom: 1rem;
-            }
-            
-            .loading-dots {
-                margin-top: 1rem;
-            }
-            
-            .dot {
-                width: 8px;
-                height: 8px;
-            }
-            
-            .back-button {
-                margin-top: 1.5rem;
-            }
-            
-            /* Adjust star count for landscape */
-            #stars {
-                --star-count: 100;
+                font-size: clamp(2.5rem, 7vw, 4rem);
+                padding: 0 1rem;
             }
         }
 
-        /* Small height screens */
-        @media (max-height: 500px) {
-            .message {
-                font-size: clamp(1.2rem, 3vw, 2rem);
-                margin-bottom: 0.5rem;
-            }
-            
-            .loading-dots {
-                margin-top: 0.5rem;
-            }
-            
-            .dot {
-                width: 6px;
-                height: 6px;
-            }
-            
-            .back-button {
-                margin-top: 1rem;
-                padding: 0.5rem 1.2rem;
-            }
-            
-            .developer-credit {
-                bottom: 5px;
-            }
-        }
-
-        .coming-soon {
-            font-family: 'Press Start 2P', cursive;
-            font-size: clamp(1.5rem, 5vw, 2.5rem);
-            color: #b388ff;
-            text-align: center;
-            margin: 2rem 0;
-            opacity: 0;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 
-                0 0 20px rgba(179, 136, 255, 0.7),
-                0 0 40px rgba(179, 136, 255, 0.5),
-                0 0 60px rgba(179, 136, 255, 0.3);
-            animation: messageReveal 1s ease-out forwards;
-            animation-delay: 1s;
-            transform: perspective(800px) rotateX(10deg);
-            line-height: 1.4;
-        }
-
+        /* Developer credit */
         .developer-credit {
             position: fixed;
             bottom: 20px;
@@ -314,11 +204,11 @@
             text-align: center;
             font-family: 'Press Start 2P', cursive;
             font-size: clamp(0.6rem, 1.5vw, 0.8rem);
-            color: #b388ff;
+            color: #ff3d00;
             text-transform: uppercase;
             letter-spacing: 2px;
             opacity: 0.7;
-            text-shadow: 0 0 10px rgba(179, 136, 255, 0.4);
+            text-shadow: 0 0 10px rgba(255, 61, 0, 0.4);
             z-index: 1000;
             white-space: nowrap;
             transform: perspective(1000px) rotateX(5deg);
@@ -337,6 +227,12 @@
                 transform: perspective(1000px) rotateX(5deg) translateY(0);
             }
         }
+
+        @media (max-height: 500px) {
+            .developer-credit {
+                bottom: 5px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -349,13 +245,8 @@
     <div class="stars" id="stars"></div>
     
     <!-- Main content -->
-    <h1 class="message">Coming Soon</h1>
-    <div class="loading-dots">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-    </div>
-    <a href="index.html" class="back-button">Go Back</a>
+    <h1 class="message">You Are Too Late</h1>
+    <a href="/index.html" class="back-button">Go Back</a>
 
     <div class="developer-credit">Developed by Pranav A</div>
 
@@ -421,4 +312,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
