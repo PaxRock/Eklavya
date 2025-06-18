@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+         :root {
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --primary-color: #0a84ff;
+            --accent-color: #ff3d00;
+            --dark-bg: #0a0e17;
+            --card-bg: rgba(16, 23, 41, 0.85);
+            --card-border: rgba(0, 132, 255, 0.3);
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --text-glow: 0 0 10px rgba(0, 132, 255, 0.8);
+            --border-radius: 8px;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Enhanced Background with tech texture - but optimized */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000000 0%, #0a0e17 40%, #101729 70%, #162040 100%);
+            z-index: -2;
+        }
+
+        /* Tech grid lines - optimized with less opacity */
+        .tech-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 132, 255, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 132, 255, 0.08) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            animation: gridPulse 15s infinite alternate ease-in-out;
+            will-change: opacity, background-size;
+        }
+
+        @keyframes gridPulse {
+            0% {
+                opacity: 0.2;
+                background-size: 50px 50px;
+            }
+            100% {
+                opacity: 0.4;
+                background-size: 51px 51px;
+            }
+        }
+
+        /* Simplified film overlay - less resource intensive */
+        .film-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            z-index: -1;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        /* Optimized lens flare effect */
+        .lens-flare {
+            display: none;
+        }
+
+        /* Animated stars - optimized for mobile */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: starGlow 4s infinite alternate;
+            will-change: opacity;
+        }
+
+        @keyframes starGlow {
+            0% {
+                opacity: 0.4;
+            }
+            100% {
+                opacity: 0.9;
+            }
+        }
+
+        /* Simplified shooting stars - fewer but more impactful */
+        .shooting-star {
+            display: none;
+        }
+
+        @keyframes shoot {
+            0% {
+                display: none;
+            }
+            100% {
+                display: none;
+            }
+        }
+
+        /* Energy beam effect - simplified */
+        .energy-beam {
+            display: none;
+        }
+
+
+        /* Back button */
+        .back-button {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    padding: 0.7rem 1.5rem;
+    background: linear-gradient(45deg, var(--accent-color), #d32f2f);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(255, 61, 0, 0.4);
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 61, 0, 0.6);
+        }
+
+        .game-container {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+
+        .game-board {
+            position: relative;
+            background: rgba(0, 0, 0, 0.9);
+            border: 3px solid #00ffff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        canvas {
+            display: block;
+            border-radius: 7px;
+        }
+
+        .side-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            min-width: 200px;
+            color: white;
+        }
+
+        .info-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .info-box h3 {
+            margin-bottom: 10px;
+            color: #00ffff;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .score {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            color: #fff;
+        }
+
+        .level, .lines {
+            font-size: 16px;
+            text-align: center;
+            margin: 5px 0;
+        }
+
+        .next-piece {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid #00ffff;
+            border-radius: 5px;
+        }
+
+        .controls {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .controls h3 {
+            margin-bottom: 10px;
+        }
+
+        .game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #ff0000;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+            display: none;
+        }
+
+        .game-over h2 {
+            color: #ff0000;
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+
+        .restart-btn {
+            background: linear-gradient(45deg, #00ffff, #0099cc);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .restart-btn:hover {
+            background: linear-gradient(45deg, #0099cc, #00ffff);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+        }
+
+        .pause-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+
+        .pause-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .mobile-controls {
+            display: none;
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 20px;
+            border: 2px solid rgba(0, 255, 255, 0.5);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        }
+
+        .mobile-btn {
+            background: linear-gradient(145deg, rgba(0, 255, 255, 0.4), rgba(0, 150, 255, 0.6));
+            color: white;
+            border: 2px solid rgba(0, 255, 255, 0.8);
+            padding: 0;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .mobile-btn:active {
+            background: linear-gradient(145deg, rgba(0, 255, 255, 0.8), rgba(0, 200, 255, 0.9));
+            transform: scale(0.95);
+            box-shadow: 0 2px 8px rgba(0, 255, 255, 0.5);
+        }
+
+        .mobile-dpad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-right: 15px;
+        }
+
+        .mobile-dpad .mobile-btn {
+            width: 55px;
+            height: 55px;
+            font-size: 24px;
+        }
+
+        .mobile-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .mobile-actions .mobile-btn {
+            width: 65px;
+            height: 55px;
+            font-size: 18px;
+        }
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    body {
+        padding: 10px 5px;
+        overflow-y: auto;
+    }
+
+    .game-container {
+        flex-direction: column;
+        padding: 10px;
+        max-width: 100vw;
+        max-height: none;
+        gap: 10px;
+        margin-bottom: 160px; /* Increased space for bigger mobile controls */
+    }
+
+    .game-board {
+        align-self: center;
+        border-width: 2px;
+    }
+
+    canvas {
+        max-width: 280px;
+        width: 280px;
+        height: 470px;
+    }
+
+    .side-panel {
+        flex-direction: row;
+        min-width: auto;
+        justify-content: space-between;
+        gap: 8px;
+        max-width: 280px;
+        align-self: center;
+    }
+
+    .info-box {
+        flex: 1;
+        min-width: 85px;
+        padding: 8px 4px;
+    }
+
+    .info-box h3 {
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+
+    .score {
+        font-size: 16px;
+    }
+
+    .level, .lines {
+        font-size: 11px;
+        margin: 3px 0;
+    }
+
+    .next-piece {
+        width: 60px;
+        height: 60px;
+    }
+
+    .controls {
+        display: none;
+    }
+
+    .mobile-controls {
+        display: flex;
+        position: fixed;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        padding: 15px;
+        background: rgba(0, 0, 0, 0.9);
+        border-radius: 18px;
+        border: 2px solid rgba(0, 255, 255, 0.6);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+        max-width: 90vw;
+    }
+
+    .mobile-dpad {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-right: 15px;
+    }
+
+    .mobile-dpad .mobile-btn {
+        width: 55px;
+        height: 55px;
+        font-size: 22px;
+    }
+
+    .mobile-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .mobile-actions .mobile-btn {
+        width: 60px;
+        height: 55px;
+        font-size: 18px;
+    }
+
+    .pause-btn {
+        top: 8px;
+        right: 8px;
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .game-over {
+        padding: 20px;
+        max-width: 280px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .game-over h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .restart-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 5px;
+    }
+
+    .back-button 
+    {
+        padding: 0.6rem 1.2rem;
+        font-size: 1.1rem;
+    }
+
+    .game-container {
+        padding: 8px;
+        gap: 8px;
+        margin-bottom: 150px;
+        transform: none; /* Remove scaling */
+    }
+
+    canvas {
+        max-width: 260px;
+        width: 260px;
+        height: 435px;
+    }
+
+    .side-panel {
+        gap: 6px;
+        max-width: 260px;
+    }
+
+    .info-box {
+        padding: 6px 3px;
+        min-width: 80px;
+    }
+
+    .info-box h3 {
+        font-size: 11px;
+        margin-bottom: 4px;
+    }
+
+    .score {
+        font-size: 14px;
+    }
+
+    .level, .lines {
+        font-size: 10px;
+        margin: 2px 0;
+    }
+
+    .next-piece {
+        width: 50px;
+        height: 50px;
+    }
+
+    .mobile-controls {
+        bottom: 8px;
+        padding: 8px;
+        max-width: 95vw;
+    }
+
+    .mobile-dpad {
+        gap: 4px;
+        margin-right: 10px;
+    }
+
+    .mobile-dpad .mobile-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+
+    .mobile-actions {
+        gap: 6px;
+    }
+
+    .mobile-actions .mobile-btn {
+        width: 55px;
+        height: 50px;
+        font-size: 16px;
+    }
+
+    .game-over {
+        padding: 15px;
+        max-width: 250px;
+    }
+
+    .game-over h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .restart-btn {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+
+    .pause-btn {
+        top: 6px;
+        right: 6px;
+        padding: 4px 8px;
+        font-size: 10px;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 360px) {
+    canvas {
+        max-width: 240px;
+        width: 240px;
+        height: 400px;
+    }
+
+    .side-panel {
+        max-width: 240px;
+    }
+
+    .info-box {
+        min-width: 75px;
+    }
+
+    .mobile-dpad .mobile-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+
+    .mobile-actions .mobile-btn {
+        width: 50px;
+        height: 45px;
+        font-size: 14px;
+    }
+}
+            
+
+        
+    </style>
+</head>
+<body>
+
+        <!-- Background elements -->
+    <div class="bg-gradient"></div>
+    <div class="tech-grid"></div>
+    <div class="film-overlay"></div>
+    <div class="lens-flare"></div>
+    
+    <!-- Stars effect -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- Energy beam effect -->
+    <div class="energy-beam"></div>
+
+    <!-- Main content -->
+    <a href="/index.html" class="back-button">BACK</a>
+
+    <div class="game-container">
+        <div class="game-board">
+            <canvas id="gameCanvas" width="300" height="600"></canvas>
+            <button class="pause-btn" onclick="togglePause()">⏸️</button>
+            <div class="game-over" id="gameOver">
+                <h2>GAME OVER</h2>
+                <div class="score" id="finalScore">Score: 0</div>
+                <button class="restart-btn" onclick="restartGame()">Play Again</button>
+            </div>
+        </div>
+        
+        <div class="side-panel">
+            <div class="info-box">
+                <h3>SCORE</h3>
+                <div class="score" id="score">0</div>
+                <div class="level">Level: <span id="level">1</span></div>
+                <div class="lines">Lines: <span id="lines">0</span></div>
+            </div>
+            
+            <div class="info-box">
+                <h3>NEXT</h3>
+                <canvas class="next-piece" id="nextCanvas" width="100" height="100"></canvas>
+            </div>
+            
+            <div class="info-box controls">
+                <h3>CONTROLS</h3>
+                <div>← → Move</div>
+                <div>↓ Soft Drop</div>
+                <div>↑ Rotate</div>
+                <div>Space Hard Drop</div>
+                <div>P Pause</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mobile-controls">
+        <div class="mobile-dpad">
+            <div></div>
+            <button class="mobile-btn" data-action="rotate">↻</button>
+            <div></div>
+            <button class="mobile-btn" data-action="left">←</button>
+            <button class="mobile-btn" data-action="down">↓</button>
+            <button class="mobile-btn" data-action="right">→</button>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="mobile-actions">
+            <button class="mobile-btn" data-action="drop">⬇</button>
+            <button class="mobile-btn" data-action="pause">⏸</button>
+        </div>
+    </div>
+
+    <script>
+
+                    // Create stars with better performance
+            const starsContainer = document.getElementById('stars');
+            
+            // Detect if we're on mobile for performance optimization
+            const isMobile = window.innerWidth < 768;
+            const starCount = isMobile ? 65 : 120;
+            
+            // Use document fragment for better performance
+            const fragment = document.createDocumentFragment();
+            
+            // Create regular stars
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                // Vary size for more natural look
+                const size = 1 + Math.random() * 2;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.opacity = 0.3 + Math.random() * 0.7;
+                // Stagger animations
+                star.style.animationDelay = Math.random() * 5 + 's';
+                fragment.appendChild(star);
+            }
+            
+            starsContainer.appendChild(fragment);
+
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const nextCanvas = document.getElementById('nextCanvas');
+        const nextCtx = nextCanvas.getContext('2d');
+
+        const BOARD_WIDTH = 10;
+        const BOARD_HEIGHT = 20;
+        const BLOCK_SIZE = 30;
+
+        // Tetris pieces
+        const PIECES = [
+            { // I
+                shape: [[1,1,1,1]],
+                color: '#00ffff'
+            },
+            { // O
+                shape: [[1,1],[1,1]],
+                color: '#ffff00'
+            },
+            { // T
+                shape: [[0,1,0],[1,1,1]],
+                color: '#800080'
+            },
+            { // S
+                shape: [[0,1,1],[1,1,0]],
+                color: '#00ff00'
+            },
+            { // Z
+                shape: [[1,1,0],[0,1,1]],
+                color: '#ff0000'
+            },
+            { // J
+                shape: [[1,0,0],[1,1,1]],
+                color: '#0000ff'
+            },
+            { // L
+                shape: [[0,0,1],[1,1,1]],
+                color: '#ffa500'
+            }
+        ];
+
+        let board = Array(BOARD_HEIGHT).fill().map(() => Array(BOARD_WIDTH).fill(0));
+        let currentPiece = null;
+        let nextPiece = null;
+        let score = 0;
+        let level = 1;
+        let lines = 0;
+        let gameRunning = false;
+        let paused = false;
+        let dropTime = 0;
+        let dropInterval = 1000;
+        let lastTime = 0;
+
+        class Piece {
+            constructor(pieceData) {
+                this.shape = pieceData.shape;
+                this.color = pieceData.color;
+                this.x = Math.floor(BOARD_WIDTH / 2) - Math.floor(this.shape[0].length / 2);
+                this.y = 0;
+            }
+
+            rotate() {
+                const rotated = this.shape[0].map((_, i) => 
+                    this.shape.map(row => row[i]).reverse()
+                );
+                
+                if (this.canMove(rotated, this.x, this.y)) {
+                    this.shape = rotated;
+                    return true;
+                }
+                return false;
+            }
+
+            canMove(shape, newX, newY) {
+                for (let y = 0; y < shape.length; y++) {
+                    for (let x = 0; x < shape[y].length; x++) {
+                        if (shape[y][x]) {
+                            const boardX = newX + x;
+                            const boardY = newY + y;
+                            
+                            if (boardX < 0 || boardX >= BOARD_WIDTH || 
+                                boardY >= BOARD_HEIGHT || 
+                                (boardY >= 0 && board[boardY][boardX])) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                return true;
+            }
+
+            move(dx, dy) {
+                if (this.canMove(this.shape, this.x + dx, this.y + dy)) {
+                    this.x += dx;
+                    this.y += dy;
+                    return true;
+                }
+                return false;
+            }
+
+            hardDrop() {
+                while (this.move(0, 1)) {}
+            }
+        }
+
+        function getRandomPiece() {
+            return new Piece(PIECES[Math.floor(Math.random() * PIECES.length)]);
+        }
+
+        function drawBlock(context, x, y, color, size = BLOCK_SIZE) {
+            const gradient = context.createLinearGradient(x, y, x + size, y + size);
+            gradient.addColorStop(0, color);
+            gradient.addColorStop(1, adjustBrightness(color, -0.3));
+            
+            context.fillStyle = gradient;
+            context.fillRect(x, y, size, size);
+            
+            context.strokeStyle = adjustBrightness(color, 0.3);
+            context.lineWidth = 2;
+            context.strokeRect(x, y, size, size);
+        }
+
+        function adjustBrightness(color, factor) {
+            const hex = color.replace('#', '');
+            const r = Math.max(0, Math.min(255, parseInt(hex.substr(0, 2), 16) * (1 + factor)));
+            const g = Math.max(0, Math.min(255, parseInt(hex.substr(2, 2), 16) * (1 + factor)));
+            const b = Math.max(0, Math.min(255, parseInt(hex.substr(4, 2), 16) * (1 + factor)));
+            return `rgb(${Math.floor(r)}, ${Math.floor(g)}, ${Math.floor(b)})`;
+        }
+
+        function drawBoard() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw background grid
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.lineWidth = 1;
+            for (let x = 0; x <= BOARD_WIDTH; x++) {
+                ctx.beginPath();
+                ctx.moveTo(x * BLOCK_SIZE, 0);
+                ctx.lineTo(x * BLOCK_SIZE, canvas.height);
+                ctx.stroke();
+            }
+            for (let y = 0; y <= BOARD_HEIGHT; y++) {
+                ctx.beginPath();
+                ctx.moveTo(0, y * BLOCK_SIZE);
+                ctx.lineTo(canvas.width, y * BLOCK_SIZE);
+                ctx.stroke();
+            }
+
+            // Draw placed pieces
+            for (let y = 0; y < BOARD_HEIGHT; y++) {
+                for (let x = 0; x < BOARD_WIDTH; x++) {
+                    if (board[y][x]) {
+                        drawBlock(ctx, x * BLOCK_SIZE, y * BLOCK_SIZE, board[y][x]);
+                    }
+                }
+            }
+
+            // Draw current piece
+            if (currentPiece) {
+                // Draw ghost piece
+                const ghostY = getGhostPosition();
+                ctx.globalAlpha = 0.3;
+                for (let y = 0; y < currentPiece.shape.length; y++) {
+                    for (let x = 0; x < currentPiece.shape[y].length; x++) {
+                        if (currentPiece.shape[y][x]) {
+                            drawBlock(ctx, 
+                                (currentPiece.x + x) * BLOCK_SIZE, 
+                                (ghostY + y) * BLOCK_SIZE, 
+                                currentPiece.color
+                            );
+                        }
+                    }
+                }
+                ctx.globalAlpha = 1;
+
+                // Draw current piece
+                for (let y = 0; y < currentPiece.shape.length; y++) {
+                    for (let x = 0; x < currentPiece.shape[y].length; x++) {
+                        if (currentPiece.shape[y][x]) {
+                            drawBlock(ctx, 
+                                (currentPiece.x + x) * BLOCK_SIZE, 
+                                (currentPiece.y + y) * BLOCK_SIZE, 
+                                currentPiece.color
+                            );
+                        }
+                    }
+                }
+            }
+        }
+
+        function getGhostPosition() {
+            let ghostY = currentPiece.y;
+            while (currentPiece.canMove(currentPiece.shape, currentPiece.x, ghostY + 1)) {
+                ghostY++;
+            }
+            return ghostY;
+        }
+
+        function drawNextPiece() {
+            nextCtx.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
+            
+            if (nextPiece) {
+                const blockSize = 20;
+                const offsetX = (nextCanvas.width - nextPiece.shape[0].length * blockSize) / 2;
+                const offsetY = (nextCanvas.height - nextPiece.shape.length * blockSize) / 2;
+                
+                for (let y = 0; y < nextPiece.shape.length; y++) {
+                    for (let x = 0; x < nextPiece.shape[y].length; x++) {
+                        if (nextPiece.shape[y][x]) {
+                            drawBlock(nextCtx, 
+                                offsetX + x * blockSize, 
+                                offsetY + y * blockSize, 
+                                nextPiece.color, 
+                                blockSize
+                            );
+                        }
+                    }
+                }
+            }
+        }
+
+        function placePiece() {
+            for (let y = 0; y < currentPiece.shape.length; y++) {
+                for (let x = 0; x < currentPiece.shape[y].length; x++) {
+                    if (currentPiece.shape[y][x]) {
+                        const boardY = currentPiece.y + y;
+                        const boardX = currentPiece.x + x;
+                        if (boardY >= 0) {
+                            board[boardY][boardX] = currentPiece.color;
+                        }
+                    }
+                }
+            }
+
+            clearLines();
+            spawnPiece();
+        }
+
+        function clearLines() {
+            let linesCleared = 0;
+            
+            for (let y = BOARD_HEIGHT - 1; y >= 0; y--) {
+                if (board[y].every(cell => cell !== 0)) {
+                    // Line clear animation
+                    animateLineClear(y);
+                    board.splice(y, 1);
+                    board.unshift(Array(BOARD_WIDTH).fill(0));
+                    linesCleared++;
+                    y++; // Check the same line again
+                }
+            }
+
+            if (linesCleared > 0) {
+                lines += linesCleared;
+                score += getLineScore(linesCleared) * level;
+                level = Math.floor(lines / 10) + 1;
+                dropInterval = Math.max(50, 1000 - (level - 1) * 50);
+                updateDisplay();
+            }
+        }
+
+        function animateLineClear(y) {
+            // Flash effect for cleared line
+            for (let x = 0; x < BOARD_WIDTH; x++) {
+                board[y][x] = '#ffffff';
+            }
+            drawBoard();
+            
+            setTimeout(() => {
+                for (let x = 0; x < BOARD_WIDTH; x++) {
+                    board[y][x] = 0;
+                }
+            }, 100);
+        }
+
+        function getLineScore(linesCleared) {
+            const scores = [0, 40, 100, 300, 1200];
+            return scores[linesCleared] || 0;
+        }
+
+        function spawnPiece() {
+            currentPiece = nextPiece || getRandomPiece();
+            nextPiece = getRandomPiece();
+            
+            if (!currentPiece.canMove(currentPiece.shape, currentPiece.x, currentPiece.y)) {
+                gameOver();
+                return false;
+            }
+            
+            drawNextPiece();
+            return true;
+        }
+
+        function gameOver() {
+            gameRunning = false;
+            document.getElementById('finalScore').textContent = `Score: ${score}`;
+            document.getElementById('gameOver').style.display = 'block';
+        }
+
+        function updateDisplay() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('level').textContent = level;
+            document.getElementById('lines').textContent = lines;
+        }
+
+        function gameLoop(currentTime) {
+            if (!gameRunning || paused) {
+                requestAnimationFrame(gameLoop);
+                return;
+            }
+
+            const deltaTime = currentTime - lastTime;
+            lastTime = currentTime;
+            dropTime += deltaTime;
+
+            if (dropTime >= dropInterval) {
+                if (!currentPiece.move(0, 1)) {
+                    placePiece();
+                }
+                dropTime = 0;
+            }
+
+            drawBoard();
+            requestAnimationFrame(gameLoop);
+        }
+
+        function startGame() {
+            board = Array(BOARD_HEIGHT).fill().map(() => Array(BOARD_WIDTH).fill(0));
+            score = 0;
+            level = 1;
+            lines = 0;
+            dropInterval = 1000;
+            gameRunning = true;
+            paused = false;
+            dropTime = 0;
+            
+            document.getElementById('gameOver').style.display = 'none';
+            
+            nextPiece = getRandomPiece();
+            spawnPiece();
+            updateDisplay();
+            requestAnimationFrame(gameLoop);
+        }
+
+        function restartGame() {
+            startGame();
+        }
+
+        function togglePause() {
+            if (!gameRunning) return;
+            paused = !paused;
+            document.querySelector('.pause-btn').textContent = paused ? '▶️' : '⏸️';
+        }
+
+        // Controls
+        document.addEventListener('keydown', (e) => {
+            if (!gameRunning || paused) return;
+            
+            switch(e.key) {
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    currentPiece.move(-1, 0);
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    currentPiece.move(1, 0);
+                    break;
+                case 'ArrowDown':
+                    e.preventDefault();
+                    if (currentPiece.move(0, 1)) {
+                        score += 1;
+                        updateDisplay();
+                    }
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    currentPiece.rotate();
+                    break;
+                case ' ':
+                    e.preventDefault();
+                    const dropDistance = getGhostPosition() - currentPiece.y;
+                    currentPiece.hardDrop();
+                    score += dropDistance * 2;
+                    updateDisplay();
+                    placePiece();
+                    break;
+                case 'p':
+                case 'P':
+                    togglePause();
+                    break;
+            }
+        });
+
+        // Mobile controls
+        document.querySelectorAll('.mobile-btn').forEach(btn => {
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const action = btn.dataset.action;
+                handleMobileAction(action);
+            });
+            
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const action = btn.dataset.action;
+                handleMobileAction(action);
+            });
+        });
+
+        function handleMobileAction(action) {
+            if (!gameRunning || paused) {
+                if (action === 'pause') togglePause();
+                return;
+            }
+            
+            switch(action) {
+                case 'left':
+                    currentPiece.move(-1, 0);
+                    break;
+                case 'right':
+                    currentPiece.move(1, 0);
+                    break;
+                case 'down':
+                    if (currentPiece.move(0, 1)) {
+                        score += 1;
+                        updateDisplay();
+                    }
+                    break;
+                case 'rotate':
+                    currentPiece.rotate();
+                    break;
+                case 'drop':
+                    const dropDistance = getGhostPosition() - currentPiece.y;
+                    currentPiece.hardDrop();
+                    score += dropDistance * 2;
+                    updateDisplay();
+                    placePiece();
+                    break;
+                case 'pause':
+                    togglePause();
+                    break;
+            }
+        }
+
+        // Touch swipe controls for mobile
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        });
+
+        canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (!gameRunning || paused) return;
+            
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            const minSwipeDistance = 30;
+            
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                if (Math.abs(deltaX) > minSwipeDistance) {
+                    if (deltaX > 0) {
+                        currentPiece.move(1, 0);
+                    } else {
+                        currentPiece.move(-1, 0);
+                    }
+                }
+            } else {
+                if (Math.abs(deltaY) > minSwipeDistance) {
+                    if (deltaY > 0) {
+                        if (currentPiece.move(0, 1)) {
+                            score += 1;
+                            updateDisplay();
+                        }
+                    } else {
+                        currentPiece.rotate();
+                    }
+                }
+            }
+        }
+
+        // Tap to rotate
+        canvas.addEventListener('click', (e) => {
+            if (!gameRunning || paused) return;
+            currentPiece.rotate();
+        });
+
+        // Prevent context menu on mobile
+        canvas.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+
+        // Start the game
+        startGame();
+    </script>
+</body>
+</html>

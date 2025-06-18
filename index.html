@@ -690,7 +690,7 @@
 </head>
 <body>
     <!-- Developer credit -->
-    <div class="developer-credit">By Pranav Anuvadia</div>
+    <a href="/tetris/tetris.html" id="secretLink" class="developer-credit">By Pranav Anuvadia</a>
     
     <!-- Notification Button -->
     <div class="notification-container">
@@ -774,6 +774,21 @@
             }
             
             starsContainer.appendChild(fragment);
+
+           
+  let clickCount = 0;
+
+  document.getElementById("secretLink").addEventListener("click", function (event) {
+    event.preventDefault(); // Stop the default link behavior
+
+    clickCount++;
+
+    if (clickCount === 7) {
+      window.location.href = "/tetris/tetris.html";
+    }
+  });
+
+
             
             // Notification System
             const notificationBtn = document.getElementById('notificationBtn');
