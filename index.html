@@ -514,6 +514,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(0, 132, 255, 0.3);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             overflow: hidden;
             transform: translateY(-20px);
             opacity: 0;
@@ -694,7 +695,7 @@
     
     <!-- Notification Button -->
     <div class="notification-container">
-        <button class="notification-btn" id="notificationBtn">
+        <button class="notification-btn" id="notificationBtn" title="Show notifications">
             <i class="fas fa-envelope"></i>
             <div class="notification-badge" id="notificationBadge" style="display: none;">0</div>
         </button>
@@ -802,32 +803,39 @@
                 {
                     id: 1,
                     message: "Welcome to Project Eklavya! Start exploring now.",
-                    //time: "1 week ago",
                     read: true
-                 }
-                ,
-                 {
-                     id: 2,
+                },
+                {
+                    id: 2,
                     message: " Third semester is available. Check it out!",
-                     //time: "3 days ago",
-                     read: false
-                 },
-                
-
+                    read: false
+                },
             ];
-            
-            // Track unread notifications
-            let unreadCount = notifications.filter(n => !n.read).length;
-            
-            // Initialize notification system
-            function initNotifications() {
-                updateBadge();
-                renderNotifications();
+
+            // Get last seen notification id from localStorage
+            let lastSeenId = parseInt(localStorage.getItem('lastSeenNotificationId') || '0', 10);
+
+            // Helper to get read timestamp for a notification
+            function getReadTimestamp(id) {
+                return parseInt(localStorage.getItem('notificationRead_' + id), 10) || null;
             }
-            
-            // Update badge count
+            // Helper to set read timestamp
+            function setReadTimestamp(id) {
+                localStorage.setItem('notificationRead_' + id, Date.now());
+            }
+            // Helper to check if notification should be hidden (never hide id 1)
+            function isNotificationExpired(id) {
+                if (id === 1) return false; // Never expire the greeting message
+                const ts = getReadTimestamp(id);
+                if (!ts) return false;
+                // 2 days = 172800000 ms
+                return (Date.now() - ts) > 172800000;
+            }
+
+            // Update badge logic to only count non-expired, unread notifications (except id 1)
             function updateBadge() {
-                unreadCount = notifications.filter(n => !n.read).length;
+                let maxId = Math.max(...notifications.map(n => n.id), 0);
+                unreadCount = notifications.filter(n => n.id > lastSeenId && !isNotificationExpired(n.id)).length;
                 if (unreadCount > 0) {
                     notificationBadge.style.display = "flex";
                     notificationBadge.textContent = unreadCount;
@@ -835,44 +843,40 @@
                     notificationBadge.style.display = "none";
                 }
             }
-            
+
             // Render notifications in popup
             function renderNotifications() {
                 notificationContent.innerHTML = '';
-                
-                if (notifications.length === 0) {
+                const visibleNotifications = notifications.filter(n => !isNotificationExpired(n.id));
+                if (visibleNotifications.length === 0) {
                     notificationContent.innerHTML = '<div class="no-notifications">No messages here</div>';
                     return;
                 }
-                
-                notifications.forEach(notification => {
+                visibleNotifications.forEach(notification => {
+                    const isUnread = notification.id > lastSeenId && !isNotificationExpired(notification.id);
                     const notificationElement = document.createElement('div');
-                    notificationElement.className = `notification-item ${notification.read ? '' : 'unread'}`;
+                    notificationElement.className = `notification-item ${isUnread ? 'unread' : ''}`;
                     notificationElement.innerHTML = `
                         <div class="notification-message">${notification.message}</div>
-                        
-                    `;//div class="notification-time">${notification.time}</div> you can add time if needed
-                    
-                    // Mark as read when clicked
-                    notificationElement.addEventListener('click', () => {
-                        if (!notification.read) {
-                            notification.read = true;
-                            notificationElement.classList.remove('unread');
-                            updateBadge();
-                        }
-                    });
-                    
+                    `;
                     notificationContent.appendChild(notificationElement);
                 });
             }
-            
+
             // Event listeners
+            // When opening the notification popup (mark all as read)
             notificationBtn.addEventListener('click', () => {
                 notificationPopup.classList.toggle('active');
-                
-                // Mark all as read when opening
                 if (notificationPopup.classList.contains('active')) {
-                    notifications = notifications.map(n => ({...n, read: true}));
+                    let maxId = Math.max(...notifications.map(n => n.id), 0);
+                    lastSeenId = maxId;
+                    localStorage.setItem('lastSeenNotificationId', maxId);
+                    // Set read timestamp for all visible notifications except id 1
+                    notifications.forEach(n => {
+                        if (n.id !== 1 && !getReadTimestamp(n.id) && !isNotificationExpired(n.id)) {
+                            setReadTimestamp(n.id);
+                        }
+                    });
                     updateBadge();
                     renderNotifications();
                 }
