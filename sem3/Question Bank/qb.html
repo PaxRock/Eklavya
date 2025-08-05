@@ -185,24 +185,44 @@
         }
 
         .container {
-            max-width: 500px;
-            width: 100%;
-            margin: 2rem auto;
+            max-width: 900px;
+            width: 95%;
+            margin: 4rem auto;
             display: flex;
             flex-direction: column;
             align-items: center;
             z-index: 1;
-            padding: 2rem 1.5rem;
+            padding: 3rem 2rem;
             border-radius: 16px;
             background: var(--card-bg);
-            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             box-shadow: var(--card-shadow);
             border: 1px solid var(--card-border);
             position: relative;
+            overflow: hidden;
+            min-height: 600px;
         }
 
-       
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            animation: scanline 4s infinite linear;
+        }
+
+        @keyframes scanline {
+            0% {
+                transform: translateY(-100%);
+            }
+
+            100% {
+                transform: translateY(900px);
+            }
+        }
 
         .semester-badge {
             position: absolute;
@@ -220,11 +240,11 @@
         }
 
         .heading {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-family: 'Russo One', sans-serif;
             text-transform: uppercase;
-            letter-spacing: 5px;
-            margin: 2rem 0 2rem 0;
+            letter-spacing: 6px;
+            margin: 3rem 0 3rem 0;
             background: linear-gradient(to bottom, #ffffff, #26c485);
             -webkit-background-clip: text;
             background-clip: text;
@@ -236,26 +256,28 @@
         }
 
         .buttons-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.8rem;
             width: 100%;
-            margin-top: 1.5rem;
+            margin-top: 2rem;
         }
 
         .button-link {
+            display: block;
             width: 100%;
+            text-decoration: none;
         }
 
         .button {
             width: 100%;
-            height: 60px;
+            height: 100px;
             border: none;
             border-radius: var(--border-radius);
             background: linear-gradient(45deg, rgba(38, 196, 133, 0.8), rgba(0, 158, 96, 0.8));
             color: white;
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             letter-spacing: 2px;
             cursor: pointer;
             position: relative;
@@ -265,10 +287,11 @@
                 0 10px 20px rgba(0, 0, 0, 0.3),
                 0 0 0 1px rgba(38, 196, 133, 0.3),
                 0 0 15px rgba(38, 196, 133, 0.4) inset;
+            transform: perspective(800px) rotateX(10deg);
         }
 
         .button:hover {
-            transform: translateY(-5px) scale(1.05);
+            transform: perspective(800px) rotateX(10deg) translateY(-5px) scale(1.05);
             box-shadow:
                 0 15px 30px rgba(0, 0, 0, 0.4),
                 0 0 0 2px rgba(38, 196, 133, 0.5),
@@ -327,43 +350,79 @@
         }
 
         @media (max-width: 768px) {
-            .container {
-                max-width: 98vw;
-                width: 98vw;
-                padding: 1.5rem 0.5rem;
+            .heading {
+                font-size: 2rem;
+                letter-spacing: 1px;
+                margin: 1rem 0 1rem 0;
             }
+
             .buttons-grid {
-                flex-direction: column;
-                gap: 1.2rem;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.8rem;
             }
+
             .button {
-                height: 60px;
-                font-size: 1.2rem;
+                height: 100px;
+                font-size: 1.8rem;
+                padding: 0 1rem;
+            }
+
+            .container {
+                padding: 3rem 1.5rem;
+                margin: 3rem auto;
+                width: 90%;
+                min-height: 550px;
+            }
+
+            .semester-badge {
+                font-size: 1rem;
+                padding: 0.6rem 1.2rem;
+                top: 1.2rem;
+                right: 1.2rem;
+            }
+
+            .star {
+                animation-duration: 8s;
+            }
+
+            .spaceship {
+                animation-duration: 25s;
+            }
+
+            .card-container {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+                gap: 2rem;
+            }
+
+            .developer-credit {
+                font-size: clamp(0.5rem, 1.2vw, 0.7rem);
+                bottom: 15px;
             }
         }
 
         @media (max-width: 480px) {
             .container {
-                padding: 1rem 0.4rem;
-                margin: 0.5rem auto;
-                width: 98vw;
-                min-height: 320px;
-                max-width: 340px;
+                padding: 2.5rem 1.2rem;
+                margin: 2.5rem auto;
+                width: 92%;
+                min-height: 500px;
             }
 
             .heading {
-                font-size: 1.2rem;
-                letter-spacing: 2px;
-                margin: 0.8rem 0 0.8rem 0;
+                font-size: 2.5rem;
+                letter-spacing: 3px;
+                margin: 2rem 0 2rem 0;
+                text-align: center;
             }
 
             .buttons-grid {
-                gap: 0.6rem;
+                gap: 1.2rem;
             }
 
             .button {
-                height: 80px !important;
-                font-size: 1.3rem !important;
+                height: 90px;
+                font-size: 1.6rem;
             }
 
             .back-button {
@@ -372,10 +431,10 @@
             }
 
             .semester-badge {
-                font-size: 0.8rem;
-                padding: 0.4rem 0.8rem;
-                top: 0.7rem;
-                right: 0.7rem;
+                font-size: 0.9rem;
+                padding: 0.5rem 1rem;
+                top: 1rem;
+                right: 1rem;
             }
 
             .spaceship {
@@ -408,7 +467,6 @@
             transition: var(--transition);
             position: relative;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             display: flex;
             flex-direction: column;
@@ -468,25 +526,11 @@
         }
 
         @media (max-width: 768px) {
-            .heading {
-                font-size: 2.2rem;
-                letter-spacing: 3px;
-                margin: 2rem 0 2rem 0;
-                text-align: center;
-            }
-
             .card-container {
                 grid-template-columns: 1fr;
                 padding: 1.5rem;
                 gap: 2rem;
             }
-
-            .button {
-                height: 100px;
-                width: 100%;
-                font-size: 1.5rem;
-            }
-
         }
 
         .developer-credit {
@@ -535,24 +579,30 @@
     <div class="stars" id="stars"></div>
 
     <!-- Main content -->
-    <a href="/index.html" class="back-button">BACK</a>
+    <a href="/sem3/sem3.html" class="back-button">BACK</a>
 
     <div class="container">
         <div class="semester-badge">Fall 2025</div>
-        <h1 class="heading">SEMESTER III</h1>
+        <h1 class="heading">QUESTION BANKS</h1>
         <div class="buttons-grid">
-            <a href="/sem3/Notes/notes.html" class="button-link">
-                <button class="button">NOTES</button>
+            <a href="/sem3/Question Bank/prj.html" class="button-link">
+                <button class="button">PRJ</button>
             </a>
-            <a href="/sem3/Experiments/experiments.html" class="button-link">
-                <button class="button">EXPERIMENTS</button>
+            <a href="/sem3/Question Bank/dst.html" class="button-link">
+                <button class="button">DST</button>
             </a>
-            <a href="/sem3/Question Bank/qb.html" class="button-link">
-                <button class="button">QUESTION BANKS</button>
+            <!-- <a href="/sem3/Question Bank/eup.html" class="button-link">
+                <button class="button">EUP</button>
+            </a> -->
+            <a href="/sem3/Question Bank/dbms.html" class="button-link">
+                <button class="button">DBMS</button>
             </a>
-            <a href="/sem3/Others/others.html" class="button-link">
-                <button class="button">OTHERS</button>
+            <a href="/sem3/Question Bank/fmp.html" class="button-link">
+                <button class="button">FMP</button>
             </a>
+            <!-- <a href="/sem3/Question Bank/lxl.html" class="button-link">
+                <button class="button">LXL</button>
+            </a> -->
         </div>
     </div>
 
