@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com https://cdn.tailwindcss.com blob: data: chrome-extension:; connect-src 'self' https://nyc.cloud.appwrite.io https://*.appwrite.io https://accounts.google.com https://oauth2.googleapis.com https://unpkg.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://accounts.google.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com https://cdn.tailwindcss.com; font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com data:; img-src 'self' data: https: blob:;">
     <title>Project Eklavya</title>
     <link rel="icon" type="image/png" href="/files/logo/logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="sem2/auth.css">
     <style>
         /* Bringing back the original fonts but loading with display=swap for better performance */
         @import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Bebas+Neue&family=Press+Start+2P&display=swap');
@@ -488,6 +490,7 @@
             font-size: 10px;
             font-weight: bold;
             animation: pulse 1.5s infinite;
+            display: none;
         }
 
         @keyframes pulse {
@@ -513,6 +516,7 @@
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(0, 132, 255, 0.3);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             overflow: hidden;
             transform: translateY(-20px);
@@ -691,12 +695,29 @@
 <body>
     <!-- Developer credit -->
     <a href="/tetris/tetris.html" id="secretLink" class="developer-credit">By Pranav Anuvadia</a>
+
+    <!-- Authentication helpers -->
+    <div id="userInfo"></div>
+    <button id="loginBtn" type="button" onclick="authSystem.showLoginModal()">Login / Signup</button>
+    <button id="logoutBtn" type="button" onclick="authSystem.logout()">Logout</button>
+
+    <div id="loginModal">
+        <div class="login-modal-content">
+            <button class="close-modal" type="button" onclick="authSystem.hideLoginModal()">&times;</button>
+            <h2>Access Required</h2>
+            <p>Please sign in or create an account to explore Project Eklavya.</p>
+            <button id="btn-siwg" type="button" onclick="authSystem.loginWithGoogle()">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo">
+                Sign in with Google
+            </button>
+        </div>
+    </div>
     
     <!-- Notification Button -->
     <div class="notification-container">
-        <button class="notification-btn" id="notificationBtn">
+        <button class="notification-btn" id="notificationBtn" aria-label="View notifications">
             <i class="fas fa-envelope"></i>
-            <div class="notification-badge" id="notificationBadge" style="display: none;">0</div>
+            <div class="notification-badge" id="notificationBadge">0</div>
         </button>
     </div>
     
@@ -741,6 +762,30 @@
         </div>
     </div>
     
+    <!-- Load Appwrite SDK from local file -->
+    <script src="sem2/appwrite.min.js"></script>
+    <script>
+        // The IIFE version exports to window.Appwrite namespace
+        // Verify it loaded correctly
+        (function() {
+            let checkCount = 0;
+            function checkAppwrite() {
+                if (typeof window.Appwrite !== 'undefined' && window.Appwrite.Client) {
+                    console.log('Appwrite SDK loaded successfully');
+                    return;
+                }
+                checkCount++;
+                if (checkCount < 50) { // Check for up to 5 seconds
+                    setTimeout(checkAppwrite, 100);
+                } else {
+                    console.error('Appwrite SDK failed to load from local file');
+                }
+            }
+            // Start checking
+            setTimeout(checkAppwrite, 100);
+        })();
+    </script>
+    <script src="sem2/auth.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Dynamic title effect

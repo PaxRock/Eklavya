@@ -1,0 +1,217 @@
+/* Authentication Modal Styles */
+#loginModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.login-modal-content {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 3rem;
+    max-width: 450px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    border: 1px solid var(--card-border);
+    position: relative;
+    animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.login-modal-content h2 {
+    font-family: 'Russo One', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.login-modal-content p {
+    color: #a0a0a0;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+#btn-siwg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+    background-color: #fff;
+    color: #1a1a1a;
+    border: 0.5px solid #9d9d9d;
+    border-radius: 12px;
+    padding: 14px 35px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+}
+
+#btn-siwg:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+    background-color: #f5f5f5;
+}
+
+#btn-siwg img {
+    height: 30px;
+    width: 30px;
+    object-fit: contain;
+}
+
+.close-modal {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 2rem;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.close-modal:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(90deg);
+}
+
+/* User Info and Logout Button */
+#userInfo {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    right: 7rem;
+    background: var(--card-bg);
+    padding: 0.7rem 1.5rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--card-border);
+    color: #ffffff;
+    font-size: 0.9rem;
+    z-index: 1000;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    font-family: 'Poppins', sans-serif;
+}
+
+#logoutBtn {
+    display: none;
+    position: fixed;
+    top: 4rem;
+    right: 7rem;
+    padding: 0.7rem 1.5rem;
+    background: var(--back-button-gradient);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(255, 61, 0, 0.4);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+#logoutBtn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 61, 0, 0.6);
+}
+
+#loginBtn {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    right: 7rem;
+    padding: 0.7rem 1.5rem;
+    background: var(--button-gradient);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 132, 255, 0.4);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    text-decoration: none;
+}
+
+#loginBtn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 132, 255, 0.6);
+}
+
+@media (max-width: 768px) {
+    .login-modal-content {
+        padding: 2rem 1.5rem;
+    }
+    
+    .login-modal-content h2 {
+        font-size: 1.5rem;
+    }
+    
+    #userInfo {
+        top: 0.5rem;
+        right: 5.5rem;
+        font-size: 0.8rem;
+        padding: 0.5rem 1rem;
+    }
+    
+    #logoutBtn {
+        top: 3.5rem;
+        right: 5.5rem;
+        padding: 0.6rem 1.2rem;
+        font-size: 1rem;
+    }
+
+    #loginBtn {
+        top: 0.5rem;
+        right: 5.5rem;
+        padding: 0.6rem 1.2rem;
+        font-size: 1rem;
+    }
+}
+
