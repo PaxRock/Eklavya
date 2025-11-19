@@ -316,7 +316,7 @@
         /* Remove hero elements media queries */
         @media (max-width: 768px) {
             .heading-container {
-                margin-top: -3rem;
+                margin-top: 4rem;
             }
             
             .heading {
@@ -332,11 +332,15 @@
                 display: block;
                 margin-bottom: 0.2em;
             }
+            
+            .button-container {
+                margin-top: 1rem;
+            }
         }
 
         @media (max-width: 480px) {
             .heading-container {
-                margin-top: -2.5rem;
+                margin-top: 5rem;
             }
             
             .heading {
@@ -359,6 +363,10 @@
             
             .epic-button {
                 padding: 0.8rem 2rem;
+            }
+            
+            .button-container {
+                margin-top: 1.5rem;
             }
         }
 
@@ -438,8 +446,14 @@
         @media (max-width: 480px) {
             .subtitle {
                 font-size: clamp(0.9rem, 2.2vw, 1.2rem);
-                margin-top: 1.5rem;
+                margin-top: 2rem;
                 margin-bottom: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .subtitle {
+                margin-top: 2rem;
             }
         }
       
