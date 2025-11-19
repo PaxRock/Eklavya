@@ -458,7 +458,7 @@
             height: 50px;
             border-radius: 50%;
             background: linear-gradient(135deg, #0a84ff, #0b5cb2);
-            color: white;
+            color: white !important;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -468,6 +468,160 @@
             position: relative;
             border: none;
             outline: none;
+        }
+        
+        .notification-btn i {
+            color: white !important;
+            font-size: 1.2rem;
+        }
+        
+        /* Profile Button Styles (Top Left) */
+        .profile-container {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1000;
+        }
+
+        .profile-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0a84ff, #0b5cb2);
+            color: white !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(10, 132, 255, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            border: none;
+            outline: none;
+        }
+        
+        .profile-btn i {
+            color: white !important;
+            font-size: 1.2rem;
+        }
+
+        .profile-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(10, 132, 255, 0.6);
+        }
+        
+        /* Profile Popup Styles */
+        .profile-popup {
+            position: fixed;
+            top: 70px;
+            left: 20px;
+            width: 300px;
+            max-height: 400px;
+            background: rgba(16, 23, 41, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 132, 255, 0.3);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            transform: translateY(-20px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .profile-popup.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .profile-header {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .profile-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            color: #4dabf7;
+            letter-spacing: 1px;
+        }
+
+        .profile-content {
+            padding: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .profile-info-item {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .profile-info-item:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-info-label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 5px;
+        }
+        
+        .profile-info-value {
+            font-size: 1rem;
+            color: #ffffff;
+            font-weight: 500;
+        }
+        
+        .profile-login-prompt {
+            text-align: center;
+            padding: 30px 20px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .profile-login-btn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #0a84ff, #0b5cb2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(10, 132, 255, 0.4);
+        }
+        
+        .profile-logout-btn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #ff3d00, #d32f2f);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .profile-logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 61, 0, 0.4);
         }
 
         .notification-btn:hover {
@@ -634,6 +788,9 @@
             height: 40px;
             font-size: 0.9rem;
             }
+            .notification-btn i {
+                font-size: 1rem;
+            }
             .notification-badge {
             width: 16px;
             height: 16px;
@@ -642,6 +799,17 @@
             .notification-popup {
                 width: 280px;
                 right: 10px;
+            }
+            .profile-btn {
+                width: 40px;
+                height: 40px;
+            }
+            .profile-btn i {
+                font-size: 1rem;
+            }
+            .profile-popup {
+                width: 280px;
+                left: 10px;
             }
             .notification-header {
                 padding: 10px;
@@ -696,10 +864,28 @@
     <!-- Developer credit -->
     <a href="/tetris/tetris.html" id="secretLink" class="developer-credit">By Pranav Anuvadia</a>
 
-    <!-- Authentication helpers -->
+    <!-- Authentication helpers (hidden, controlled by JS) -->
     <div id="userInfo"></div>
     <button id="loginBtn" type="button" onclick="authSystem.showLoginModal()">Login / Signup</button>
     <button id="logoutBtn" type="button" onclick="authSystem.logout()">Logout</button>
+    
+    <!-- Profile Button (Top Left) -->
+    <div class="profile-container">
+        <button class="profile-btn" id="profileBtn" aria-label="View profile">
+            <i class="fas fa-user"></i>
+        </button>
+    </div>
+    
+    <!-- Profile Popup -->
+    <div class="profile-popup" id="profilePopup">
+        <div class="profile-header">
+            <div class="profile-title">Account</div>
+            <button class="close-btn" id="closeProfilePopup">&times;</button>
+        </div>
+        <div class="profile-content" id="profileContent">
+            <!-- Profile info will be added here dynamically -->
+        </div>
+    </div>
 
     <div id="loginModal">
         <div class="login-modal-content">
@@ -940,6 +1126,34 @@
                     !notificationBtn.contains(e.target) &&
                     notificationPopup.classList.contains('active')) {
                     notificationPopup.classList.remove('active');
+                }
+            });
+            
+            // Profile Button System
+            const profileBtn = document.getElementById('profileBtn');
+            const profilePopup = document.getElementById('profilePopup');
+            const profileContent = document.getElementById('profileContent');
+            const closeProfilePopup = document.getElementById('closeProfilePopup');
+            
+            // Event listeners for profile button
+            if (profileBtn) {
+                profileBtn.addEventListener('click', () => {
+                    profilePopup.classList.toggle('active');
+                });
+            }
+            
+            if (closeProfilePopup) {
+                closeProfilePopup.addEventListener('click', () => {
+                    profilePopup.classList.remove('active');
+                });
+            }
+            
+            // Close profile popup when clicking outside
+            document.addEventListener('click', (e) => {
+                if (profilePopup && !profilePopup.contains(e.target) && 
+                    !profileBtn.contains(e.target) &&
+                    profilePopup.classList.contains('active')) {
+                    profilePopup.classList.remove('active');
                 }
             });
 

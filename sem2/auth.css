@@ -160,7 +160,7 @@
 }
 
 #loginBtn {
-    display: block;
+    display: none;
     position: fixed;
     top: 1rem;
     right: 7rem;

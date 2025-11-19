@@ -131,6 +131,7 @@ async function logout() {
         localStorage.removeItem('isAuthenticated');
         localStorage.removeItem('userEmail');
         localStorage.removeItem('userName');
+        hideProfilePopup();
         updateUI();
         hideLoginModal();
     } catch (error) {
@@ -162,20 +163,69 @@ function updateUI() {
     const logoutBtn = document.getElementById('logoutBtn');
     const userInfo = document.getElementById('userInfo');
     
+    // Update profile popup content
+    updateProfilePopup();
+    
     if (isAuthenticated || localStorage.getItem('isAuthenticated') === 'true') {
         isAuthenticated = true;
         const userName = localStorage.getItem('userName') || localStorage.getItem('userEmail') || 'User';
         
         if (loginBtn) loginBtn.style.display = 'none';
-        if (logoutBtn) logoutBtn.style.display = 'block';
+        if (logoutBtn) logoutBtn.style.display = 'none'; // Hidden, using profile button instead
         if (userInfo) {
             userInfo.textContent = `Welcome, ${userName}`;
-            userInfo.style.display = 'block';
+            userInfo.style.display = 'none'; // Hidden, using profile popup instead
         }
     } else {
-        if (loginBtn) loginBtn.style.display = 'block';
+        if (loginBtn) loginBtn.style.display = 'none'; // Hidden, using profile button instead
         if (logoutBtn) logoutBtn.style.display = 'none';
         if (userInfo) userInfo.style.display = 'none';
+    }
+}
+
+// Update profile popup content
+function updateProfilePopup() {
+    const profileContent = document.getElementById('profileContent');
+    if (!profileContent) return;
+    
+    if (isAuthenticated || localStorage.getItem('isAuthenticated') === 'true') {
+        const userName = localStorage.getItem('userName') || 'User';
+        const userEmail = localStorage.getItem('userEmail') || 'No email';
+        
+        profileContent.innerHTML = `
+            <div class="profile-info-item">
+                <div class="profile-info-label">Name</div>
+                <div class="profile-info-value">${userName}</div>
+            </div>
+            <div class="profile-info-item">
+                <div class="profile-info-label">Email</div>
+                <div class="profile-info-value">${userEmail}</div>
+            </div>
+            <button class="profile-logout-btn" onclick="authSystem.logout()">Logout</button>
+        `;
+    } else {
+        profileContent.innerHTML = `
+            <div class="profile-login-prompt">
+                <p>Please sign in to view your account information.</p>
+                <button class="profile-login-btn" onclick="authSystem.showLoginModal(); authSystem.hideProfilePopup();">Sign In</button>
+            </div>
+        `;
+    }
+}
+
+// Show profile popup
+function showProfilePopup() {
+    const popup = document.getElementById('profilePopup');
+    if (popup) {
+        popup.classList.add('active');
+    }
+}
+
+// Hide profile popup
+function hideProfilePopup() {
+    const popup = document.getElementById('profilePopup');
+    if (popup) {
+        popup.classList.remove('active');
     }
 }
 
@@ -260,8 +310,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Setup button interception
     setupButtonInterception();
     
-    // Update UI based on stored auth status
-    updateUI();
+        // Update UI based on stored auth status
+        updateUI();
+        
+        // Update profile popup periodically to reflect auth changes
+        setInterval(() => {
+            if (typeof updateProfilePopup === 'function') {
+                updateProfilePopup();
+            }
+        }, 1000);
 });
 
 // Export functions for global use
@@ -270,6 +327,8 @@ window.authSystem = {
     logout,
     showLoginModal,
     hideLoginModal,
+    showProfilePopup,
+    hideProfilePopup,
     checkAuthStatus,
     isAuthenticated: () => isAuthenticated || localStorage.getItem('isAuthenticated') === 'true'
 };
