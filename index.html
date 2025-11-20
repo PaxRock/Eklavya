@@ -457,7 +457,111 @@
             }
         }
       
+        /* Liquid Glass Effect */
+        .liquid-glass {
+            background: radial-gradient(
+                47.2% 50% at 50.39% 88.37%,
+                rgba(255, 255, 255, 0.12) 0%,
+                rgba(255, 255, 255, 0) 100%
+            ),
+            rgba(255, 255, 255, 0.04);
+            position: relative;
+            transition: background 0.3s ease;
+            border-radius: 14px;
+            width: fit-content;
+            height: fit-content;
+            padding: 8px 16px;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
 
+        .liquid-glass:hover {
+            background: radial-gradient(
+                47.2% 50% at 50.39% 88.37%,
+                rgba(255, 255, 255, 0.12) 0%,
+                rgba(255, 255, 255, 0) 100%
+            ),
+            rgba(255, 255, 255, 0.08);
+        }
+
+        .liquid-glass::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 1px;
+            background: linear-gradient(
+                150deg,
+                rgba(255, 255, 255, 0.48) 16.73%,
+                rgba(255, 255, 255, 0.08) 30.2%,
+                rgba(255, 255, 255, 0.08) 68.2%,
+                rgba(255, 255, 255, 0.6) 81.89%
+            );
+            border-radius: inherit;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: xor;
+            pointer-events: none;
+        }
+
+        /* Login Button with Liquid Glass */
+        #loginBtn {
+            background: radial-gradient(
+                47.2% 50% at 50.39% 88.37%,
+                rgba(255, 255, 255, 0.12) 0%,
+                rgba(255, 255, 255, 0) 100%
+            ),
+            rgba(255, 255, 255, 0.04);
+            position: relative;
+            transition: background 0.3s ease;
+            border-radius: 14px;
+            width: fit-content;
+            height: fit-content;
+            padding: 8px 16px;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            border: none;
+            cursor: pointer;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        #loginBtn:hover {
+            background: radial-gradient(
+                47.2% 50% at 50.39% 88.37%,
+                rgba(255, 255, 255, 0.12) 0%,
+                rgba(255, 255, 255, 0) 100%
+            ),
+            rgba(255, 255, 255, 0.08);
+        }
+
+        #loginBtn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 1px;
+            background: linear-gradient(
+                150deg,
+                rgba(255, 255, 255, 0.48) 16.73%,
+                rgba(255, 255, 255, 0.08) 30.2%,
+                rgba(255, 255, 255, 0.08) 68.2%,
+                rgba(255, 255, 255, 0.6) 81.89%
+            );
+            border-radius: inherit;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: xor;
+            pointer-events: none;
+        }
 
         /* Notification Button Styles */
         .notification-container {
@@ -471,17 +575,52 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #0a84ff, #0b5cb2);
+            background: radial-gradient(
+                47.2% 50% at 50.39% 88.37%,
+                rgba(255, 255, 255, 0.12) 0%,
+                rgba(255, 255, 255, 0) 100%
+            ),
+            rgba(255, 255, 255, 0.04);
             color: white !important;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(10, 132, 255, 0.4);
-            transition: all 0.3s ease;
+            transition: background 0.3s ease;
             position: relative;
             border: none;
             outline: none;
+        }
+
+        .notification-btn:hover {
+            background: radial-gradient(
+                47.2% 50% at 50.39% 88.37%,
+                rgba(255, 255, 255, 0.12) 0%,
+                rgba(255, 255, 255, 0) 100%
+            ),
+            rgba(255, 255, 255, 0.08);
+        }
+
+        .notification-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 1px;
+            background: linear-gradient(
+                150deg,
+                rgba(255, 255, 255, 0.48) 16.73%,
+                rgba(255, 255, 255, 0.08) 30.2%,
+                rgba(255, 255, 255, 0.08) 68.2%,
+                rgba(255, 255, 255, 0.6) 81.89%
+            );
+            border-radius: inherit;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: xor;
+            pointer-events: none;
         }
         
         .notification-btn i {
@@ -506,17 +645,53 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #0a84ff, #0b5cb2);
+            background: radial-gradient(
+                47.2% 50% at 50.39% 88.37%,
+                rgba(255, 255, 255, 0.12) 0%,
+                rgba(255, 255, 255, 0) 100%
+            ),
+            rgba(255, 255, 255, 0.04);
             color: white !important;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(10, 132, 255, 0.4);
-            transition: all 0.3s ease;
+            transition: background 0.3s ease;
             position: relative;
             border: none;
             outline: none;
+        }
+
+        .profile-btn:hover {
+            transform: scale(1.1);
+            background: radial-gradient(
+                47.2% 50% at 50.39% 88.37%,
+                rgba(255, 255, 255, 0.12) 0%,
+                rgba(255, 255, 255, 0) 100%
+            ),
+            rgba(255, 255, 255, 0.08);
+        }
+
+        .profile-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 1px;
+            background: linear-gradient(
+                150deg,
+                rgba(255, 255, 255, 0.48) 16.73%,
+                rgba(255, 255, 255, 0.08) 30.2%,
+                rgba(255, 255, 255, 0.08) 68.2%,
+                rgba(255, 255, 255, 0.6) 81.89%
+            );
+            border-radius: inherit;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: xor;
+            pointer-events: none;
         }
         
         .profile-btn i {
@@ -527,11 +702,8 @@
             font-variant: normal;
             text-rendering: auto;
             -webkit-font-smoothing: antialiased;
-        }
-
-        .profile-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(10, 132, 255, 0.6);
+            position: relative;
+            z-index: 1;
         }
         
         /* Profile Popup Styles */
@@ -650,7 +822,6 @@
 
         .notification-btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(10, 132, 255, 0.6);
         }
 
         .notification-badge {
