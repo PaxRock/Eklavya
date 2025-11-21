@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com https://cdn.tailwindcss.com blob: data: chrome-extension:; connect-src 'self' https://nyc.cloud.appwrite.io https://*.appwrite.io https://accounts.google.com https://oauth2.googleapis.com https://unpkg.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://accounts.google.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com https://cdn.tailwindcss.com; font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com https://cdnjs.cloudflare.com data:; img-src 'self' data: https: blob:;">
+    <meta http-equiv="Content-Security-Policy"
+        content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://unpkg.com https://cdnjs.cloudflare.com https://cdn.tailwindcss.com blob: data: chrome-extension:; connect-src 'self' https://nyc.cloud.appwrite.io https://*.appwrite.io https://accounts.google.com https://oauth2.googleapis.com https://unpkg.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; frame-src 'self' https://accounts.google.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com https://cdn.tailwindcss.com; font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com https://cdnjs.cloudflare.com data:; img-src 'self' data: https: blob:;">
     <title>Project Eklavya</title>
     <link rel="icon" type="image/png" href="/files/logo/logo.png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,7 +14,7 @@
     <style>
         /* Bringing back the original fonts but loading with display=swap for better performance */
         @import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Bebas+Neue&family=Press+Start+2P&display=swap');
-        
+
         * {
             margin: 0;
             padding: 0;
@@ -32,9 +34,8 @@
         body {
             margin: 0;
             padding: 0;
-            height: 100vh;
             min-height: 100vh;
-            max-height: 100vh;
+            height: 100vh;
             font-family: sans-serif;
             display: flex;
             flex-direction: column;
@@ -44,18 +45,14 @@
             color: #ffffff;
             line-height: 1.6;
             overflow: hidden;
-            overflow-x: hidden;
             position: relative;
             width: 100%;
-            max-width: 100vw;
         }
 
         html {
             overflow: hidden;
-            overflow-x: hidden;
             height: 100%;
             width: 100%;
-            max-width: 100vw;
         }
 
         /* Enhanced Background with tech texture - but optimized */
@@ -76,7 +73,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
+            background-image:
                 linear-gradient(rgba(0, 132, 255, 0.08) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 132, 255, 0.08) 1px, transparent 1px);
             background-size: 50px 50px;
@@ -90,6 +87,7 @@
                 opacity: 0.2;
                 background-size: 50px 50px;
             }
+
             100% {
                 opacity: 0.4;
                 background-size: 51px 51px;
@@ -140,6 +138,7 @@
             0% {
                 opacity: 0.4;
             }
+
             100% {
                 opacity: 0.9;
             }
@@ -154,6 +153,7 @@
             0% {
                 display: none;
             }
+
             100% {
                 display: none;
             }
@@ -191,7 +191,7 @@
             transform: perspective(1200px) rotateX(20deg);
             will-change: transform, opacity;
             line-height: 1.2;
-            text-shadow: 
+            text-shadow:
                 0 0 20px rgba(77, 171, 247, 0.7),
                 0 0 40px rgba(77, 171, 247, 0.5),
                 0 0 60px rgba(77, 171, 247, 0.3);
@@ -206,6 +206,7 @@
                 opacity: 0;
                 transform: perspective(1200px) rotateX(40deg) translateY(-30px);
             }
+
             100% {
                 opacity: 1;
                 transform: perspective(1200px) rotateX(20deg) translateY(0);
@@ -228,9 +229,17 @@
 
         /* Performance optimization for all devices */
         @media (prefers-reduced-motion: reduce) {
-            .tech-grid, .lens-flare, .particle, .energy-beam, 
-            .hero-element, .heading::before, .heading-accent::before,
-            .epic-button::before, .heading, .epic-button {
+
+            .tech-grid,
+            .lens-flare,
+            .particle,
+            .energy-beam,
+            .hero-element,
+            .heading::before,
+            .heading-accent::before,
+            .epic-button::before,
+            .heading,
+            .epic-button {
                 animation: none !important;
                 transition: none !important;
             }
@@ -265,24 +274,27 @@
 
         .epic-button {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(1.2rem, 4vw, 2rem);
+            font-size: clamp(1.3rem, 4.5vw, 2.2rem);
             text-transform: uppercase;
             letter-spacing: 2px;
-            padding: 0.8rem 2rem;
-            background: linear-gradient(45deg, #0a84ff, #0b5cb2);
+            padding: 1rem 2.8rem;
+            background: linear-gradient(135deg, rgba(10, 132, 255, 0.85), rgba(11, 92, 178, 0.95));
             color: white;
-            border: none;
-            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 22px;
             cursor: pointer;
             position: relative;
             overflow: hidden;
             text-decoration: none;
-            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease, box-shadow 0.3s ease;
             animation: buttonReveal 1.5s ease-out forwards;
             transform: perspective(800px) rotateX(10deg);
-            will-change: transform;
+            will-change: transform, background, box-shadow;
             min-width: 200px;
             text-align: center;
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.2), inset 0 -1px 1px rgba(0, 0, 0, 0.1);
         }
 
         @keyframes buttonReveal {
@@ -290,6 +302,7 @@
                 opacity: 0;
                 transform: perspective(800px) rotateX(30deg) translateY(30px);
             }
+
             100% {
                 opacity: 1;
                 transform: perspective(800px) rotateX(10deg) translateY(0);
@@ -298,12 +311,41 @@
 
         .epic-button:hover {
             transform: perspective(800px) rotateX(10deg) translateY(-3px) scale(1.03);
-            background: linear-gradient(45deg, #0b5cb2, #0a84ff);
+            background: linear-gradient(135deg, rgba(11, 92, 178, 0.95), rgba(10, 132, 255, 0.85));
+            border-color: rgba(255, 255, 255, 0.35);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15), inset 0 2px 2px rgba(255, 255, 255, 0.3), inset 0 -2px 2px rgba(0, 0, 0, 0.1);
         }
 
-        /* Remove button shimmer effect */
         .epic-button::before {
-            display: none;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .epic-button:hover::before {
+            left: 100%;
+        }
+
+        .epic-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, transparent 100%);
+            border-radius: 16px 16px 0 0;
+            pointer-events: none;
+        }
+
+        .epic-button:active {
+            transform: perspective(800px) rotateX(10deg) translateY(-1px) scale(1.01);
+            transition: all 0.1s ease;
         }
 
         /* Remove hero elements CSS */
@@ -323,6 +365,7 @@
             0% {
                 display: none;
             }
+
             100% {
                 display: none;
             }
@@ -333,7 +376,7 @@
             .heading-container {
                 margin-top: 4rem;
             }
-            
+
             .heading {
                 font-size: clamp(4rem, 10vw, 6rem);
                 letter-spacing: 3px;
@@ -347,7 +390,7 @@
                 display: block;
                 margin-bottom: 0.2em;
             }
-            
+
             .button-container {
                 margin-top: 1rem;
             }
@@ -357,7 +400,7 @@
             .heading-container {
                 margin-top: 5rem;
             }
-            
+
             .heading {
                 font-size: clamp(3.8rem, 9.5vw, 5.5rem);
                 letter-spacing: 2px;
@@ -375,13 +418,51 @@
             .buttons-row {
                 gap: 1rem;
             }
-            
+
             .epic-button {
                 padding: 0.8rem 2rem;
             }
-            
+
             .button-container {
                 margin-top: 1.5rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 0.5rem 0;
+                min-height: 100vh;
+                height: 100vh;
+            }
+
+            .heading-container {
+                margin-top: 0.5rem;
+            }
+
+            .heading {
+                font-size: clamp(2.8rem, 14vw, 4.5rem);
+                letter-spacing: 2px;
+            }
+
+            .subtitle {
+                margin-top: 0.3rem;
+                margin-bottom: 0.7rem;
+                font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+            }
+
+            .button-container {
+                margin-top: 0.5rem;
+            }
+
+            .buttons-row {
+                gap: 0.75rem;
+                padding: 0 0.5rem;
+            }
+
+            .epic-button {
+                padding: 0.75rem 1.8rem;
+                font-size: clamp(1.15rem, 4.5vw, 1.6rem);
+                border-radius: 18px;
             }
         }
 
@@ -390,7 +471,7 @@
                 width: 90%;
                 gap: 1.5rem;
             }
-            
+
             .epic-button {
                 flex: 0 1 calc(33.333% - 2rem);
                 margin-bottom: 1rem;
@@ -452,6 +533,7 @@
                 opacity: 0;
                 transform: perspective(800px) rotateX(30deg) translateY(20px);
             }
+
             100% {
                 opacity: 0.85;
                 transform: perspective(800px) rotateX(10deg) translateY(0);
@@ -465,21 +547,19 @@
                 margin-bottom: 1.5rem;
             }
         }
-        
+
         @media (max-width: 768px) {
             .subtitle {
                 margin-top: 0.2rem;
             }
         }
-      
+
         /* Liquid Glass Effect */
         .liquid-glass {
-            background: radial-gradient(
-                47.2% 50% at 50.39% 88.37%,
-                rgba(255, 255, 255, 0.12) 0%,
-                rgba(255, 255, 255, 0) 100%
-            ),
-            rgba(255, 255, 255, 0.04);
+            background: radial-gradient(47.2% 50% at 50.39% 88.37%,
+                    rgba(255, 255, 255, 0.12) 0%,
+                    rgba(255, 255, 255, 0) 100%),
+                rgba(255, 255, 255, 0.04);
             position: relative;
             transition: background 0.3s ease;
             border-radius: 14px;
@@ -493,12 +573,10 @@
         }
 
         .liquid-glass:hover {
-            background: radial-gradient(
-                47.2% 50% at 50.39% 88.37%,
-                rgba(255, 255, 255, 0.12) 0%,
-                rgba(255, 255, 255, 0) 100%
-            ),
-            rgba(255, 255, 255, 0.08);
+            background: radial-gradient(47.2% 50% at 50.39% 88.37%,
+                    rgba(255, 255, 255, 0.12) 0%,
+                    rgba(255, 255, 255, 0) 100%),
+                rgba(255, 255, 255, 0.08);
         }
 
         .liquid-glass::before {
@@ -509,13 +587,11 @@
             right: 0;
             bottom: 0;
             padding: 1px;
-            background: linear-gradient(
-                150deg,
-                rgba(255, 255, 255, 0.48) 16.73%,
-                rgba(255, 255, 255, 0.08) 30.2%,
-                rgba(255, 255, 255, 0.08) 68.2%,
-                rgba(255, 255, 255, 0.6) 81.89%
-            );
+            background: linear-gradient(150deg,
+                    rgba(255, 255, 255, 0.48) 16.73%,
+                    rgba(255, 255, 255, 0.08) 30.2%,
+                    rgba(255, 255, 255, 0.08) 68.2%,
+                    rgba(255, 255, 255, 0.6) 81.89%);
             border-radius: inherit;
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
@@ -525,12 +601,10 @@
 
         /* Login Button with Liquid Glass */
         #loginBtn {
-            background: radial-gradient(
-                47.2% 50% at 50.39% 88.37%,
-                rgba(255, 255, 255, 0.12) 0%,
-                rgba(255, 255, 255, 0) 100%
-            ),
-            rgba(255, 255, 255, 0.04);
+            background: radial-gradient(47.2% 50% at 50.39% 88.37%,
+                    rgba(255, 255, 255, 0.12) 0%,
+                    rgba(255, 255, 255, 0) 100%),
+                rgba(255, 255, 255, 0.04);
             position: relative;
             transition: background 0.3s ease;
             border-radius: 14px;
@@ -541,19 +615,17 @@
             font-weight: bold;
             font-size: 14px;
             color: rgba(255, 255, 255, 0.8);
-            border: none;
+            border: 1px solid rgba(255, 255, 255, 0.18);
             cursor: pointer;
             font-family: 'Bebas Neue', sans-serif;
             letter-spacing: 1px;
         }
 
         #loginBtn:hover {
-            background: radial-gradient(
-                47.2% 50% at 50.39% 88.37%,
-                rgba(255, 255, 255, 0.12) 0%,
-                rgba(255, 255, 255, 0) 100%
-            ),
-            rgba(255, 255, 255, 0.08);
+            background: radial-gradient(47.2% 50% at 50.39% 88.37%,
+                    rgba(255, 255, 255, 0.12) 0%,
+                    rgba(255, 255, 255, 0) 100%),
+                rgba(255, 255, 255, 0.08);
         }
 
         #loginBtn::before {
@@ -564,13 +636,11 @@
             right: 0;
             bottom: 0;
             padding: 1px;
-            background: linear-gradient(
-                150deg,
-                rgba(255, 255, 255, 0.48) 16.73%,
-                rgba(255, 255, 255, 0.08) 30.2%,
-                rgba(255, 255, 255, 0.08) 68.2%,
-                rgba(255, 255, 255, 0.6) 81.89%
-            );
+            background: linear-gradient(150deg,
+                    rgba(255, 255, 255, 0.48) 16.73%,
+                    rgba(255, 255, 255, 0.08) 30.2%,
+                    rgba(255, 255, 255, 0.08) 68.2%,
+                    rgba(255, 255, 255, 0.6) 81.89%);
             border-radius: inherit;
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
@@ -590,12 +660,10 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: radial-gradient(
-                47.2% 50% at 50.39% 88.37%,
-                rgba(255, 255, 255, 0.12) 0%,
-                rgba(255, 255, 255, 0) 100%
-            ),
-            rgba(255, 255, 255, 0.04);
+            background: radial-gradient(47.2% 50% at 50.39% 88.37%,
+                    rgba(255, 255, 255, 0.12) 0%,
+                    rgba(255, 255, 255, 0) 100%),
+                rgba(255, 255, 255, 0.04);
             color: white !important;
             display: flex;
             justify-content: center;
@@ -603,17 +671,15 @@
             cursor: pointer;
             transition: background 0.3s ease;
             position: relative;
-            border: none;
+            border: 1px solid rgba(255, 255, 255, 0.18);
             outline: none;
         }
 
         .notification-btn:hover {
-            background: radial-gradient(
-                47.2% 50% at 50.39% 88.37%,
-                rgba(255, 255, 255, 0.12) 0%,
-                rgba(255, 255, 255, 0) 100%
-            ),
-            rgba(255, 255, 255, 0.08);
+            background: radial-gradient(47.2% 50% at 50.39% 88.37%,
+                    rgba(255, 255, 255, 0.12) 0%,
+                    rgba(255, 255, 255, 0) 100%),
+                rgba(255, 255, 255, 0.08);
         }
 
         .notification-btn::before {
@@ -624,20 +690,18 @@
             right: 0;
             bottom: 0;
             padding: 1px;
-            background: linear-gradient(
-                150deg,
-                rgba(255, 255, 255, 0.48) 16.73%,
-                rgba(255, 255, 255, 0.08) 30.2%,
-                rgba(255, 255, 255, 0.08) 68.2%,
-                rgba(255, 255, 255, 0.6) 81.89%
-            );
+            background: linear-gradient(150deg,
+                    rgba(255, 255, 255, 0.48) 16.73%,
+                    rgba(255, 255, 255, 0.08) 30.2%,
+                    rgba(255, 255, 255, 0.08) 68.2%,
+                    rgba(255, 255, 255, 0.6) 81.89%);
             border-radius: inherit;
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: xor;
             pointer-events: none;
         }
-        
+
         .notification-btn i {
             color: white !important;
             font-size: 1.2rem;
@@ -647,7 +711,7 @@
             text-rendering: auto;
             -webkit-font-smoothing: antialiased;
         }
-        
+
         /* Profile Button Styles (Top Left) */
         .profile-container {
             position: fixed;
@@ -660,12 +724,10 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            background: radial-gradient(
-                47.2% 50% at 50.39% 88.37%,
-                rgba(255, 255, 255, 0.12) 0%,
-                rgba(255, 255, 255, 0) 100%
-            ),
-            rgba(255, 255, 255, 0.04);
+            background: radial-gradient(47.2% 50% at 50.39% 88.37%,
+                    rgba(255, 255, 255, 0.12) 0%,
+                    rgba(255, 255, 255, 0) 100%),
+                rgba(255, 255, 255, 0.04);
             color: white !important;
             display: flex;
             justify-content: center;
@@ -673,18 +735,16 @@
             cursor: pointer;
             transition: background 0.3s ease;
             position: relative;
-            border: none;
+            border: 1px solid rgba(255, 255, 255, 0.18);
             outline: none;
         }
 
         .profile-btn:hover {
             transform: scale(1.1);
-            background: radial-gradient(
-                47.2% 50% at 50.39% 88.37%,
-                rgba(255, 255, 255, 0.12) 0%,
-                rgba(255, 255, 255, 0) 100%
-            ),
-            rgba(255, 255, 255, 0.08);
+            background: radial-gradient(47.2% 50% at 50.39% 88.37%,
+                    rgba(255, 255, 255, 0.12) 0%,
+                    rgba(255, 255, 255, 0) 100%),
+                rgba(255, 255, 255, 0.08);
         }
 
         .profile-btn::before {
@@ -695,20 +755,18 @@
             right: 0;
             bottom: 0;
             padding: 1px;
-            background: linear-gradient(
-                150deg,
-                rgba(255, 255, 255, 0.48) 16.73%,
-                rgba(255, 255, 255, 0.08) 30.2%,
-                rgba(255, 255, 255, 0.08) 68.2%,
-                rgba(255, 255, 255, 0.6) 81.89%
-            );
+            background: linear-gradient(150deg,
+                    rgba(255, 255, 255, 0.48) 16.73%,
+                    rgba(255, 255, 255, 0.08) 30.2%,
+                    rgba(255, 255, 255, 0.08) 68.2%,
+                    rgba(255, 255, 255, 0.6) 81.89%);
             border-radius: inherit;
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: xor;
             pointer-events: none;
         }
-        
+
         .profile-btn i {
             color: white !important;
             font-size: 1.2rem;
@@ -720,7 +778,7 @@
             position: relative;
             z-index: 1;
         }
-        
+
         /* Profile Popup Styles */
         .profile-popup {
             position: fixed;
@@ -768,40 +826,40 @@
             max-height: 300px;
             overflow-y: auto;
         }
-        
+
         .profile-info-item {
             padding: 12px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .profile-info-item:last-child {
             border-bottom: none;
         }
-        
+
         .profile-info-label {
             font-size: 0.8rem;
             color: rgba(255, 255, 255, 0.6);
             margin-bottom: 5px;
         }
-        
+
         .profile-info-value {
             font-size: 1rem;
             color: #ffffff;
             font-weight: 500;
         }
-        
+
         .profile-login-prompt {
             text-align: center;
             padding: 30px 20px;
             color: rgba(255, 255, 255, 0.7);
         }
-        
+
         .profile-login-btn {
             margin-top: 15px;
             padding: 10px 20px;
             background: linear-gradient(135deg, #0a84ff, #0b5cb2);
             color: white;
-            border: none;
+            border: 1px solid rgba(255, 255, 255, 0.18);
             border-radius: 8px;
             cursor: pointer;
             font-family: 'Bebas Neue', sans-serif;
@@ -809,18 +867,18 @@
             letter-spacing: 1px;
             transition: all 0.3s ease;
         }
-        
+
         .profile-login-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(10, 132, 255, 0.4);
         }
-        
+
         .profile-logout-btn {
             margin-top: 15px;
             padding: 10px 20px;
             background: linear-gradient(135deg, #ff3d00, #d32f2f);
             color: white;
-            border: none;
+            border: 1px solid rgba(255, 255, 255, 0.18);
             border-radius: 8px;
             cursor: pointer;
             font-family: 'Bebas Neue', sans-serif;
@@ -829,7 +887,7 @@
             transition: all 0.3s ease;
             width: 100%;
         }
-        
+
         .profile-logout-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(255, 61, 0, 0.4);
@@ -861,9 +919,11 @@
             0% {
                 transform: scale(1);
             }
+
             50% {
                 transform: scale(1.2);
             }
+
             100% {
                 transform: scale(1);
             }
@@ -913,7 +973,7 @@
 
         .close-btn {
             background: none;
-            border: none;
+            border: 1px solid rgba(255, 255, 255, 0.18);
             color: rgba(255, 255, 255, 0.6);
             font-size: 1.2rem;
             cursor: pointer;
@@ -968,10 +1028,10 @@
             font-style: italic;
         }
 
-        
 
-        
-       
+
+
+
 
         /* Scrollbar styling */
         ::-webkit-scrollbar {
@@ -997,60 +1057,76 @@
                 top: 1rem;
                 right: 1rem;
             }
+
             .notification-btn {
-            width: 40px;
-            height: 40px;
-            font-size: 0.9rem;
+                width: 40px;
+                height: 40px;
+                font-size: 0.9rem;
             }
+
             .notification-btn i {
                 font-size: 1rem;
             }
+
             .notification-badge {
-            width: 16px;
-            height: 16px;
-            font-size: 8px;
+                width: 16px;
+                height: 16px;
+                font-size: 8px;
             }
+
             .notification-popup {
                 width: 280px;
                 right: 10px;
             }
+
             .profile-container {
                 top: 1rem;
                 left: 1rem;
             }
+
             .profile-btn {
                 width: 40px;
                 height: 40px;
             }
+
             .profile-btn i {
                 font-size: 1rem;
             }
+
             .profile-popup {
                 width: 280px;
                 left: 10px;
             }
+
             .notification-header {
                 padding: 10px;
-        }
+            }
+
             .notification-title {
                 font-size: 1.2rem;
             }
+
             .close-btn {
                 font-size: 1rem;
             }
+
             .notification-item {
                 padding: 10px 12px;
             }
+
             .notification-message {
                 font-size: 0.8rem;
             }
+
             .notification-time {
                 font-size: 0.6rem;
             }
+
             .no-notifications {
                 padding: 20px;
                 font-size: 0.8rem;
             }
+
             .notification-container {
                 top: 0.5rem;
                 right: 0.7rem;
@@ -1074,10 +1150,9 @@
             }
 
         }
-
-        
     </style>
 </head>
+
 <body>
     <!-- Developer credit -->
     <a href="/tetris/tetris.html" id="secretLink" class="developer-credit">By Pranav Anuvadia</a>
@@ -1086,14 +1161,14 @@
     <div id="userInfo"></div>
     <button id="loginBtn" type="button" onclick="authSystem.showLoginModal()">Login / Signup</button>
     <button id="logoutBtn" type="button" onclick="authSystem.logout()">Logout</button>
-    
+
     <!-- Profile Button (Top Left) -->
     <div class="profile-container">
         <button class="profile-btn" id="profileBtn" aria-label="View profile">
             <i class="fas fa-user"></i>
         </button>
     </div>
-    
+
     <!-- Profile Popup -->
     <div class="profile-popup" id="profilePopup">
         <div class="profile-header">
@@ -1116,7 +1191,7 @@
             </button>
         </div>
     </div>
-    
+
     <!-- Notification Button -->
     <div class="notification-container">
         <button class="notification-btn" id="notificationBtn" aria-label="View notifications">
@@ -1124,7 +1199,7 @@
             <div class="notification-badge" id="notificationBadge">0</div>
         </button>
     </div>
-    
+
     <!-- Notification Popup -->
     <div class="notification-popup" id="notificationPopup">
         <div class="notification-header">
@@ -1135,25 +1210,25 @@
             <!-- Notifications will be added here dynamically -->
         </div>
     </div>
-    
+
     <!-- Background elements -->
     <div class="bg-gradient"></div>
     <div class="tech-grid"></div>
     <div class="film-overlay"></div>
     <div class="lens-flare"></div>
-    
+
     <!-- Stars effect -->
     <div class="stars" id="stars"></div>
-    
+
     <!-- Energy beam effect -->
     <div class="energy-beam"></div>
-    
+
     <!-- Main content -->
     <div class="heading-container">
         <h1 class="heading" data-text="PROJECT EKLAVYA"><span>PROJECT</span> <span>EKLAVYA</span></h1>
         <div class="heading-accent"></div>
     </div>
-    
+
     <div class="button-container">
         <h2 class="subtitle">Select your semester</h2>
         <div class="buttons-row">
@@ -1165,13 +1240,13 @@
             <a href="/sem6/sem6.html" class="epic-button">SEMESTER VI</a>
         </div>
     </div>
-    
+
     <!-- Load Appwrite SDK from local file -->
     <script src="sem2/appwrite.min.js"></script>
     <script>
         // The IIFE version exports to window.Appwrite namespace
         // Verify it loaded correctly
-        (function() {
+        (function () {
             let checkCount = 0;
             function checkAppwrite() {
                 if (typeof window.Appwrite !== 'undefined' && window.Appwrite.Client) {
@@ -1195,17 +1270,17 @@
             // Dynamic title effect
             const heading = document.querySelector('.heading');
             heading.setAttribute('data-text', heading.textContent);
-            
+
             // Create stars with better performance
             const starsContainer = document.getElementById('stars');
-            
+
             // Detect if we're on mobile for performance optimization
             const isMobile = window.innerWidth < 768;
             const starCount = isMobile ? 65 : 120;
-            
+
             // Use document fragment for better performance
             const fragment = document.createDocumentFragment();
-            
+
             // Create regular stars
             for (let i = 0; i < starCount; i++) {
                 const star = document.createElement('div');
@@ -1221,31 +1296,31 @@
                 star.style.animationDelay = Math.random() * 5 + 's';
                 fragment.appendChild(star);
             }
-            
+
             starsContainer.appendChild(fragment);
 
-           
-  let clickCount = 0;
 
-  document.getElementById("secretLink").addEventListener("click", function (event) {
-    event.preventDefault(); // Stop the default link behavior
+            let clickCount = 0;
 
-    clickCount++;
+            document.getElementById("secretLink").addEventListener("click", function (event) {
+                event.preventDefault(); // Stop the default link behavior
 
-    if (clickCount === 7) {
-      window.location.href = "/tetris/tetris.html";
-    }
-  });
+                clickCount++;
+
+                if (clickCount === 7) {
+                    window.location.href = "/tetris/tetris.html";
+                }
+            });
 
 
-            
+
             // Notification System
             const notificationBtn = document.getElementById('notificationBtn');
             const notificationBadge = document.getElementById('notificationBadge');
             const notificationPopup = document.getElementById('notificationPopup');
             const notificationContent = document.getElementById('notificationContent');
             const closePopup = document.getElementById('closePopup');
-            
+
             // Define your notifications directly in the code
             let notifications = [
                 {
@@ -1253,25 +1328,25 @@
                     message: "Welcome to Project Eklavya! Start exploring now.",
                     //time: "1 week ago",
                     read: true
-                 }
+                }
                 ,
                 {
-                     id: 2,
+                    id: 2,
                     message: " 4th semester will be available soon.",
-                     read: false
+                    read: false
                 }
-                 
+
             ];
-            
+
             // Track unread notifications
             let unreadCount = notifications.filter(n => !n.read).length;
-            
+
             // Initialize notification system
             function initNotifications() {
                 updateBadge();
                 renderNotifications();
             }
-            
+
             // Update badge count
             function updateBadge() {
                 unreadCount = notifications.filter(n => !n.read).length;
@@ -1282,16 +1357,16 @@
                     notificationBadge.style.display = "none";
                 }
             }
-            
+
             // Render notifications in popup
             function renderNotifications() {
                 notificationContent.innerHTML = '';
-                
+
                 if (notifications.length === 0) {
                     notificationContent.innerHTML = '<div class="no-notifications">No messages here</div>';
                     return;
                 }
-                
+
                 notifications.forEach(notification => {
                     const notificationElement = document.createElement('div');
                     notificationElement.className = `notification-item ${notification.read ? '' : 'unread'}`;
@@ -1299,7 +1374,7 @@
                         <div class="notification-message">${notification.message}</div>
                         
                     `;//div class="notification-time">${notification.time}</div> you can add time if needed
-                    
+
                     // Mark as read when clicked
                     notificationElement.addEventListener('click', () => {
                         if (!notification.read) {
@@ -1308,71 +1383,72 @@
                             updateBadge();
                         }
                     });
-                    
+
                     notificationContent.appendChild(notificationElement);
                 });
             }
-            
+
             // Event listeners
             notificationBtn.addEventListener('click', () => {
                 notificationPopup.classList.toggle('active');
-                
+
                 // Mark all as read when opening
                 if (notificationPopup.classList.contains('active')) {
-                    notifications = notifications.map(n => ({...n, read: true}));
+                    notifications = notifications.map(n => ({ ...n, read: true }));
                     updateBadge();
                     renderNotifications();
                 }
             });
-            
+
             closePopup.addEventListener('click', () => {
                 notificationPopup.classList.remove('active');
             });
-            
+
             // Close popup when clicking outside
             document.addEventListener('click', (e) => {
-                if (!notificationPopup.contains(e.target) && 
+                if (!notificationPopup.contains(e.target) &&
                     !notificationBtn.contains(e.target) &&
                     notificationPopup.classList.contains('active')) {
                     notificationPopup.classList.remove('active');
                 }
             });
-            
+
             // Profile Button System
             const profileBtn = document.getElementById('profileBtn');
             const profilePopup = document.getElementById('profilePopup');
             const profileContent = document.getElementById('profileContent');
             const closeProfilePopup = document.getElementById('closeProfilePopup');
-            
+
             // Event listeners for profile button
             if (profileBtn) {
                 profileBtn.addEventListener('click', () => {
                     profilePopup.classList.toggle('active');
                 });
             }
-            
+
             if (closeProfilePopup) {
                 closeProfilePopup.addEventListener('click', () => {
                     profilePopup.classList.remove('active');
                 });
             }
-            
+
             // Close profile popup when clicking outside
             document.addEventListener('click', (e) => {
-                if (profilePopup && !profilePopup.contains(e.target) && 
+                if (profilePopup && !profilePopup.contains(e.target) &&
                     !profileBtn.contains(e.target) &&
                     profilePopup.classList.contains('active')) {
                     profilePopup.classList.remove('active');
                 }
             });
 
-            
+
 
             // Add a click event listener to the secret link
-            
+
             // Initialize
             initNotifications();
         });
     </script>
 </body>
+
 </html>
