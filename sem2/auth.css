@@ -19,22 +19,48 @@
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
 }
 
 .login-modal-content {
-    background: var(--card-bg);
-    border-radius: var(--border-radius);
+    background: radial-gradient(47.2% 50% at 50.39% 88.37%,
+            rgba(255, 255, 255, 0.12) 0%,
+            rgba(255, 255, 255, 0) 100%),
+        rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
     padding: 3rem;
     max-width: 450px;
     width: 90%;
     text-align: center;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-    border: 1px solid var(--card-border);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     position: relative;
     animation: slideUp 0.4s ease-out;
+}
+
+.login-modal-content::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 1px;
+    background: linear-gradient(150deg,
+            rgba(255, 255, 255, 0.48) 16.73%,
+            rgba(255, 255, 255, 0.08) 30.2%,
+            rgba(255, 255, 255, 0.08) 68.2%,
+            rgba(255, 255, 255, 0.6) 81.89%);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: xor;
+    pointer-events: none;
 }
 
 @keyframes slideUp {
@@ -42,6 +68,7 @@
         transform: translateY(50px);
         opacity: 0;
     }
+
     to {
         transform: translateY(0);
         opacity: 1;
@@ -165,12 +192,10 @@
     top: 1rem;
     right: 7rem;
     padding: 0.7rem 1.5rem;
-    background: radial-gradient(
-        47.2% 50% at 50.39% 88.37%,
-        rgba(255, 255, 255, 0.12) 0%,
-        rgba(255, 255, 255, 0) 100%
-    ),
-    rgba(255, 255, 255, 0.04);
+    background: radial-gradient(47.2% 50% at 50.39% 88.37%,
+            rgba(255, 255, 255, 0.12) 0%,
+            rgba(255, 255, 255, 0) 100%),
+        rgba(255, 255, 255, 0.04);
     color: rgba(255, 255, 255, 0.8);
     border: none;
     border-radius: 14px;
@@ -187,12 +212,10 @@
 
 #loginBtn:hover {
     transform: translateY(-3px);
-    background: radial-gradient(
-        47.2% 50% at 50.39% 88.37%,
-        rgba(255, 255, 255, 0.12) 0%,
-        rgba(255, 255, 255, 0) 100%
-    ),
-    rgba(255, 255, 255, 0.08);
+    background: radial-gradient(47.2% 50% at 50.39% 88.37%,
+            rgba(255, 255, 255, 0.12) 0%,
+            rgba(255, 255, 255, 0) 100%),
+        rgba(255, 255, 255, 0.08);
 }
 
 #loginBtn::before {
@@ -203,13 +226,11 @@
     right: 0;
     bottom: 0;
     padding: 1px;
-    background: linear-gradient(
-        150deg,
-        rgba(255, 255, 255, 0.48) 16.73%,
-        rgba(255, 255, 255, 0.08) 30.2%,
-        rgba(255, 255, 255, 0.08) 68.2%,
-        rgba(255, 255, 255, 0.6) 81.89%
-    );
+    background: linear-gradient(150deg,
+            rgba(255, 255, 255, 0.48) 16.73%,
+            rgba(255, 255, 255, 0.08) 30.2%,
+            rgba(255, 255, 255, 0.08) 68.2%,
+            rgba(255, 255, 255, 0.6) 81.89%);
     border-radius: inherit;
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
@@ -221,18 +242,18 @@
     .login-modal-content {
         padding: 2rem 1.5rem;
     }
-    
+
     .login-modal-content h2 {
         font-size: 1.5rem;
     }
-    
+
     #userInfo {
         top: 0.5rem;
         right: 5.5rem;
         font-size: 0.8rem;
         padding: 0.5rem 1rem;
     }
-    
+
     #logoutBtn {
         top: 3.5rem;
         right: 5.5rem;
@@ -247,4 +268,3 @@
         font-size: 1rem;
     }
 }
-

@@ -786,10 +786,13 @@
             left: 20px;
             width: 300px;
             max-height: 400px;
-            background: rgba(16, 23, 41, 0.95);
+            background: radial-gradient(47.2% 50% at 50.39% 88.37%,
+                    rgba(255, 255, 255, 0.12) 0%,
+                    rgba(255, 255, 255, 0) 100%),
+                rgba(255, 255, 255, 0.04);
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 132, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.18);
             -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             overflow: hidden;
@@ -798,6 +801,26 @@
             visibility: hidden;
             transition: all 0.3s ease;
             z-index: 1001;
+        }
+
+        .profile-popup::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 1px;
+            background: linear-gradient(150deg,
+                    rgba(255, 255, 255, 0.48) 16.73%,
+                    rgba(255, 255, 255, 0.08) 30.2%,
+                    rgba(255, 255, 255, 0.08) 68.2%,
+                    rgba(255, 255, 255, 0.6) 81.89%);
+            border-radius: inherit;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: xor;
+            pointer-events: none;
         }
 
         .profile-popup.active {
@@ -936,10 +959,13 @@
             right: 20px;
             width: 350px;
             max-height: 500px;
-            background: rgba(16, 23, 41, 0.95);
+            background: radial-gradient(47.2% 50% at 50.39% 88.37%,
+                    rgba(255, 255, 255, 0.12) 0%,
+                    rgba(255, 255, 255, 0) 100%),
+                rgba(255, 255, 255, 0.04);
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 132, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.18);
             -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             overflow: hidden;
@@ -948,6 +974,26 @@
             visibility: hidden;
             transition: all 0.3s ease;
             z-index: 1001;
+        }
+
+        .notification-popup::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 1px;
+            background: linear-gradient(150deg,
+                    rgba(255, 255, 255, 0.48) 16.73%,
+                    rgba(255, 255, 255, 0.08) 30.2%,
+                    rgba(255, 255, 255, 0.08) 68.2%,
+                    rgba(255, 255, 255, 0.6) 81.89%);
+            border-radius: inherit;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: xor;
+            pointer-events: none;
         }
 
         .notification-popup.active {
@@ -1011,9 +1057,11 @@
         }
 
         .notification-message {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            font-weight: 600;
             margin-bottom: 5px;
-            color: rgba(255, 255, 255, 0.9);
+            color: #ffffff;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         .notification-time {
@@ -1027,11 +1075,6 @@
             color: rgba(255, 255, 255, 0.5);
             font-style: italic;
         }
-
-
-
-
-
 
         /* Scrollbar styling */
         ::-webkit-scrollbar {

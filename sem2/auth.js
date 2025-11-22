@@ -242,7 +242,11 @@ function setupButtonInterception() {
             target.id === 'loginBtn' || 
             target.id === 'logoutBtn' ||
             target.id === 'btn-siwg' ||
-            target.closest('#loginModal')) {
+            target.closest('#loginModal') ||
+            target.closest('#profileBtn') ||
+            target.closest('#notificationBtn') ||
+            target.closest('#profilePopup') ||
+            target.closest('#notificationPopup')) {
             return;
         }
         
