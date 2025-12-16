@@ -1,14 +1,23 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semester I - Project Eklavya</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Semester IV - Project Eklavya</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" type="image/png" href="/files/logo/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800&family=Press+Start+2P&family=Russo+One&display=swap"
+        rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Bebas+Neue&family=Press+Start+2P&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
         * {
             margin: 0;
             padding: 0;
@@ -17,12 +26,14 @@
 
         :root {
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --primary-color: #0a84ff;
-            --accent-color: #ff3d00;
+            --primary-color: #26c485;
+            --accent-color: #009e60;
             --dark-bg: #0a0e17;
             --card-bg: rgba(16, 23, 41, 0.85);
-            --card-border: rgba(0, 132, 255, 0.3);
-            --text-glow: 0 0 10px rgba(0, 132, 255, 0.8);
+            --card-border: rgba(38, 196, 133, 0.3);
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --text-glow: 0 0 10px rgba(38, 196, 133, 0.8);
+            --border-radius: 8px;
         }
 
         body {
@@ -30,16 +41,16 @@
             padding: 0;
             min-height: 100vh;
             max-height: 100vh;
-            font-family: sans-serif;
+            font-family: 'Poppins', sans-serif;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
             background-color: var(--dark-bg);
             color: #ffffff;
             line-height: 1.6;
             overflow: hidden;
             position: relative;
+            justify-content: center;
+            align-items: center;
         }
 
         html {
@@ -47,6 +58,7 @@
             height: 100%;
         }
 
+        /* Enhanced Background with tech texture */
         .bg-gradient {
             position: fixed;
             top: 0;
@@ -57,29 +69,45 @@
             z-index: -2;
         }
 
+        /* Tech grid lines */
         .tech-grid {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 132, 255, 0.08) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 132, 255, 0.08) 1px, transparent 1px);
+            background-image:
+                linear-gradient(rgba(0, 132, 255, 0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 132, 255, 0.15) 1px, transparent 1px);
             background-size: 50px 50px;
             z-index: -1;
-            animation: gridPulse 15s infinite alternate ease-in-out;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            animation: gridPulse 10s infinite alternate ease-in-out;
         }
 
+        @keyframes gridPulse {
+            0% {
+                opacity: 0.3;
+                background-size: 50px 50px;
+            }
+
+            100% {
+                opacity: 0.6;
+                background-size: 52px 52px;
+            }
+        }
+
+        /* Cinematic overlay with film texture */
         .film-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
             z-index: -1;
-            opacity: 0.3;
+            opacity: 0.6;
             pointer-events: none;
         }
 
@@ -89,114 +117,68 @@
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
             z-index: -1;
+            overflow: hidden;
         }
 
         .star {
             position: absolute;
-            width: 2px;
-            height: 2px;
             background: #fff;
             border-radius: 50%;
+            width: 2px;
+            height: 2px;
             opacity: 0.7;
-            animation: starGlow 4s infinite alternate;
+            animation: twinkle 4s infinite ease-in-out;
         }
 
-        @keyframes starGlow {
-            0% { opacity: 0.4; }
-            100% { opacity: 0.9; }
-        }
+        @keyframes twinkle {
 
-        @keyframes gridPulse {
-            0% {
-                opacity: 0.2;
-                background-size: 50px 50px;
-            }
+            0%,
             100% {
-                opacity: 0.4;
-                background-size: 51px 51px;
+                opacity: 0.7;
+                transform: scale(1);
             }
-        }
 
-        .message {
-            font-size: clamp(2rem, 6vw, 3.5rem);
-            font-family: 'Press Start 2P', cursive;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: #ff3d00;
-            text-align: center;
-            margin: 0;
-            padding: 0 1rem;
-            animation: messageReveal 2s ease-out forwards;
-            transform: perspective(1200px) rotateX(20deg);
-            line-height: 1.4;
-            text-shadow: 
-                0 0 20px rgba(255, 61, 0, 0.7),
-                0 0 40px rgba(255, 61, 0, 0.5),
-                0 0 60px rgba(255, 61, 0, 0.3);
-        }
-
-        @keyframes messageReveal {
-            0% {
-                opacity: 0;
-                transform: perspective(1200px) rotateX(40deg) translateY(-30px);
-            }
-            100% {
+            50% {
                 opacity: 1;
-                transform: perspective(1200px) rotateX(20deg) translateY(0);
+                transform: scale(1.2);
             }
         }
 
-        .back-button {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            padding: 0.8rem 2rem;
-            background: linear-gradient(45deg, #ff3d00, #b71c1c);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            text-decoration: none;
-            margin-top: 3rem;
-            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-            animation: buttonReveal 1.5s ease-out forwards;
-            transform: perspective(800px) rotateX(10deg);
+        .lens-flare {
+            position: fixed;
+            top: -150px;
+            right: -150px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle at center, rgba(0, 132, 255, 0.5) 0%, rgba(0, 132, 255, 0.2) 20%, transparent 70%);
+            z-index: -1;
+            opacity: 0.7;
+            filter: blur(30px);
+            animation: flareMove 20s infinite alternate ease-in-out;
         }
 
-        .back-button:hover {
-            transform: perspective(800px) rotateX(10deg) translateY(-3px) scale(1.03);
-            background: linear-gradient(45deg, #b71c1c, #ff3d00);
-        }
-
-        @keyframes buttonReveal {
+        @keyframes flareMove {
             0% {
-                opacity: 0;
-                transform: perspective(800px) rotateX(30deg) translateY(30px);
+                transform: translate(0, 0);
+                opacity: 0.3;
             }
+
             100% {
-                opacity: 1;
-                transform: perspective(800px) rotateX(10deg) translateY(0);
+                transform: translate(-100px, 100px);
+                opacity: 0.5;
             }
         }
 
-        @media (max-width: 768px) {
-            .message {
-                font-size: clamp(3rem, 8vw, 5rem);
-                padding: 0 1.5rem;
+        @media (prefers-reduced-motion) {
+
+            .star,
+            .tech-grid,
+            .lens-flare {
+                animation: none !important;
             }
         }
 
-        @media (max-width: 480px) {
-            .message {
-                font-size: clamp(2.5rem, 7vw, 4rem);
-                padding: 0 1rem;
-            }
-        }
-
-        /* Developer credit */
         .developer-credit {
             position: fixed;
             bottom: 20px;
@@ -205,16 +187,16 @@
             text-align: center;
             font-family: 'Press Start 2P', cursive;
             font-size: clamp(0.6rem, 1.5vw, 0.8rem);
-            color: #ff3d00;
+            color: #ef4444;
             text-transform: uppercase;
             letter-spacing: 2px;
             opacity: 0.7;
-            text-shadow: 0 0 10px rgba(255, 61, 0, 0.4);
+            text-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
             z-index: 1000;
             white-space: nowrap;
             transform: perspective(1000px) rotateX(5deg);
             animation: creditReveal 1s ease-out forwards;
-            animation-delay: 2s;
+            animation-delay: 1s;
             line-height: 1.4;
         }
 
@@ -223,41 +205,524 @@
                 opacity: 0;
                 transform: perspective(1000px) rotateX(5deg) translateY(20px);
             }
+
             to {
                 opacity: 0.7;
                 transform: perspective(1000px) rotateX(5deg) translateY(0);
             }
         }
 
-        @media (max-height: 500px) {
-            .developer-credit {
-                bottom: 5px;
+        /* Refactored Styles */
+        .app-container {
+            background-color: var(--dark-bg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .app-container::selection {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .back-nav {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #d4d4d4;
+            transition: all 300ms;
+            z-index: 50;
+            text-decoration: none;
+        }
+
+        .back-nav:hover {
+            border-color: rgba(239, 68, 68, 0.5);
+            color: white;
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+
+        .back-nav svg {
+            transition: transform 300ms;
+        }
+
+        .back-nav:hover svg {
+            transform: translateX(-0.25rem);
+        }
+
+        .card-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 32rem;
+            /* max-w-lg */
+            margin: 2rem auto;
+            padding: 0 1rem;
+            z-index: 10;
+        }
+
+        .card-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 80%;
+            background-color: rgba(220, 38, 38, 0.2);
+            /* ares-600/20 */
+            filter: blur(100px);
+            border-radius: 9999px;
+            z-index: -10;
+            pointer-events: none;
+        }
+
+        .main-card {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(64px);
+            /* blur-3xl */
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1.5rem;
+            /* rounded-3xl */
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            /* shadow-2xl */
+            overflow: hidden;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            /* ring-1 */
+        }
+
+        .card-header {
+            padding: 2.5rem 2rem 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-sheen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(239, 68, 68, 0.5), transparent);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .semester-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            margin-bottom: 1rem;
+            border-radius: 9999px;
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            /* ares-400 */
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.1);
+        }
+
+        .card-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.025em;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 10px 8px rgba(0, 0, 0, 0.04), 0 4px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (min-width: 640px) {
+            .card-title {
+                font-size: 3rem;
             }
         }
+
+        .highlight-text {
+            color: #ef4444;
+            /* ares-500 */
+        }
+
+        .card-subtitle {
+            color: #a3a3a3;
+            /* neutral-400 */
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.025em;
+        }
+
+        .nav-list {
+            padding: 0 1rem 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .nav-link {
+            display: block;
+            width: 100%;
+            text-decoration: none;
+            outline: none;
+        }
+
+        .nav-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            /* rounded-2xl */
+            transition: all 300ms cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .nav-link:hover .nav-item {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: rgba(239, 68, 68, 0.3);
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-link:focus-visible .nav-item {
+            box-shadow: 0 0 0 2px #ef4444;
+        }
+
+        .nav-icon {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.75rem;
+            /* rounded-xl */
+            background-color: #18181b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #a3a3a3;
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+            transition: all 300ms;
+        }
+
+        .nav-link:hover .nav-icon {
+            background-color: #ef4444;
+            border-color: #f87171;
+            color: white;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+            transform: rotate(3deg);
+        }
+
+        .nav-content {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-title {
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            line-height: 1.25;
+            transition: color 300ms;
+        }
+
+        .nav-desc {
+            color: #737373;
+            /* neutral-500 */
+            font-size: 0.75rem;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 0.25rem;
+            transition: color 300ms;
+        }
+
+        .nav-link:hover .nav-desc {
+            color: #d4d4d4;
+        }
+
+        .nav-chevron {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #525252;
+            /* neutral-600 */
+            transition: all 300ms;
+        }
+
+        .nav-link:hover .nav-chevron {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(0.25rem);
+        }
     </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ares: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            200: '#fecaca',
+                            300: '#fca5a5',
+                            400: '#f87171',
+                            500: '#ef4444', // Primary Red
+                            600: '#dc2626', // Darker Red
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                            900: '#7f1d1d',
+                            950: '#450a0a',
+                        },
+                        dark: {
+                            bg: '#0a0e17',
+                            card: 'rgba(16, 23, 41, 0.85)',
+                        }
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                        russo: ['"Russo One"', 'sans-serif'],
+                        bebas: ['"Bebas Neue"', 'sans-serif'],
+                        retro: ['"Press Start 2P"', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
+
+<body class="app-container">
+
+    <!-- Back Button - Minimalist -->
+    <a href="/index.html" class="back-nav group">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Back
+    </a>
+
     <!-- Background elements -->
     <div class="bg-gradient"></div>
     <div class="tech-grid"></div>
     <div class="film-overlay"></div>
-    
+
     <!-- Stars effect -->
     <div class="stars" id="stars"></div>
-    
-    <!-- Main content -->
-    <h1 class="message">Coming Soon</h1>
-    <a href="/index.html" class="back-button">Go Back</a>
+
+    <!-- MenuCard Component -->
+    <div class="card-wrapper">
+
+        <!-- Background Glow for Depth -->
+        <div class="card-glow"></div>
+
+        <!-- Main Card -->
+        <div class="main-card">
+
+            <!-- Header Area -->
+            <div class="card-header">
+                <!-- Subtle top sheen -->
+                <div class="header-sheen"></div>
+
+                <div class="header-content">
+                    <span class="semester-badge">
+                        Fall Semester 2025
+                    </span>
+
+                    <h1 class="card-title">
+                        Semester <span class="highlight-text">IV</span>
+                    </h1>
+                </div>
+            </div>
+
+            <!-- List Container -->
+            <div class="nav-list">
+
+                <!-- NavButton 0: Notes -->
+                <a href="#" class="nav-link group">
+                    <div class="nav-item" style="animation-delay: 0ms">
+                        <!-- Icon Container -->
+                        <div class="nav-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                strokeLinejoin="round">
+                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                            </svg>
+                        </div>
+
+                        <!-- Text Content -->
+                        <div class="nav-content">
+                            <span class="nav-title">
+                                Notes
+                            </span>
+                            <!-- <span class="nav-desc">
+                                Lectures, PDFs & Summaries
+                            </span> -->
+                        </div>
+
+                        <!-- Chevron Arrow -->
+                        <div class="nav-chevron">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="m9 18 6-6-6-6" />
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- NavButton 1: Experiments -->
+                <a href="#" class="nav-link group">
+                    <div class="nav-item" style="animation-delay: 100ms">
+                        <!-- Icon Container -->
+                        <div class="nav-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                strokeLinejoin="round">
+                                <path d="M10 2v7.31" />
+                                <path d="M14 2v7.31" />
+                                <path d="M8.5 2h7" />
+                                <path d="M14 9.3a6.5 6.5 0 1 1-4 0" />
+                                <path d="M5.52 16h12.96" />
+                            </svg>
+                        </div>
+
+                        <!-- Text Content -->
+                        <div class="nav-content">
+                            <span class="nav-title">
+                                Experiments
+                            </span>
+                            <!-- <span class="nav-desc">
+                                Lab Manuals & Practical Records
+                            </span> -->
+                        </div>
+
+                        <!-- Chevron Arrow -->
+                        <div class="nav-chevron">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="m9 18 6-6-6-6" />
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- NavButton 2: Question Banks -->
+                <a href="#" class="nav-link group">
+                    <div class="nav-item" style="animation-delay: 200ms">
+                        <!-- Icon Container -->
+                        <div class="nav-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                strokeLinejoin="round">
+                                <path d="M21 8v13H3V8" />
+                                <path d="M1 3h22v5H1z" />
+                                <path d="M10 12h4" />
+                            </svg>
+                        </div>
+
+                        <!-- Text Content -->
+                        <div class="nav-content">
+                            <span class="nav-title">
+                                Question Banks
+                            </span>
+                            <!-- <span class="nav-desc">
+                                Previous Years & Mock Papers
+                            </span> -->
+                        </div>
+
+                        <!-- Chevron Arrow -->
+                        <div class="nav-chevron">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="m9 18 6-6-6-6" />
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- NavButton 3: Resources -->
+                <a href="#" class="nav-link group">
+                    <div class="nav-item" style="animation-delay: 300ms">
+                        <!-- Icon Container -->
+                        <div class="nav-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                strokeLinejoin="round">
+                                <rect width="7" height="7" x="3" y="3" rx="1" />
+                                <rect width="7" height="7" x="14" y="3" rx="1" />
+                                <rect width="7" height="7" x="14" y="14" rx="1" />
+                                <rect width="7" height="7" x="3" y="14" rx="1" />
+                            </svg>
+                        </div>
+
+                        <!-- Text Content -->
+                        <div class="nav-content">
+                            <span class="nav-title">
+                                Other Resources
+                            </span>
+                            <!-- <span class="nav-desc">
+                                Tools, Software & Extras
+                            </span> -->
+                        </div>
+
+                        <!-- Chevron Arrow -->
+                        <div class="nav-chevron">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="m9 18 6-6-6-6" />
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </div>
 
     <div class="developer-credit">Developed by Pranav A</div>
 
     <script>
+        // No custom JS needed as background animations are removed
+        console.log("Sem 4 page loaded");
+
         document.addEventListener('DOMContentLoaded', () => {
             // Create stars
             const starsContainer = document.getElementById('stars');
             const isMobile = window.innerWidth < 768;
             const isLandscape = window.innerWidth < 768 && window.innerHeight < window.innerWidth;
-            
+
             // Adjust star count based on orientation
             let starCount;
             if (isMobile) {
@@ -265,9 +730,9 @@
             } else {
                 starCount = 120;
             }
-            
+
             const fragment = document.createDocumentFragment();
-            
+
             for (let i = 0; i < starCount; i++) {
                 const star = document.createElement('div');
                 star.classList.add('star');
@@ -280,20 +745,20 @@
                 star.style.animationDelay = Math.random() * 5 + 's';
                 fragment.appendChild(star);
             }
-            
+
             starsContainer.appendChild(fragment);
-            
+
             // Handle orientation changes
             window.addEventListener('resize', () => {
                 const newIsLandscape = window.innerWidth < 768 && window.innerHeight < window.innerWidth;
                 if (newIsLandscape !== isLandscape) {
                     // Clear existing stars
                     starsContainer.innerHTML = '';
-                    
+
                     // Recreate stars with new count
                     const newStarCount = window.innerWidth < 768 ? (newIsLandscape ? 100 : 65) : 120;
                     const newFragment = document.createDocumentFragment();
-                    
+
                     for (let i = 0; i < newStarCount; i++) {
                         const star = document.createElement('div');
                         star.classList.add('star');
@@ -306,11 +771,12 @@
                         star.style.animationDelay = Math.random() * 5 + 's';
                         newFragment.appendChild(star);
                     }
-                    
+
                     starsContainer.appendChild(newFragment);
                 }
             });
         });
     </script>
 </body>
+
 </html>
