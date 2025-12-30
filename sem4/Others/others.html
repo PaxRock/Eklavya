@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Other Resources - Semester IV</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="/files/logo/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800&family=Press+Start+2P&family=Russo+One&display=swap"
+        rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --primary-color: #ef4444;
+            --accent-color: #dc2626;
+            --dark-bg: #0a0e17;
+            --card-bg: rgba(16, 23, 41, 0.85);
+            --border-radius: 8px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Enhanced Background with tech texture */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000000 0%, #0a0e17 40%, #101729 70%, #162040 100%);
+            z-index: -2;
+        }
+
+        /* Tech grid lines */
+        .tech-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(239, 68, 68, 0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(239, 68, 68, 0.15) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            animation: gridPulse 10s infinite alternate ease-in-out;
+        }
+
+        @keyframes gridPulse {
+            0% {
+                opacity: 0.2;
+                background-size: 50px 50px;
+            }
+
+            100% {
+                opacity: 0.4;
+                background-size: 52px 52px;
+            }
+        }
+
+        /* Cinematic overlay */
+        .film-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
+            z-index: -1;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            width: 2px;
+            height: 2px;
+            opacity: 0.7;
+            animation: twinkle 4s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.7;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Refactored Styles */
+        .app-container {
+            background-color: var(--dark-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .back-nav {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #d4d4d4;
+            transition: all 300ms;
+            z-index: 50;
+            text-decoration: none;
+        }
+
+        .back-nav:hover {
+            border-color: rgba(239, 68, 68, 0.5);
+            color: white;
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+
+        .back-nav svg {
+            transition: transform 300ms;
+        }
+
+        .back-nav:hover svg {
+            transform: translateX(-0.25rem);
+        }
+
+        .card-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 32rem;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            z-index: 10;
+        }
+
+        .card-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 80%;
+            background-color: rgba(220, 38, 38, 0.2);
+            filter: blur(100px);
+            border-radius: 9999px;
+            z-index: -10;
+            pointer-events: none;
+        }
+
+        .main-card {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(64px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+
+        .card-header {
+            padding: 2.5rem 2rem 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-sheen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(239, 68, 68, 0.5), transparent);
+        }
+
+        .semester-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            margin-bottom: 1rem;
+            border-radius: 9999px;
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.1);
+        }
+
+        .card-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.025em;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 10px 8px rgba(0, 0, 0, 0.04), 0 4px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight-text {
+            color: #f4444e;
+        }
+
+        /* Navigation List */
+        .nav-list {
+            padding: 0 1rem 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .nav-link {
+            display: block;
+            width: 100%;
+            text-decoration: none;
+            outline: none;
+        }
+
+        .nav-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            transition: all 300ms cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .nav-link:hover .nav-item {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: rgba(239, 68, 68, 0.3);
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-icon {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.75rem;
+            background-color: #18181b;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #a3a3a3;
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+            transition: all 300ms;
+        }
+
+        .nav-link:hover .nav-icon {
+            background-color: #ef4444;
+            border-color: #f87171;
+            color: white;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+            transform: rotate(3deg);
+        }
+
+        .nav-content {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-title {
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            line-height: 1.25;
+            transition: color 300ms;
+        }
+
+        .nav-chevron {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #525252;
+            transition: all 300ms;
+        }
+
+        .nav-link:hover .nav-chevron {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(0.25rem);
+        }
+
+        .developer-credit {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: clamp(0.6rem, 1.5vw, 0.8rem);
+            color: #ef4444;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.7;
+            text-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+            z-index: 1000;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ares: { 500: '#ef4444', 600: '#dc2626' }
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                        bebas: ['"Bebas Neue"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="app-container">
+
+    <!-- Back Button -->
+    <a href="/sem4/sem4.html" class="back-nav group">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Back
+    </a>
+
+    <!-- Background elements -->
+    <div class="bg-gradient"></div>
+    <div class="tech-grid"></div>
+    <div class="film-overlay"></div>
+    <div class="stars" id="stars"></div>
+
+    <!-- Main Card -->
+    <div class="card-wrapper">
+        <div class="card-glow"></div>
+        <div class="main-card">
+            <div class="card-header">
+                <div class="header-sheen"></div>
+                <div class="header-content">
+                    <span class="semester-badge">Semester IV</span>
+                    <h1 class="card-title">
+                        OTHER <span class="highlight-text">RESOURCES</span>
+                    </h1>
+                </div>
+            </div>
+
+            <!-- Navigation List -->
+            <div class="nav-list">
+
+                <!-- Curriculum -->
+                <a href="resources/curriculum.html" class="nav-link">
+                    <div class="nav-item">
+                        <div class="nav-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                strokeLinejoin="round">
+                                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <line x1="10" y1="9" x2="8" y2="9"/>
+                            </svg>
+                        </div>
+
+                        <div class="nav-content">
+                            <span class="nav-title">Curriculum</span>
+                        </div>
+
+                        <div class="nav-chevron">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="m9 18 6-6-6-6" />
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Time Table -->
+                <a href="resources/timetable.html" class="nav-link">
+                    <div class="nav-item">
+                        <div class="nav-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                strokeLinejoin="round">
+                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                                <line x1="16" x2="16" y1="2" y2="6"/>
+                                <line x1="8" x2="8" y1="2" y2="6"/>
+                                <line x1="3" x2="21" y1="10" y2="10"/>
+                            </svg>
+                        </div>
+
+                        <div class="nav-content">
+                            <span class="nav-title">Time Table</span>
+                        </div>
+
+                        <div class="nav-chevron">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="m9 18 6-6-6-6" />
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Previous Year Papers -->
+                <a href="resources/pyp.html" class="nav-link">
+                    <div class="nav-item">
+                        <div class="nav-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                strokeLinejoin="round">
+                                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+                                <path d="M9 10h6"/>
+                                <path d="M9 14h6"/>
+                            </svg>
+                        </div>
+
+                        <div class="nav-content">
+                            <span class="nav-title">Previous Year Papers</span>
+                        </div>
+
+                        <div class="nav-chevron">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="m9 18 6-6-6-6" />
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="developer-credit">Developed by Pranav A</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Star animation logic
+            const starsContainer = document.getElementById('stars');
+            const isMobile = window.innerWidth < 768;
+            const starCount = isMobile ? 65 : 120;
+            const fragment = document.createDocumentFragment();
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                const size = 1 + Math.random() * 2;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.opacity = 0.3 + Math.random() * 0.7;
+                star.style.animationDelay = Math.random() * 5 + 's';
+                fragment.appendChild(star);
+            }
+            starsContainer.appendChild(fragment);
+        });
+    </script>
+</body>
+
+</html>

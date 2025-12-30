@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Question Banks - Semester IV</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="/files/logo/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800&family=Press+Start+2P&family=Russo+One&display=swap"
+        rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --primary-color: #ef4444;
+            --accent-color: #dc2626;
+            --dark-bg: #0a0e17;
+            --card-bg: rgba(16, 23, 41, 0.85);
+            --border-radius: 8px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Enhanced Background with tech texture */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000000 0%, #0a0e17 40%, #101729 70%, #162040 100%);
+            z-index: -2;
+        }
+
+        /* Tech grid lines */
+        .tech-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(239, 68, 68, 0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(239, 68, 68, 0.15) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            animation: gridPulse 10s infinite alternate ease-in-out;
+        }
+
+        @keyframes gridPulse {
+            0% {
+                opacity: 0.2;
+                background-size: 50px 50px;
+            }
+
+            100% {
+                opacity: 0.4;
+                background-size: 52px 52px;
+            }
+        }
+
+        /* Cinematic overlay */
+        .film-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
+            z-index: -1;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            width: 2px;
+            height: 2px;
+            opacity: 0.7;
+            animation: twinkle 4s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.7;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Refactored Styles */
+        .app-container {
+            background-color: var(--dark-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .back-nav {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #d4d4d4;
+            transition: all 300ms;
+            z-index: 50;
+            text-decoration: none;
+        }
+
+        .back-nav:hover {
+            border-color: rgba(239, 68, 68, 0.5);
+            color: white;
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+
+        .back-nav svg {
+            transition: transform 300ms;
+        }
+
+        .back-nav:hover svg {
+            transform: translateX(-0.25rem);
+        }
+
+        .card-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 50rem;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            z-index: 10;
+        }
+
+        .card-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 80%;
+            background-color: rgba(220, 38, 38, 0.2);
+            filter: blur(100px);
+            border-radius: 9999px;
+            z-index: -10;
+            pointer-events: none;
+        }
+
+        .main-card {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(64px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+
+        .card-header {
+            padding: 2.5rem 2rem 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-sheen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(239, 68, 68, 0.5), transparent);
+        }
+
+        .semester-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            margin-bottom: 1rem;
+            border-radius: 9999px;
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.1);
+        }
+
+        .card-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.025em;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 10px 8px rgba(0, 0, 0, 0.04), 0 4px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight-text {
+            color: #f4444e;
+        }
+
+        /* Grid specific styles - 2x2 layout */
+        .buttons-grid {
+            padding: 1rem 2rem 3rem;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .button-link {
+            text-decoration: none;
+            display: block;
+        }
+
+        .subject-button {
+            width: 100%;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            /* Nav-item base styles */
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+
+            /* Text styles */
+            color: white;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 300ms cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        /* Hover effects */
+        .subject-button:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: rgba(239, 68, 68, 0.3);
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            color: #ef4444;
+        }
+
+        .developer-credit {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: clamp(0.6rem, 1.5vw, 0.8rem);
+            color: #ef4444;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.7;
+            text-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
+            z-index: 1000;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ares: { 500: '#ef4444', 600: '#dc2626' }
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                        bebas: ['"Bebas Neue"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="app-container">
+
+    <!-- Back Button -->
+    <a href="/sem4/sem4.html" class="back-nav group">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Back
+    </a>
+
+    <!-- Background elements -->
+    <div class="bg-gradient"></div>
+    <div class="tech-grid"></div>
+    <div class="film-overlay"></div>
+    <div class="stars" id="stars"></div>
+
+    <!-- Main Card -->
+    <div class="card-wrapper">
+        <div class="card-glow"></div>
+        <div class="main-card">
+            <div class="card-header">
+                <div class="header-sheen"></div>
+                <div class="header-content">
+                    <span class="semester-badge">Semester IV</span>
+                    <h1 class="card-title">
+                        QUESTION <span class="highlight-text">BANKS</span>
+                    </h1>
+                </div>
+            </div>
+
+            <!-- Subject Grid - 2x2 for 4 subjects -->
+            <div class="buttons-grid">
+                <a href="osy.html" class="button-link">
+                    <button class="subject-button">
+                        OSY
+                    </button>
+                </a>
+                <a href="csy.html" class="button-link">
+                    <button class="subject-button">
+                        CSY
+                    </button>
+                </a>
+                <a href="iot.html" class="button-link">
+                    <button class="subject-button">
+                        IOT
+                    </button>
+                </a>
+                <a href="nwa.html" class="button-link">
+                    <button class="subject-button">
+                        NWA
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="developer-credit">Developed by Pranav A</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Star animation logic
+            const starsContainer = document.getElementById('stars');
+            const isMobile = window.innerWidth < 768;
+            const starCount = isMobile ? 65 : 120;
+            const fragment = document.createDocumentFragment();
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                const size = 1 + Math.random() * 2;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.opacity = 0.3 + Math.random() * 0.7;
+                star.style.animationDelay = Math.random() * 5 + 's';
+                fragment.appendChild(star);
+            }
+            starsContainer.appendChild(fragment);
+        });
+    </script>
+</body>
+
+</html>
