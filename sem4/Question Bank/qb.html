@@ -37,16 +37,22 @@
             margin: 0;
             padding: 0;
             min-height: 100vh;
+            max-height: 100vh;
             font-family: 'Poppins', sans-serif;
             display: flex;
             flex-direction: column;
             background-color: var(--dark-bg);
             color: #ffffff;
             line-height: 1.6;
-            overflow-x: hidden;
+            overflow: hidden;
             position: relative;
             justify-content: center;
             align-items: center;
+        }
+
+        html {
+            overflow: hidden;
+            height: 100%;
         }
 
         /* Enhanced Background with tech texture */
@@ -139,11 +145,12 @@
         /* Refactored Styles */
         .app-container {
             background-color: var(--dark-bg);
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
             color: white;
             font-family: 'Poppins', sans-serif;
         }
