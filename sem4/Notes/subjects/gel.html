@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEL - Project Eklavya</title>
+    <link rel="icon" type="image/png" href="/files/logo/logo.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --primary-color: #ef4444;
+            --accent-color: #dc2626;
+            --dark-bg: #0a0e17;
+            --card-bg: rgba(16, 23, 41, 0.85);
+            --card-border: rgba(239, 68, 68, 0.3);
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --text-glow: 0 0 10px rgba(239, 68, 68, 0.8);
+            --border-radius: 8px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Enhanced Background with tech texture */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000000 0%, #0a0e17 40%, #101729 70%, #162040 100%);
+            z-index: -2;
+        }
+
+        /* Tech grid lines */
+        .tech-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(239, 68, 68, 0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(239, 68, 68, 0.15) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            animation: gridPulse 10s infinite alternate ease-in-out;
+        }
+
+        @keyframes gridPulse {
+            0% {
+                opacity: 0.3;
+                background-size: 50px 50px;
+            }
+
+            100% {
+                opacity: 0.6;
+                background-size: 52px 52px;
+            }
+        }
+
+        /* Cinematic overlay with film texture */
+        .film-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.07'/%3E%3C/svg%3E");
+            z-index: -1;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        /* Stars background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            width: 2px;
+            height: 2px;
+            opacity: 0.7;
+            animation: twinkle 4s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.7;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        /* Lens flare effect */
+        .lens-flare {
+            position: fixed;
+            top: -150px;
+            right: -150px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle at center, rgba(239, 68, 68, 0.5) 0%, rgba(239, 68, 68, 0.2) 20%, transparent 70%);
+            z-index: -1;
+            opacity: 0.7;
+            filter: blur(30px);
+            animation: flareMove 20s infinite alternate ease-in-out;
+        }
+
+        @keyframes flareMove {
+            0% {
+                transform: translate(0, 0);
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: translate(-100px, 100px);
+                opacity: 0.5;
+            }
+        }
+
+        /* Back Button */
+        .back-nav {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #d4d4d4;
+            transition: all 300ms;
+            z-index: 50;
+            text-decoration: none;
+        }
+
+        .back-nav:hover {
+            border-color: rgba(239, 68, 68, 0.5);
+            color: white;
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+
+        .back-nav svg {
+            transition: transform 300ms;
+        }
+
+        .back-nav:hover svg {
+            transform: translateX(-0.25rem);
+        }
+
+        .heading {
+            font-size: 3.5rem;
+            font-family: 'Russo One', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            margin: 3rem 0 2rem 0;
+            text-align: center;
+            position: relative;
+            font-weight: 400;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow:
+                0 1px 0 rgba(255, 255, 255, 0.4),
+                0 2px 0 rgba(255, 255, 255, 0.3),
+                0 3px 0 rgba(255, 255, 255, 0.2),
+                0 4px 0 rgba(255, 255, 255, 0.1),
+                0 5px 10px rgba(0, 0, 0, 0.5),
+                0 10px 20px rgba(239, 68, 68, 0.3),
+                0 20px 40px rgba(239, 68, 68, 0.2);
+            filter: drop-shadow(0 0 30px rgba(239, 68, 68, 0.5));
+            transform: perspective(500px) rotateX(5deg);
+        }
+
+        .heading-container {
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Card container */
+        .card-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            align-items: start;
+            animation: fadeInUp 1s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(16, 23, 41, 0.3) 100%);
+            backdrop-filter: blur(64px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, transparent, rgba(239, 68, 68, 0.1), transparent);
+            border-radius: 1.5rem;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+            border-color: rgba(239, 68, 68, 0.3);
+            box-shadow: 0 8px 30px rgba(239, 68, 68, 0.2), 0 0 60px rgba(239, 68, 68, 0.1);
+        }
+
+        .card-header {
+            padding: 2rem 0 1.5rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(180deg, rgba(239, 68, 68, 0.05) 0%, transparent 100%);
+        }
+
+        .header-sheen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(239, 68, 68, 0.5), transparent);
+        }
+
+        .exp-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            margin-bottom: 0.75rem;
+            border-radius: 9999px;
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.1);
+        }
+
+        .card-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.025em;
+            margin-bottom: 0.5rem;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 2px;
+            padding: 0.75rem 0;
+            background: rgba(255, 255, 255, 0.03);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.05);
+            width: 100%;
+        }
+
+        .card-subtitle {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .card-content {
+            padding: 0 1.5rem 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .file-info {
+            background: rgba(239, 68, 68, 0.08);
+            border-left: 3px solid var(--primary-color);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 8px 8px 0;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-info::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(239, 68, 68, 0.5), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .file-info:hover {
+            background: rgba(239, 68, 68, 0.12);
+            border-left-width: 4px;
+        }
+
+        .file-info:hover::after {
+            opacity: 1;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .file-description {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .card-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .card-footer {
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .view-button {
+            padding: 0.75rem 2rem;
+            font-size: 1rem;
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Bebas Neue', sans-serif;
+        }
+
+        .view-button:hover {
+            background-color: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.5);
+            transform: scale(1.02);
+            color: #ffffff;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .card-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2.5rem;
+                padding: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .heading {
+                font-size: 2.5rem;
+                letter-spacing: 4px;
+                margin: 2.5rem 0 2rem 0;
+            }
+
+            .card-container {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+                gap: 1.5rem;
+            }
+
+            .card-title {
+                font-size: 1.8rem;
+            }
+
+            .card-content {
+                padding: 0 1.25rem 1.25rem;
+            }
+
+            .card-header {
+                padding: 1.5rem 1.25rem 1.25rem;
+            }
+
+            .back-nav {
+                top: 1rem;
+                left: 1rem;
+            }
+
+            .star {
+                animation-duration: 8s;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .heading {
+                font-size: 2rem;
+                letter-spacing: 3px;
+                margin: 2rem 0 1.5rem 0;
+            }
+
+            .card-title {
+                font-size: 1.5rem;
+            }
+
+            .card-subtitle {
+                font-size: 0.8rem;
+            }
+
+            .file-name {
+                font-size: 1rem;
+            }
+
+            .file-description {
+                font-size: 0.85rem;
+            }
+
+            .card-content {
+                padding: 0 1rem 1rem;
+            }
+
+            .tech-grid {
+                background-size: 60px 60px;
+            }
+        }
+
+        @media (prefers-reduced-motion) {
+
+            .star,
+            .tech-grid,
+            .lens-flare {
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background elements -->
+    <div class="bg-gradient"></div>
+    <div class="tech-grid"></div>
+    <div class="film-overlay"></div>
+    <div class="lens-flare"></div>
+
+    <!-- Stars -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Back Button -->
+    <a href="../notes.html" class="back-nav">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Back
+    </a>
+
+    <div class="heading-container">
+        <h1 class="heading">GEL</h1>
+    </div>
+    <div class="card-container">
+
+        <!-- <div class="card">
+            <div class="card-header">
+                <div class="header-sheen"></div>
+                <span class="exp-badge">GEL</span>
+                <h2 class="card-title">Notes</h2>
+                <p class="card-subtitle">Unit 1</p>
+            </div>
+            <div class="card-content">
+                <div class="file-info">
+                    <div class="file-name">Unit 1</div>
+                    <div class="file-description">Complete notes for Unit 1.</div>
+                </div>
+                <p class="card-text">
+                    Click the button below to download the complete notes.
+                </p>
+            </div>
+            <div class="card-footer">
+                <a href="#" class="view-button">DOWNLOAD NOTES</a>
+            </div>
+        </div> -->
+
+        <!-- Add more experiment cards as needed -->
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Create stars
+            const starsContainer = document.getElementById('stars');
+            const isMobile = window.innerWidth < 768;
+            const isLandscape = window.innerWidth < 768 && window.innerHeight < window.innerWidth;
+
+            let starCount;
+            if (isMobile) {
+                starCount = isLandscape ? 100 : 65;
+            } else {
+                starCount = 120;
+            }
+
+            const fragment = document.createDocumentFragment();
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                const size = 1 + Math.random() * 2;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.opacity = 0.3 + Math.random() * 0.7;
+                star.style.animationDelay = Math.random() * 5 + 's';
+                fragment.appendChild(star);
+            }
+
+            starsContainer.appendChild(fragment);
+
+            // Handle orientation changes
+            window.addEventListener('resize', () => {
+                const newIsLandscape = window.innerWidth < 768 && window.innerHeight < window.innerWidth;
+                if (newIsLandscape !== isLandscape) {
+                    starsContainer.innerHTML = '';
+
+                    const newStarCount = window.innerWidth < 768 ? (newIsLandscape ? 100 : 65) : 120;
+                    const newFragment = document.createDocumentFragment();
+
+                    for (let i = 0; i < newStarCount; i++) {
+                        const star = document.createElement('div');
+                        star.classList.add('star');
+                        star.style.top = Math.random() * 100 + '%';
+                        star.style.left = Math.random() * 100 + '%';
+                        const size = 1 + Math.random() * 2;
+                        star.style.width = size + 'px';
+                        star.style.height = size + 'px';
+                        star.style.opacity = 0.3 + Math.random() * 0.7;
+                        star.style.animationDelay = Math.random() * 5 + 's';
+                        newFragment.appendChild(star);
+                    }
+
+                    starsContainer.appendChild(newFragment);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
