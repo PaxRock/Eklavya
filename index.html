@@ -1189,7 +1189,174 @@
             .notification-popup.active {
                 transform: translateY(0);
             }
+        }
 
+        /* Settings Button Styles (Bottom Right) */
+        .settings-container {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            z-index: 1000;
+        }
+
+        .settings-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: radial-gradient(47.2% 50% at 50.39% 88.37%,
+                    rgba(255, 255, 255, 0.12) 0%,
+                    rgba(255, 255, 255, 0) 100%),
+                rgba(255, 255, 255, 0.04);
+            color: white !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            outline: none;
+            text-decoration: none;
+        }
+
+        .settings-btn:hover {
+            transform: scale(1.1);
+            background: radial-gradient(47.2% 50% at 50.39% 88.37%,
+                    rgba(255, 255, 255, 0.12) 0%,
+                    rgba(255, 255, 255, 0) 100%),
+                rgba(255, 255, 255, 0.08);
+        }
+
+        .settings-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 1px;
+            background: linear-gradient(150deg,
+                    rgba(255, 255, 255, 0.48) 16.73%,
+                    rgba(255, 255, 255, 0.08) 30.2%,
+                    rgba(255, 255, 255, 0.08) 68.2%,
+                    rgba(255, 255, 255, 0.6) 81.89%);
+            border-radius: inherit;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: xor;
+            pointer-events: none;
+        }
+
+        .settings-btn i {
+            color: white !important;
+            font-size: 1.2rem;
+            display: inline-block;
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+            z-index: 1;
+        }
+
+
+
+        /* Share Button Styles (Bottom Left) */
+        .share-container {
+            position: fixed;
+            bottom: 1rem;
+            left: 1rem;
+            z-index: 1000;
+        }
+
+        .share-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: radial-gradient(47.2% 50% at 50.39% 88.37%,
+                    rgba(255, 255, 255, 0.12) 0%,
+                    rgba(255, 255, 255, 0) 100%),
+                rgba(255, 255, 255, 0.04);
+            color: white !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            outline: none;
+            text-decoration: none;
+        }
+
+        .share-btn:hover {
+            transform: scale(1.1);
+            background: radial-gradient(47.2% 50% at 50.39% 88.37%,
+                    rgba(255, 255, 255, 0.12) 0%,
+                    rgba(255, 255, 255, 0) 100%),
+                rgba(255, 255, 255, 0.08);
+        }
+
+        .share-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 1px;
+            background: linear-gradient(150deg,
+                    rgba(255, 255, 255, 0.48) 16.73%,
+                    rgba(255, 255, 255, 0.08) 30.2%,
+                    rgba(255, 255, 255, 0.08) 68.2%,
+                    rgba(255, 255, 255, 0.6) 81.89%);
+            border-radius: inherit;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: xor;
+            pointer-events: none;
+        }
+
+        .share-btn i {
+            color: white !important;
+            font-size: 1.2rem;
+            display: inline-block;
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 480px) {
+            .settings-container {
+                bottom: 1rem;
+                right: 1rem;
+            }
+
+            .settings-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .settings-btn i {
+                font-size: 1rem;
+            }
+
+            .share-container {
+                bottom: 1rem;
+                left: 1rem;
+            }
+
+            .share-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .share-btn i {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -1207,6 +1374,13 @@
     <div class="profile-container">
         <button class="profile-btn" id="profileBtn" aria-label="View profile">
             <i class="fas fa-user"></i>
+        </button>
+    </div>
+
+    <!-- Share Button (Bottom Left) -->
+    <div class="share-container">
+        <button class="share-btn" id="shareBtn" aria-label="Share">
+            <i class="fas fa-share-alt"></i>
         </button>
     </div>
 
@@ -1239,6 +1413,13 @@
             <i class="fas fa-envelope"></i>
             <div class="notification-badge" id="notificationBadge">0</div>
         </button>
+    </div>
+
+    <!-- Settings Button (Bottom Right) -->
+    <div class="settings-container">
+        <a href="/settings/settings.html" class="settings-btn" id="settingsBtn" aria-label="Settings">
+            <i class="fas fa-cog"></i>
+        </a>
     </div>
 
     <!-- Notification Popup -->
@@ -1389,7 +1570,7 @@
                     read: true
                 }
                 ,
-                
+
 
             ];
 
@@ -1495,6 +1676,27 @@
                     profilePopup.classList.remove('active');
                 }
             });
+
+            // Share functionality
+            const shareBtn = document.getElementById('shareBtn');
+            if (shareBtn) {
+                shareBtn.addEventListener('click', async () => {
+                    try {
+                        if (navigator.share) {
+                            await navigator.share({
+                                title: 'Project Eklavya',
+                                text: 'Check out Project Eklavya - The Ultimate Resource Hub!',
+                                url: window.location.href
+                            });
+                        } else {
+                            await navigator.clipboard.writeText(window.location.href);
+                            alert('Link copied to clipboard!');
+                        }
+                    } catch (err) {
+                        console.error('Share failed:', err);
+                    }
+                });
+            }
 
 
 

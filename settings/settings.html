@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Project Eklavya</title>
+    <link rel="icon" type="image/png" href="/files/logo/logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Bebas+Neue&family=Press+Start+2P&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #0a84ff;
+            --accent-color: #ff3d00;
+            --dark-bg: #0a0e17;
+            --card-bg: rgba(16, 23, 41, 0.85);
+        }
+
+        body {
+            font-family: sans-serif;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000000 0%, #0a0e17 40%, #101729 70%, #162040 100%);
+            z-index: -2;
+        }
+
+        .tech-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 132, 255, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 132, 255, 0.08) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            animation: gridPulse 15s infinite alternate ease-in-out;
+        }
+
+        @keyframes gridPulse {
+            0% {
+                opacity: 0.2;
+                background-size: 50px 50px;
+            }
+
+            100% {
+                opacity: 0.4;
+                background-size: 51px 51px;
+            }
+        }
+
+        /* Film overlay */
+        .film-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            z-index: -1;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        /* Animated stars */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: starGlow 4s infinite alternate;
+            will-change: opacity;
+        }
+
+        @keyframes starGlow {
+            0% {
+                opacity: 0.4;
+            }
+
+            100% {
+                opacity: 0.9;
+            }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: radial-gradient(47.2% 50% at 50.39% 88.37%,
+                    rgba(255, 255, 255, 0.12) 0%,
+                    rgba(255, 255, 255, 0) 100%),
+                rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 12px;
+            color: white;
+            text-decoration: none;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(-5px);
+        }
+
+        .settings-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .settings-title {
+            font-family: 'Russo One', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            color: #4dabf7;
+            text-shadow: 0 0 20px rgba(77, 171, 247, 0.5);
+            margin-bottom: 0.5rem;
+        }
+
+        .settings-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .settings-card {
+            background: radial-gradient(47.2% 50% at 50.39% 88.37%,
+                    rgba(255, 255, 255, 0.12) 0%,
+                    rgba(255, 255, 255, 0) 100%),
+                rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 16px;
+            padding: 2.5rem;
+            backdrop-filter: blur(20px);
+            position: relative;
+        }
+
+        .settings-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 1px;
+            background: linear-gradient(150deg,
+                    rgba(255, 255, 255, 0.48) 16.73%,
+                    rgba(255, 255, 255, 0.08) 30.2%,
+                    rgba(255, 255, 255, 0.08) 68.2%,
+                    rgba(255, 255, 255, 0.6) 81.89%);
+            border-radius: inherit;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .profile-photo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .photo-preview-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 1.5rem;
+        }
+
+        .photo-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(0, 132, 255, 0.5);
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .photo-preview img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .photo-upload-btn {
+            position: relative;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #0a84ff, #0b5cb2);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 10px;
+            color: white;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .photo-upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(10, 132, 255, 0.4);
+        }
+
+        .photo-upload-btn input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            color: #4dabf7;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .form-input {
+            padding: 0.875rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: sans-serif;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: rgba(0, 132, 255, 0.5);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 15px rgba(0, 132, 255, 0.2);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .save-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #0a84ff, #0b5cb2);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 12px;
+            color: white;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(10, 132, 255, 0.4);
+        }
+
+        .save-btn:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            display: none;
+            padding: 1rem;
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+            border-radius: 10px;
+            color: #4caf50;
+            text-align: center;
+            margin-top: 1rem;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-required {
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+
+        .login-required h2 {
+            font-family: 'Russo One', sans-serif;
+            color: #4dabf7;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        .login-required p {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 2rem;
+        }
+
+        .login-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #0a84ff, #0b5cb2);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 12px;
+            color: white;
+            text-decoration: none;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(10, 132, 255, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .settings-card {
+                padding: 1.5rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-gradient"></div>
+    <div class="tech-grid"></div>
+    <div class="film-overlay"></div>
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+        <a href="/" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+
+        <div class="settings-header">
+            <h1 class="settings-title">SETTINGS</h1>
+            <p class="settings-subtitle">Manage your profile information</p>
+        </div>
+
+        <div class="settings-card" id="settingsContent">
+            <form id="settingsForm">
+                <div class="profile-photo-section">
+                    <div class="photo-preview-container">
+                        <div class="photo-preview" id="photoPreview">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                    <label class="photo-upload-btn">
+                        <i class="fas fa-camera"></i> Upload Photo
+                        <input type="file" id="photoInput" accept="image/*">
+                    </label>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <input type="text" id="firstName" class="form-input" placeholder="Enter first name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" id="lastName" class="form-input" placeholder="Enter last name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Age</label>
+                        <input type="number" id="age" class="form-input" placeholder="Enter age" min="1" max="120"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Contact Number</label>
+                        <input type="tel" id="contactNo" class="form-input" placeholder="Enter contact number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="email" class="form-input" placeholder="Enter email" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="save-btn">
+                    <i class="fas fa-save"></i> Save Settings
+                </button>
+
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle"></i> Settings saved successfully!
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // User settings storage
+        let userSettings = {};
+
+        // Load user settings from storage on page load
+        function loadUserSettings() {
+            const savedSettings = localStorage.getItem('userSettings');
+
+            if (savedSettings) {
+                userSettings = JSON.parse(savedSettings);
+
+                // Populate form fields
+                document.getElementById('firstName').value = userSettings.firstName || '';
+                document.getElementById('lastName').value = userSettings.lastName || '';
+                document.getElementById('age').value = userSettings.age || '';
+                document.getElementById('contactNo').value = userSettings.contactNo || '';
+                document.getElementById('email').value = userSettings.email || '';
+
+                // Load profile photo
+                if (userSettings.photoUrl) {
+                    displayPhoto(userSettings.photoUrl);
+                }
+            }
+        }
+
+        // Handle photo upload
+        document.getElementById('photoInput')?.addEventListener('change', function (e) {
+            const file = e.target.files[0];
+
+            if (file) {
+                // Check file size (max 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('File size must be less than 5MB');
+                    return;
+                }
+
+                // Check file type
+                if (!file.type.startsWith('image/')) {
+                    alert('Please upload an image file');
+                    return;
+                }
+
+                const reader = new FileReader();
+
+                reader.onload = function (event) {
+                    const photoUrl = event.target.result;
+                    displayPhoto(photoUrl);
+                    userSettings.photoUrl = photoUrl;
+                };
+
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function displayPhoto(photoUrl) {
+            const photoPreview = document.getElementById('photoPreview');
+            photoPreview.innerHTML = `<img src="${photoUrl}" alt="Profile Photo">`;
+        }
+
+        // Handle form submission
+        document.getElementById('settingsForm')?.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Collect form data
+            userSettings.firstName = document.getElementById('firstName').value.trim();
+            userSettings.lastName = document.getElementById('lastName').value.trim();
+            userSettings.age = document.getElementById('age').value;
+            userSettings.contactNo = document.getElementById('contactNo').value.trim();
+            userSettings.email = document.getElementById('email').value.trim();
+
+            // Save to localStorage
+            localStorage.setItem('userSettings', JSON.stringify(userSettings));
+
+            // Show success message
+            const successMessage = document.getElementById('successMessage');
+            successMessage.classList.add('show');
+
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 3000);
+
+            console.log('Settings saved:', userSettings);
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            loadUserSettings();
+            createStars();
+        });
+
+        // Create animated stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const isMobile = window.innerWidth < 768;
+            const starCount = isMobile ? 65 : 120;
+            const fragment = document.createDocumentFragment();
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                const size = 1 + Math.random() * 2;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.opacity = 0.3 + Math.random() * 0.7;
+                star.style.animationDelay = Math.random() * 5 + 's';
+                fragment.appendChild(star);
+            }
+
+            starsContainer.appendChild(fragment);
+        }
+    </script>
+</body>
+
+</html>
