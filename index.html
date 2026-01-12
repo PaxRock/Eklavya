@@ -1358,6 +1358,80 @@
                 font-size: 1rem;
             }
         }
+
+        .share-btn i {
+            font-size: 1rem;
+        }
+
+
+        /* Login Modal Enhancements */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.9rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .divider span {
+            padding: 0 10px;
+        }
+
+        .email-input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            margin-bottom: 10px;
+            font-family: inherit;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: #0a84ff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .email-login-btn {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid #0a84ff;
+            color: #0a84ff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .email-login-btn:hover {
+            background: rgba(10, 132, 255, 0.1);
+        }
+
+        .email-feedback {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            text-align: center;
+            min-height: 20px;
+        }
+
+        .email-feedback.success {
+            color: #4cd964;
+        }
+
+        .email-feedback.error {
+            color: #ff3b30;
+        }
     </style>
 </head>
 
@@ -1404,7 +1478,21 @@
                 <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo">
                 Sign in with Google
             </button>
+
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+            <div class="email-login-container">
+                <input type="email" id="emailInput" placeholder="Enter your email address" class="email-input">
+                <button type="button" id="btn-email-login" class="email-login-btn">
+                    <i class="fas fa-magic"></i> Send Login Link
+                </button>
+                <div id="emailFeedback" class="email-feedback"></div>
+            </div>
         </div>
+    </div>
+
     </div>
 
     <!-- Notification Button -->
@@ -1701,6 +1789,40 @@
 
 
             // Add a click event listener to the secret link
+
+            // Email Login Handler
+            const emailLoginBtn = document.getElementById('btn-email-login');
+            if (emailLoginBtn) {
+                emailLoginBtn.addEventListener('click', async () => {
+                    const emailInput = document.getElementById('emailInput');
+                    const feedback = document.getElementById('emailFeedback');
+                    const email = emailInput.value.trim();
+
+                    if (!email) {
+                        feedback.textContent = 'Please enter a valid email';
+                        feedback.className = 'email-feedback error';
+                        return;
+                    }
+
+                    emailLoginBtn.disabled = true;
+                    emailLoginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                    feedback.textContent = '';
+
+                    const result = await authSystem.loginWithEmail(email);
+
+                    if (result.success) {
+                        feedback.textContent = 'Login link sent! check your email.';
+                        feedback.className = 'email-feedback success';
+                        emailInput.value = '';
+                    } else {
+                        feedback.textContent = result.error.message || 'Failed to send link';
+                        feedback.className = 'email-feedback error';
+                    }
+
+                    emailLoginBtn.disabled = false;
+                    emailLoginBtn.innerHTML = '<i class="fas fa-magic"></i> Send Login Link';
+                });
+            }
 
             // Initialize
             initNotifications();

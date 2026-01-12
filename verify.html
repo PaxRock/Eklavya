@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifying - Project Eklavya</title>
+    <link rel="icon" type="image/png" href="/files/logo/logo.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Bebas+Neue&family=Outfit:wght@300;400;600&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #0a0e17;
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            overflow: hidden;
+        }
+
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, #162040 0%, #0a0e17 100%);
+            z-index: -2;
+        }
+
+        .tech-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 132, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 132, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        /* Glassmorphism Card */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.05),
+                    transparent);
+            transition: 0.5s;
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                left: -100%;
+            }
+
+            50%,
+            100% {
+                left: 100%;
+            }
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .logo-container {
+            margin-bottom: 2.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 15px rgba(10, 132, 255, 0.3));
+        }
+
+        .status-icon-container {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(10, 132, 255, 0.1);
+            position: relative;
+        }
+
+        .status-icon {
+            font-size: 2.5rem;
+            color: #0a84ff;
+        }
+
+        .status-icon-container.success {
+            background: rgba(76, 217, 100, 0.1);
+        }
+
+        .status-icon-container.success .status-icon {
+            color: #4cd964;
+        }
+
+        .status-icon-container.error {
+            background: rgba(255, 59, 48, 0.1);
+        }
+
+        .status-icon-container.error .status-icon {
+            color: #ff3b30;
+        }
+
+        h1 {
+            font-family: 'Russo One', sans-serif;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+            background: linear-gradient(to right, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 3.5rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 35px;
+            background: linear-gradient(135deg, #0a84ff, #0056b3);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            text-decoration: none;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(10, 132, 255, 0.3);
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(10, 132, 255, 0.5);
+        }
+
+        /* Custom Loader */
+        .loader-ring {
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1.5rem;
+        }
+
+        .loader-ring div {
+            box-sizing: border-box;
+            display: block;
+            position: absolute;
+            width: 64px;
+            height: 64px;
+            margin: 8px;
+            border: 4px solid #0a84ff;
+            border-radius: 50%;
+            animation: loader-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+            border-color: #0a84ff transparent transparent transparent;
+        }
+
+        .loader-ring div:nth-child(1) {
+            animation-delay: -0.45s;
+        }
+
+        .loader-ring div:nth-child(2) {
+            animation-delay: -0.3s;
+        }
+
+        .loader-ring div:nth-child(3) {
+            animation-delay: -0.15s;
+        }
+
+        @keyframes loader-ring {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-gradient"></div>
+    <div class="tech-grid"></div>
+
+    <div class="card" id="loadingCard">
+        <div class="logo-container">
+            <img src="/files/logo/logo.png" alt="Project Eklavya Logo" class="logo">
+        </div>
+        <div class="loader-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <h1>Verifying Link</h1>
+        <p>Please wait a moment while we secure your session...</p>
+    </div>
+
+    <div class="card hidden" id="successCard">
+        <div class="logo-container">
+            <img src="/files/logo/logo.png" alt="Project Eklavya Logo" class="logo">
+        </div>
+        <div class="status-icon-container success">
+            <i class="fas fa-check status-icon"></i>
+        </div>
+        <h1>Successfully Verified!</h1>
+        <p>You are now logged in to Project Eklavya. Welcome back!</p>
+        <a href="/index.html" class="btn">Go to Dashboard <i class="fas fa-arrow-right"
+                style="margin-left: 10px;"></i></a>
+    </div>
+
+    <div class="card hidden" id="errorCard">
+        <div class="logo-container">
+            <img src="/files/logo/logo.png" alt="Project Eklavya Logo" class="logo">
+        </div>
+        <div class="status-icon-container error">
+            <i class="fas fa-times status-icon"></i>
+        </div>
+        <h1>Verification Failed</h1>
+        <p id="errorMessage">The login link is invalid or has expired.</p>
+        <a href="/index.html" class="btn">Try Again</a>
+    </div>
+
+    <!-- Load Appwrite SDK from local file -->
+    <script src="sem2/appwrite.min.js"></script>
+    <script src="sem2/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get('userId');
+            const secret = urlParams.get('secret');
+
+            // Wait a minimal time for visual effect so the loader doesn't just flicker
+            const minTime = new Promise(resolve => setTimeout(resolve, 1500));
+
+            if (userId && secret) {
+                try {
+                    // Wait for SDK to initialize
+                    if (typeof authSystem === 'undefined') {
+                        await new Promise(resolve => setTimeout(resolve, 500));
+                    }
+
+                    const [result] = await Promise.all([
+                        authSystem.completeEmailLogin(userId, secret),
+                        minTime
+                    ]);
+
+                    document.getElementById('loadingCard').classList.add('hidden');
+
+                    if (result.success) {
+                        document.getElementById('successCard').classList.remove('hidden');
+                    } else {
+                        document.getElementById('errorMessage').textContent = result.error.message || "Invalid or expired link.";
+                        document.getElementById('errorCard').classList.remove('hidden');
+                    }
+                } catch (error) {
+                    console.error(error);
+                    document.getElementById('loadingCard').classList.add('hidden');
+                    document.getElementById('errorCard').classList.remove('hidden');
+                }
+            } else {
+                await minTime;
+                document.getElementById('loadingCard').classList.add('hidden');
+                document.getElementById('errorMessage').textContent = "Invalid verification link parameters.";
+                document.getElementById('errorCard').classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+
+</html>
