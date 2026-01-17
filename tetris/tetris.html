@@ -976,6 +976,7 @@
         let dropTime = 0;
         let dropInterval = 1000;
         let lastTime = 0;
+        let animationId = null;
 
         class Piece {
             constructor(pieceData) {
@@ -1220,6 +1221,7 @@
 
         function gameOver() {
             gameRunning = false;
+            cancelAnimationFrame(animationId);
             document.getElementById('finalScore').textContent = `Score: ${score}`;
             document.getElementById('gameOver').style.display = 'block';
         }
@@ -1232,7 +1234,8 @@
 
         function gameLoop(currentTime) {
             if (!gameRunning || paused) {
-                requestAnimationFrame(gameLoop);
+                lastTime = currentTime;
+                animationId = requestAnimationFrame(gameLoop);
                 return;
             }
 
@@ -1248,10 +1251,12 @@
             }
 
             drawBoard();
-            requestAnimationFrame(gameLoop);
+            animationId = requestAnimationFrame(gameLoop);
         }
 
         function startGame() {
+            if (animationId) cancelAnimationFrame(animationId);
+
             board = Array(BOARD_HEIGHT).fill().map(() => Array(BOARD_WIDTH).fill(0));
             score = 0;
             level = 1;
@@ -1266,7 +1271,7 @@
             nextPiece = getRandomPiece();
             spawnPiece();
             updateDisplay();
-            requestAnimationFrame(gameLoop);
+            animationId = requestAnimationFrame(gameLoop);
         }
 
         function restartGame() {
@@ -1281,6 +1286,13 @@
 
         // Controls
         document.addEventListener('keydown', (e) => {
+            // Check for pause toggle first so it works even when paused
+            if (e.key === 'p' || e.key === 'P') {
+                e.preventDefault();
+                togglePause();
+                return;
+            }
+
             if (!gameRunning || paused) return;
 
             switch (e.key) {
@@ -1373,6 +1385,7 @@
         let touchStartY = 0;
         let touchEndX = 0;
         let touchEndY = 0;
+        let lastTouchTime = 0;
 
         canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
@@ -1384,6 +1397,7 @@
             e.preventDefault();
             touchEndX = e.changedTouches[0].screenX;
             touchEndY = e.changedTouches[0].screenY;
+            lastTouchTime = Date.now();
             handleSwipe();
         });
 
@@ -1418,6 +1432,7 @@
 
         // Tap to rotate
         canvas.addEventListener('click', (e) => {
+            if (Date.now() - lastTouchTime < 500) return;
             if (!gameRunning || paused) return;
             currentPiece.rotate();
         });
