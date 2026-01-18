@@ -117,6 +117,7 @@ async function loginWithGoogle() {
     } catch (error) {
         console.error('Google sign-in failed', error);
         alert('Login failed. Please try again. Error: ' + (error.message || 'Unknown error'));
+        // return { success: false, error }; // Removed to match other paths returning undefined
     }
 }
 
@@ -235,17 +236,38 @@ function updateProfilePopup() {
         const userName = localStorage.getItem('userName') || 'User';
         const userEmail = localStorage.getItem('userEmail') || 'No email';
 
-        profileContent.innerHTML = `
-            <div class="profile-info-item">
-                <div class="profile-info-label">Name</div>
-                <div class="profile-info-value">${userName}</div>
-            </div>
-            <div class="profile-info-item">
-                <div class="profile-info-label">Email</div>
-                <div class="profile-info-value">${userEmail}</div>
-            </div>
-            <button class="profile-logout-btn" onclick="authSystem.logout()">Logout</button>
-        `;
+        profileContent.innerHTML = '';
+
+        const item1 = document.createElement('div');
+        item1.className = 'profile-info-item';
+        const label1 = document.createElement('div');
+        label1.className = 'profile-info-label';
+        label1.textContent = 'Name';
+        const value1 = document.createElement('div');
+        value1.className = 'profile-info-value';
+        value1.textContent = userName;
+        item1.appendChild(label1);
+        item1.appendChild(value1);
+
+        const item2 = document.createElement('div');
+        item2.className = 'profile-info-item';
+        const label2 = document.createElement('div');
+        label2.className = 'profile-info-label';
+        label2.textContent = 'Email';
+        const value2 = document.createElement('div');
+        value2.className = 'profile-info-value';
+        value2.textContent = userEmail;
+        item2.appendChild(label2);
+        item2.appendChild(value2);
+
+        const logoutBtn = document.createElement('button');
+        logoutBtn.className = 'profile-logout-btn';
+        logoutBtn.textContent = 'Logout';
+        logoutBtn.onclick = () => window.authSystem.logout();
+
+        profileContent.appendChild(item1);
+        profileContent.appendChild(item2);
+        profileContent.appendChild(logoutBtn);
     } else {
         profileContent.innerHTML = `
             <div class="profile-login-prompt">

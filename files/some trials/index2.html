@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Eklavya | Next Gen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* --- CORE VARIABLES --- */
+        :root {
+            --bg-color: #030303;
+            --card-bg: rgba(20, 20, 20, 0.6);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+            --accent-glow: #3b82f6;
+            --spotlight-size: 400px;
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-body: 'Outfit', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- AMBIENT BACKGROUND SYSTEM --- */
+        .ambient-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: #4f46e5;
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: #ec4899;
+            animation-delay: -5s;
+        }
+
+        .blob-3 {
+            top: 40%;
+            left: 40%;
+            width: 40vw;
+            height: 40vw;
+            background: #06b6d4;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+
+            100% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+        }
+
+        /* --- NOISE TEXTURE --- */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.05;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* --- UI COMPONENTS --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 50px;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .brand {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -1px;
+            background: linear-gradient(to right, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font-body);
+        }
+
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- HERO SECTION --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-text {
+            text-align: center;
+            margin-bottom: 80px;
+            animation: fadeInDown 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        h1.main-title {
+            font-family: var(--font-display);
+            font-size: 5rem;
+            line-height: 1;
+            font-weight: 700;
+            letter-spacing: -3px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #a5a5a5 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* --- GRID SYSTEM WITH SPOTLIGHT --- */
+        .grid-wrapper {
+            width: 100%;
+            perspective: 1000px;
+            /* For 3D Tilt */
+        }
+
+        .semester-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            width: 100%;
+            /* This enables the spotlight logic */
+            position: relative;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform 0.1s;
+            /* Quick response for tilt */
+
+            /* Staggered Animation Defaults */
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        /* Stagger Delays */
+        .card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .card:nth-child(6) {
+            animation-delay: 0.6s;
+        }
+
+        /* The Spotlight Glow Layer */
+        .card::before {
+            content: "";
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(var(--spotlight-size) circle at var(--mouse-x) var(--mouse-y),
+                    rgba(255, 255, 255, 0.06),
+                    transparent 40%);
+            z-index: 3;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        /* The Border Glow Layer */
+        .card::after {
+            content: "";
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(var(--spotlight-size) circle at var(--mouse-x) var(--mouse-y),
+                    rgba(255, 255, 255, 0.3),
+                    transparent 40%);
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s;
+            /* Mask logic to only show border */
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            padding: 1px;
+            /* Border width */
+            border-radius: 16px;
+        }
+
+        .semester-grid:hover .card::before,
+        .semester-grid:hover .card::after {
+            opacity: 1;
+        }
+
+        .card-content {
+            z-index: 10;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .card h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 5px;
+            letter-spacing: -0.5px;
+        }
+
+        .card p {
+            font-size: 0.8rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        /* --- NOTIFICATION --- */
+        .notification {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .notification.active {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .close-notif {
+            background: transparent;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* --- MODAL --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.01);
+            backdrop-filter: blur(0px);
+            z-index: 200;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.4s ease;
+        }
+
+        .modal-overlay.open {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal {
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 90%;
+            max-width: 400px;
+            padding: 40px;
+            border-radius: 24px;
+            text-align: center;
+            transform: scale(0.9) translateY(20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-overlay.open .modal {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .modal h3 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .modal p {
+            color: #888;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: white;
+            color: black;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media(max-width: 768px) {
+            .semester-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            h1.main-title {
+                font-size: 3rem;
+            }
+        }
+
+        @media(max-width: 480px) {
+            .semester-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1.main-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* --- KEYFRAMES --- */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Ambient Backgrounds -->
+    <div class="ambient-wrapper">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+    <div class="noise-overlay"></div>
+
+    <!-- UI -->
+    <nav class="navbar">
+        <div class="brand">EKLAVYA.</div>
+        <button class="btn-glass" onclick="openModal('login')">Connect</button>
+    </nav>
+
+    <main class="container">
+        <div class="hero-text">
+            <h1 class="main-title">ACADEMIC<br>INTELLIGENCE</h1>
+            <p class="subtitle">Next-generation resource management for students. <br>Select your semester to begin.</p>
+        </div>
+
+        <div class="grid-wrapper" id="gridWrapper">
+            <div class="semester-grid" id="cardsContainer">
+                <!-- Cards injected here via JS for easier management or static below -->
+                <div class="card" onclick="handleAccess()">
+                    <div class="card-content">
+                        <h2>SEMESTER I</h2>
+                        <p>Foundations</p>
+                    </div>
+                </div>
+                <div class="card" onclick="handleAccess()">
+                    <div class="card-content">
+                        <h2>SEMESTER II</h2>
+                        <p>Core Concepts</p>
+                    </div>
+                </div>
+                <div class="card" onclick="handleAccess()">
+                    <div class="card-content">
+                        <h2>SEMESTER III</h2>
+                        <p>Intermediate</p>
+                    </div>
+                </div>
+                <div class="card" onclick="handleAccess()">
+                    <span class="badge">Live Now</span>
+                    <div class="card-content">
+                        <h2>SEMESTER IV</h2>
+                        <p>Advanced</p>
+                    </div>
+                </div>
+                <div class="card" onclick="handleAccess()">
+                    <div class="card-content">
+                        <h2>SEMESTER V</h2>
+                        <p>Specialization</p>
+                    </div>
+                </div>
+                <div class="card" onclick="handleAccess()">
+                    <div class="card-content">
+                        <h2>SEMESTER VI</h2>
+                        <p>Final Project</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Floating Notification -->
+    <div class="notification" id="notification">
+        <span style="color: #4ade80">●</span>
+        <span>Semester 4 database has been updated.</span>
+        <button class="close-notif" onclick="closeNotification()">×</button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h3 id="modalTitle">Access Denied</h3>
+            <p id="modalText">Restricted area. Please identify yourself to access the academic mainframe.</p>
+            <button class="btn-primary" onclick="closeModal()">Authenticate</button>
+        </div>
+    </div>
+
+    <script>
+        // --- SPOTLIGHT & TILT EFFECT LOGIC ---
+        const wrapper = document.getElementById("cardsContainer");
+        const cards = document.querySelectorAll(".card");
+
+        wrapper.onmousemove = e => {
+            for (const card of cards) {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                // Apply coordinates for spotlight
+                card.style.setProperty("--mouse-x", `${x}px`);
+                card.style.setProperty("--mouse-y", `${y}px`);
+
+                // 3D Tilt calculation
+                // Only tilt if screen is large enough to support it properly
+                if (window.innerWidth > 768) {
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+                    const mouseX = e.clientX - centerX;
+                    const mouseY = e.clientY - centerY;
+
+                    // Max rotation deg
+                    const rotateX = (mouseY / 20) * -1;
+                    const rotateY = (mouseX / 20);
+
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+                }
+            }
+        };
+
+        // Reset transform on mouse leave
+        wrapper.onmouseleave = () => {
+            for (const card of cards) {
+                card.style.transform = "perspective(1000px) rotateX(0) rotateY(0) scale(1)";
+            }
+        };
+
+        // --- MODAL LOGIC ---
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalText = document.getElementById('modalText');
+
+        function openModal(type) {
+            modalOverlay.style.display = 'flex';
+            // Force reflow for animation
+            setTimeout(() => {
+                modalOverlay.classList.add('open');
+            }, 10);
+
+            if (type === 'login') {
+                modalTitle.innerText = "Identity Verification";
+                modalText.innerText = "Connect your account to synchronize progress across the Eklavya network.";
+            } else {
+                modalTitle.innerText = "Access Restricted";
+                modalText.innerText = "This sector requires elevated privileges. Please log in to continue.";
+            }
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('open');
+            setTimeout(() => {
+                modalOverlay.style.display = 'none';
+            }, 400);
+        }
+
+        function handleAccess() {
+            openModal('access');
+        }
+
+        // Close modal on background click
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) closeModal();
+        });
+
+        // --- NOTIFICATION LOGIC ---
+        setTimeout(() => {
+            document.getElementById('notification').classList.add('active');
+        }, 1500);
+
+        function closeNotification() {
+            document.getElementById('notification').classList.remove('active');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Semester IV - Project Eklavya: Too Late Message">
     <title>Semester IV - Project Eklavya</title>
     <link rel="icon" type="image/png" href="/files/logo/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Press+Start+2P&family=Russo+One&display=swap"
+        rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Russo+One&family=Bebas+Neue&family=Press+Start+2P&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
@@ -59,7 +63,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
+            background-image:
                 linear-gradient(rgba(0, 132, 255, 0.08) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 132, 255, 0.08) 1px, transparent 1px);
             background-size: 50px 50px;
@@ -111,7 +115,7 @@
             animation: messageReveal 2s ease-out forwards;
             transform: perspective(1200px) rotateX(20deg);
             line-height: 1.4;
-            text-shadow: 
+            text-shadow:
                 0 0 20px rgba(179, 136, 255, 0.7),
                 0 0 40px rgba(179, 136, 255, 0.5),
                 0 0 60px rgba(179, 136, 255, 0.3);
@@ -141,10 +145,13 @@
         }
 
         @keyframes dotPulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: scale(0.5);
                 opacity: 0.3;
             }
+
             50% {
                 transform: scale(1);
                 opacity: 1;
@@ -152,8 +159,13 @@
         }
 
         @keyframes starGlow {
-            0% { opacity: 0.4; }
-            100% { opacity: 0.9; }
+            0% {
+                opacity: 0.4;
+            }
+
+            100% {
+                opacity: 0.9;
+            }
         }
 
         @keyframes gridPulse {
@@ -161,6 +173,7 @@
                 opacity: 0.2;
                 background-size: 50px 50px;
             }
+
             100% {
                 opacity: 0.4;
                 background-size: 51px 51px;
@@ -195,6 +208,7 @@
                 opacity: 0;
                 transform: perspective(1200px) rotateX(40deg) translateY(-30px);
             }
+
             100% {
                 opacity: 1;
                 transform: perspective(1200px) rotateX(20deg) translateY(0);
@@ -206,6 +220,7 @@
                 opacity: 0;
                 transform: perspective(800px) rotateX(30deg) translateY(30px);
             }
+
             100% {
                 opacity: 1;
                 transform: perspective(800px) rotateX(10deg) translateY(0);
@@ -217,18 +232,18 @@
                 font-size: clamp(1.8rem, 6vw, 3rem);
                 padding: 0 0.5rem;
             }
-            
+
             .dot {
                 width: 10px;
                 height: 10px;
             }
-            
+
             .back-button {
                 font-size: 1.2rem;
                 padding: 0.6rem 1.5rem;
                 margin-top: 2rem;
             }
-            
+
             .developer-credit {
                 font-size: clamp(0.5rem, 1.2vw, 0.7rem);
                 bottom: 15px;
@@ -241,20 +256,20 @@
                 font-size: clamp(1.5rem, 4vw, 2.5rem);
                 margin-bottom: 1rem;
             }
-            
+
             .loading-dots {
                 margin-top: 1rem;
             }
-            
+
             .dot {
                 width: 8px;
                 height: 8px;
             }
-            
+
             .back-button {
                 margin-top: 1.5rem;
             }
-            
+
             /* Adjust star count for landscape */
             #stars {
                 --star-count: 100;
@@ -267,21 +282,21 @@
                 font-size: clamp(1.2rem, 3vw, 2rem);
                 margin-bottom: 0.5rem;
             }
-            
+
             .loading-dots {
                 margin-top: 0.5rem;
             }
-            
+
             .dot {
                 width: 6px;
                 height: 6px;
             }
-            
+
             .back-button {
                 margin-top: 1rem;
                 padding: 0.5rem 1.2rem;
             }
-            
+
             .developer-credit {
                 bottom: 5px;
             }
@@ -296,7 +311,7 @@
             opacity: 0;
             text-transform: uppercase;
             letter-spacing: 3px;
-            text-shadow: 
+            text-shadow:
                 0 0 20px rgba(179, 136, 255, 0.7),
                 0 0 40px rgba(179, 136, 255, 0.5),
                 0 0 60px rgba(179, 136, 255, 0.3);
@@ -332,22 +347,37 @@
                 opacity: 0;
                 transform: perspective(1000px) rotateX(5deg) translateY(20px);
             }
+
             to {
                 opacity: 0.7;
                 transform: perspective(1000px) rotateX(5deg) translateY(0);
             }
         }
+
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            ::before,
+            ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
     </style>
 </head>
+
 <body>
     <!-- Background elements -->
     <div class="bg-gradient"></div>
     <div class="tech-grid"></div>
     <div class="film-overlay"></div>
-    
+
     <!-- Stars effect -->
     <div class="stars" id="stars"></div>
-    
+
     <!-- Main content -->
     <h1 class="message">You Are Too Late</h1>
     <div class="loading-dots">
@@ -364,8 +394,8 @@
             // Create stars
             const starsContainer = document.getElementById('stars');
             const isMobile = window.innerWidth < 768;
-            const isLandscape = window.innerWidth < 768 && window.innerHeight < window.innerWidth;
-            
+            let isLandscape = window.innerWidth < 768 && window.innerHeight < window.innerWidth;
+
             // Adjust star count based on orientation
             let starCount;
             if (isMobile) {
@@ -373,9 +403,9 @@
             } else {
                 starCount = 120;
             }
-            
+
             const fragment = document.createDocumentFragment();
-            
+
             for (let i = 0; i < starCount; i++) {
                 const star = document.createElement('div');
                 star.classList.add('star');
@@ -388,37 +418,43 @@
                 star.style.animationDelay = Math.random() * 5 + 's';
                 fragment.appendChild(star);
             }
-            
+
             starsContainer.appendChild(fragment);
-            
+
             // Handle orientation changes
+            let resizeTimeout;
             window.addEventListener('resize', () => {
-                const newIsLandscape = window.innerWidth < 768 && window.innerHeight < window.innerWidth;
-                if (newIsLandscape !== isLandscape) {
-                    // Clear existing stars
-                    starsContainer.innerHTML = '';
-                    
-                    // Recreate stars with new count
-                    const newStarCount = window.innerWidth < 768 ? (newIsLandscape ? 100 : 65) : 120;
-                    const newFragment = document.createDocumentFragment();
-                    
-                    for (let i = 0; i < newStarCount; i++) {
-                        const star = document.createElement('div');
-                        star.classList.add('star');
-                        star.style.top = Math.random() * 100 + '%';
-                        star.style.left = Math.random() * 100 + '%';
-                        const size = 1 + Math.random() * 2;
-                        star.style.width = size + 'px';
-                        star.style.height = size + 'px';
-                        star.style.opacity = 0.3 + Math.random() * 0.7;
-                        star.style.animationDelay = Math.random() * 5 + 's';
-                        newFragment.appendChild(star);
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    const newIsLandscape = window.innerWidth < 768 && window.innerHeight < window.innerWidth;
+                    if (newIsLandscape !== isLandscape) {
+                        isLandscape = newIsLandscape;
+                        // Clear existing stars
+                        starsContainer.innerHTML = '';
+
+                        // Recreate stars with new count
+                        const newStarCount = window.innerWidth < 768 ? (newIsLandscape ? 100 : 65) : 120;
+                        const newFragment = document.createDocumentFragment();
+
+                        for (let i = 0; i < newStarCount; i++) {
+                            const star = document.createElement('div');
+                            star.classList.add('star');
+                            star.style.top = Math.random() * 100 + '%';
+                            star.style.left = Math.random() * 100 + '%';
+                            const size = 1 + Math.random() * 2;
+                            star.style.width = size + 'px';
+                            star.style.height = size + 'px';
+                            star.style.opacity = 0.3 + Math.random() * 0.7;
+                            star.style.animationDelay = Math.random() * 5 + 's';
+                            newFragment.appendChild(star);
+                        }
+
+                        starsContainer.appendChild(newFragment);
                     }
-                    
-                    starsContainer.appendChild(newFragment);
-                }
+                }, 250);
             });
         });
     </script>
 </body>
-</html> 
+
+</html>

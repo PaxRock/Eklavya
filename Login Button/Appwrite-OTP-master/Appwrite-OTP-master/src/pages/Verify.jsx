@@ -5,38 +5,44 @@ import { useSearchParams } from "react-router-dom";
 
 const Verify = () => {
     const [code, setCode] = useState("");
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    const userId = searchParams.get("token");
+    const userId = searchParams.get("userId");
 
     useEffect(() => {
         const getSession = async () => {
             try {
-                const session = await account.get();
-                console.log(session);
+                await account.get();
                 navigate("/");
             } catch (error) {
-                console.log(error);
+                // Not logged in, stay on page
             }
         };
         getSession();
-    }, []);
+    }, [navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError(null);
+
+        if (!userId || !code) {
+            setError("Invalid verification details.");
+            return;
+        }
 
         try {
-            const session = await account.createSession(userId, code);
-            console.log(session);
+            await account.createSession(userId, code);
             navigate("/");
         } catch (error) {
-            console.log(error);
+            setError(error.message || "Verification failed");
         }
     };
 
     return (
         <form onSubmit={handleSubmit}>
             <h3>Verify your phone number</h3>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
             <input
                 type="text"
                 placeholder="Code"

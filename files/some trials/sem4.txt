@@ -12,11 +12,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800&family=Press+Start+2P&family=Russo+One&display=swap"
         rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 
         @property --gradient_rotate {
             syntax: "<angle>";
@@ -775,8 +771,9 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Create stars
             const starsContainer = document.getElementById('stars');
-            const isMobile = window.innerWidth < 768;
-            const isLandscape = window.innerWidth < 768 && window.innerHeight < window.innerWidth;
+            let isMobile = window.innerWidth < 768;
+            let isLandscape = window.innerWidth < 768 && window.innerHeight < window.innerWidth;
+            let resizeTimeout;
 
             // Adjust star count based on orientation
             let starCount;
@@ -805,30 +802,38 @@
 
             // Handle orientation changes
             window.addEventListener('resize', () => {
-                const newIsLandscape = window.innerWidth < 768 && window.innerHeight < window.innerWidth;
-                if (newIsLandscape !== isLandscape) {
-                    // Clear existing stars
-                    starsContainer.innerHTML = '';
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    const newIsLandscape = window.innerWidth < 768 && window.innerHeight < window.innerWidth;
+                    const newIsMobile = window.innerWidth < 768;
+                    
+                    if (newIsLandscape !== isLandscape || newIsMobile !== isMobile) {
+                        isLandscape = newIsLandscape;
+                        isMobile = newIsMobile;
+                        
+                        // Clear existing stars
+                        starsContainer.innerHTML = '';
 
-                    // Recreate stars with new count
-                    const newStarCount = window.innerWidth < 768 ? (newIsLandscape ? 100 : 65) : 120;
-                    const newFragment = document.createDocumentFragment();
+                        // Recreate stars with new count
+                        const newStarCount = window.innerWidth < 768 ? (newIsLandscape ? 100 : 65) : 120;
+                        const newFragment = document.createDocumentFragment();
 
-                    for (let i = 0; i < newStarCount; i++) {
-                        const star = document.createElement('div');
-                        star.classList.add('star');
-                        star.style.top = Math.random() * 100 + '%';
-                        star.style.left = Math.random() * 100 + '%';
-                        const size = 1 + Math.random() * 2;
-                        star.style.width = size + 'px';
-                        star.style.height = size + 'px';
-                        star.style.opacity = 0.3 + Math.random() * 0.7;
-                        star.style.animationDelay = Math.random() * 5 + 's';
-                        newFragment.appendChild(star);
+                        for (let i = 0; i < newStarCount; i++) {
+                            const star = document.createElement('div');
+                            star.classList.add('star');
+                            star.style.top = Math.random() * 100 + '%';
+                            star.style.left = Math.random() * 100 + '%';
+                            const size = 1 + Math.random() * 2;
+                            star.style.width = size + 'px';
+                            star.style.height = size + 'px';
+                            star.style.opacity = 0.3 + Math.random() * 0.7;
+                            star.style.animationDelay = Math.random() * 5 + 's';
+                            newFragment.appendChild(star);
+                        }
+
+                        starsContainer.appendChild(newFragment);
                     }
-
-                    starsContainer.appendChild(newFragment);
-                }
+                }, 250);
             });
         });
     </script>

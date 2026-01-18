@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Eklavya</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --bg-color: #000000;
+            --surface-color: #0a0a0a;
+            --card-bg: #111;
+            --border-color: #333;
+            --border-hover: #555;
+            --text-primary: #ededed;
+            --text-secondary: #888888;
+            --accent-color: #0070f3;
+            /* Vercel Blue */
+            --accent-glow: rgba(0, 112, 243, 0.15);
+            --danger: #e00;
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --transition-speed: 0.2s;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            /* Subtle radial gradient background */
+            background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #000 70%);
+        }
+
+        button {
+            font-family: var(--font-main);
+        }
+
+        /* --- NOTIFICATION BANNER --- */
+        .notification-banner {
+            background: var(--text-primary);
+            color: var(--bg-color);
+            text-align: center;
+            padding: 12px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            position: relative;
+            animation: slideDown 0.5s ease;
+        }
+
+        .close-banner {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--bg-color);
+            font-size: 1.2rem;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .close-banner:hover {
+            opacity: 1;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .nav-brand {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-brand h1 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+        }
+
+        .nav-brand span {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .btn-login {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+
+        .btn-login:hover {
+            background: var(--text-primary);
+            color: var(--bg-color);
+        }
+
+        /* --- MAIN HERO SECTION --- */
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        /* Glowing text effect */
+        .main-title {
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            background: linear-gradient(180deg, #fff, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        /* --- SEMESTER GRID --- */
+        .semester-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 48px 24px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            transition: all var(--transition-speed) ease;
+            overflow: hidden;
+        }
+
+        /* Subtle glow on hover */
+        .card:hover {
+            border-color: var(--text-primary);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
+            transform: translateY(-4px);
+        }
+
+        .card h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: 0.02em;
+        }
+
+        .badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--accent-color);
+            color: white;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            border-radius: 99px;
+            font-weight: 700;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        /* --- MODAL SYSTEM --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 100;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            width: 90%;
+            max-width: 420px;
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            transform: scale(0.95) translateY(10px);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 4px;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+
+        .close-modal:hover {
+            color: var(--text-primary);
+        }
+
+        .modal-body p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        /* Buttons in Modal */
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--bg-color);
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        .btn-google {
+            background: #fff;
+            color: #333;
+            border: 1px solid #ddd;
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: background 0.2s;
+        }
+
+        .btn-google:hover {
+            background: #f5f5f5;
+        }
+
+        /* --- RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            .semester-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .navbar {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .semester-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .main-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Notification -->
+    <div class="notification-banner" id="banner">
+        <span>4th semester is available now!</span>
+        <button class="close-banner" onclick="toggleBanner(false)">×</button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <h1>Project Eklavya</h1>
+            <span>By Pranav Anuvadia</span>
+        </div>
+        <button class="btn-login" onclick="toggleModal('login', true)">Login / Signup</button>
+    </nav>
+
+    <!-- Content -->
+    <main class="container">
+        <div class="hero">
+            <h1 class="main-title">PROJECT EKLAVYA</h1>
+            <p class="subtitle">Select your semester to continue</p>
+        </div>
+
+        <div class="semester-grid">
+            <!-- Semesters 1-3 -->
+            <div class="card" onclick="handleCardClick()">
+                <h2>SEMESTER I</h2>
+            </div>
+            <div class="card" onclick="handleCardClick()">
+                <h2>SEMESTER II</h2>
+            </div>
+            <div class="card" onclick="handleCardClick()">
+                <h2>SEMESTER III</h2>
+            </div>
+
+            <!-- Semester 4 (New) -->
+            <div class="card" onclick="handleCardClick()">
+                <h2>SEMESTER IV</h2>
+                <span class="badge">New</span>
+            </div>
+
+            <!-- Semesters 5-6 -->
+            <div class="card" onclick="handleCardClick()">
+                <h2>SEMESTER V</h2>
+            </div>
+            <div class="card" onclick="handleCardClick()">
+                <h2>SEMESTER VI</h2>
+            </div>
+        </div>
+    </main>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Sign In</h3>
+                <button class="close-modal" onclick="toggleModal('login', false)">×</button>
+            </div>
+            <div class="modal-body">
+                <p>Please sign in to access your dashboard and saved progress.</p>
+                <button class="btn-google">
+                    <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"
+                            fill="#4285F4" />
+                        <path
+                            d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.836.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"
+                            fill="#34A853" />
+                        <path
+                            d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"
+                            fill="#FBBC05" />
+                        <path
+                            d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"
+                            fill="#EA4335" />
+                    </svg>
+                    Sign in with Google
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Access Denied Modal -->
+    <div class="modal-overlay" id="accessModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Access Required</h3>
+                <button class="close-modal" onclick="toggleModal('access', false)">×</button>
+            </div>
+            <div class="modal-body">
+                <p>You need to be logged in to view semester materials. Please create an account or sign in to continue.
+                </p>
+                <button class="btn-primary" onclick="switchToLogin()">Go to Login</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        const state = {
+            bannerVisible: true,
+            isLoggedIn: false
+        };
+
+        // DOM Elements
+        const els = {
+            banner: document.getElementById('banner'),
+            loginModal: document.getElementById('loginModal'),
+            accessModal: document.getElementById('accessModal')
+        };
+
+        // Toggle Notification Banner
+        function toggleBanner(show) {
+            els.banner.style.display = show ? 'block' : 'none';
+        }
+
+        // Generic Modal Toggle
+        function toggleModal(type, show) {
+            const modal = type === 'login' ? els.loginModal : els.accessModal;
+
+            if (show) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            } else {
+                modal.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
+            }
+        }
+
+        // Handle Card Clicks
+        function handleCardClick() {
+            if (state.isLoggedIn) {
+                alert("Redirecting to semester content...");
+            } else {
+                toggleModal('access', true);
+            }
+        }
+
+        // Switch from Access Modal to Login Modal
+        function switchToLogin() {
+            toggleModal('access', false);
+            // Small delay for smooth transition
+            setTimeout(() => toggleModal('login', true), 200);
+        }
+
+        // Close modals on outside click
+        window.addEventListener('click', (e) => {
+            if (e.target === els.loginModal) toggleModal('login', false);
+            if (e.target === els.accessModal) toggleModal('access', false);
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                toggleModal('login', false);
+                toggleModal('access', false);
+            }
+        });
+    </script>
+</body>
+
+</html>

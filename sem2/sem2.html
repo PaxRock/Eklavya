@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Semester II - Project Eklavya: Resources">
     <title>Semester II - Project Eklavya</title>
     <link rel="icon" type="image/png" href="/files/logo/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800&family=Press+Start+2P&family=Russo+One&display=swap"
+        rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
@@ -69,7 +71,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
+            background-image:
                 linear-gradient(rgba(0, 132, 255, 0.15) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 132, 255, 0.15) 1px, transparent 1px);
             background-size: 50px 50px;
@@ -84,6 +86,7 @@
                 opacity: 0.3;
                 background-size: 50px 50px;
             }
+
             100% {
                 opacity: 0.6;
                 background-size: 52px 52px;
@@ -125,10 +128,13 @@
         }
 
         @keyframes twinkle {
-            0%, 100% {
+
+            0%,
+            100% {
                 opacity: 0.7;
                 transform: scale(1);
             }
+
             50% {
                 opacity: 1;
                 transform: scale(1.2);
@@ -150,6 +156,7 @@
             0% {
                 transform: translate(-30px, 0) rotate(0deg);
             }
+
             100% {
                 transform: translate(calc(100vw + 30px), 0) rotate(0deg);
             }
@@ -174,6 +181,7 @@
                 transform: translate(0, 0);
                 opacity: 0.3;
             }
+
             100% {
                 transform: translate(-100px, 100px);
                 opacity: 0.5;
@@ -215,6 +223,7 @@
             0% {
                 transform: translateY(-100%);
             }
+
             100% {
                 transform: translateY(900px);
             }
@@ -282,7 +291,11 @@
             position: relative;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-            box-shadow: 
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
                 0 10px 20px rgba(0, 0, 0, 0.3),
                 0 0 0 1px rgba(0, 132, 255, 0.3),
                 0 0 15px rgba(0, 132, 255, 0.4) inset;
@@ -291,7 +304,7 @@
 
         .button:hover {
             transform: perspective(800px) rotateX(10deg) translateY(-5px) scale(1.05);
-            box-shadow: 
+            box-shadow:
                 0 15px 30px rgba(0, 0, 0, 0.4),
                 0 0 0 2px rgba(0, 132, 255, 0.5),
                 0 0 20px rgba(0, 132, 255, 0.6) inset;
@@ -306,12 +319,10 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(
-                45deg,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.1) 50%,
-                rgba(255, 255, 255, 0) 100%
-            );
+            background: linear-gradient(45deg,
+                    rgba(255, 255, 255, 0) 0%,
+                    rgba(255, 255, 255, 0.1) 50%,
+                    rgba(255, 255, 255, 0) 100%);
             transform: rotate(45deg);
             animation: shimmer 3s infinite;
         }
@@ -321,6 +332,7 @@
                 top: -150%;
                 left: -150%;
             }
+
             100% {
                 top: 50%;
                 left: 50%;
@@ -358,48 +370,48 @@
                 letter-spacing: 4px;
                 margin: 2.5rem 0 2.5rem 0;
             }
-            
+
             .buttons-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 1.8rem;
             }
-            
+
             .button {
                 height: 100px;
                 font-size: 1.8rem;
                 padding: 0 1rem;
             }
-            
+
             .container {
                 padding: 3rem 1.5rem;
                 margin: 3rem auto;
                 width: 90%;
                 min-height: 550px;
             }
-            
+
             .semester-badge {
                 font-size: 1rem;
                 padding: 0.6rem 1.2rem;
                 top: 1.2rem;
                 right: 1.2rem;
             }
-            
+
             /* Reduce animations for better performance */
             .star {
                 animation-duration: 8s;
             }
-            
+
             /* Simplify spaceship paths */
             .spaceship {
                 animation-duration: 25s;
             }
-            
+
             .card-container {
                 grid-template-columns: 1fr;
                 padding: 1.5rem;
                 gap: 2rem;
             }
-            
+
             .developer-credit {
                 font-size: clamp(0.5rem, 1.2vw, 0.7rem);
                 bottom: 15px;
@@ -413,40 +425,40 @@
                 width: 92%;
                 min-height: 500px;
             }
-            
+
             .heading {
                 font-size: 2.5rem;
                 letter-spacing: 3px;
                 margin: 2rem 0 2rem 0;
             }
-            
+
             .buttons-grid {
                 gap: 1.2rem;
             }
-            
+
             .button {
                 height: 90px;
                 font-size: 1.6rem;
             }
-            
+
             .back-button {
                 padding: 0.6rem 1.2rem;
                 font-size: 1.1rem;
             }
-            
+
             .semester-badge {
                 font-size: 0.9rem;
                 padding: 0.5rem 1rem;
                 top: 1rem;
                 right: 1rem;
             }
-            
+
             /* Further optimize performance */
             .spaceship {
                 width: 20px;
                 height: 10px;
             }
-            
+
             /* Reduce grid complexity */
             .tech-grid {
                 background-size: 60px 60px;
@@ -454,8 +466,14 @@
         }
 
         /* Performance optimization for all devices */
-        @media (prefers-reduced-motion) {
-            .star, .spaceship, .tech-grid, .lens-flare, .button::before, .container::before {
+        @media (prefers-reduced-motion: reduce) {
+
+            .star,
+            .spaceship,
+            .tech-grid,
+            .lens-flare,
+            .button::before,
+            .container::before {
                 animation: none !important;
             }
         }
@@ -560,6 +578,7 @@
                 opacity: 0;
                 transform: perspective(1000px) rotateX(5deg) translateY(20px);
             }
+
             to {
                 opacity: 0.7;
                 transform: perspective(1000px) rotateX(5deg) translateY(0);
@@ -567,41 +586,30 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Background elements -->
     <div class="bg-gradient"></div>
     <div class="tech-grid"></div>
     <div class="film-overlay"></div>
     <div class="lens-flare"></div>
-    
+
     <!-- Stars -->
     <div class="stars" id="stars"></div>
-    
+
     <!-- Main content -->
     <a href="/index.html" class="back-button">BACK</a>
-    
+
     <div class="container">
         <div class="semester-badge">Spring 2025</div>
         <h1 class="heading">SEMESTER II</h1>
         <div class="buttons-grid">
-            <a href="prc.html" class="button-link">
-                <button class="button">PRC</button>
-            </a>
-            <a href="fsl.html" class="button-link">
-                <button class="button">FSL</button>
-            </a>
-            <a href="amt.html" class="button-link">
-                <button class="button">AMT</button>
-            </a>
-            <a href="bex.html" class="button-link">
-                <button class="button">BEX</button>
-            </a>
-            <a href="fcn.html" class="button-link">
-                <button class="button">FCN</button>
-            </a>
-            <a href="other.html" class="button-link">
-                <button class="button">OTHER</button>
-            </a>
+            <a href="prc.html" class="button">PRC</a>
+            <a href="fsl.html" class="button">FSL</a>
+            <a href="amt.html" class="button">AMT</a>
+            <a href="bex.html" class="button">BEX</a>
+            <a href="fcn.html" class="button">FCN</a>
+            <a href="other.html" class="button">OTHER</a>
         </div>
     </div>
 
@@ -609,66 +617,84 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Create stars with varied sizes
             const starsContainer = document.getElementById('stars');
-            const starCount = window.innerWidth <= 768 ? 75 : 150; // Fewer stars on mobile
-            
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
-                
-                // Random positioning
-                star.style.top = `${Math.random() * 100}%`;
-                star.style.left = `${Math.random() * 100}%`;
-                
-                // Random size (smaller range for better performance)
-                const size = 1 + Math.random() * 2;
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-                
-                // Random animation delay
-                star.style.animationDelay = `${Math.random() * 4}s`;
-                
-                // Vary brightness
-                star.style.opacity = 0.5 + Math.random() * 0.5;
-                
-                starsContainer.appendChild(star);
+            let isMobile = window.innerWidth <= 768; // Changed to let for updates
+
+            function createStars() {
+                starsContainer.innerHTML = '';
+                const starCount = window.innerWidth <= 768 ? 75 : 150;
+
+                const fragment = document.createDocumentFragment();
+                for (let i = 0; i < starCount; i++) {
+                    const star = document.createElement('div');
+                    star.classList.add('star');
+                    star.style.top = `${Math.random() * 100}%`;
+                    star.style.left = `${Math.random() * 100}%`;
+                    const size = 1 + Math.random() * 2;
+                    star.style.width = `${size}px`;
+                    star.style.height = `${size}px`;
+                    star.style.animationDelay = `${Math.random() * 4}s`;
+                    star.style.opacity = 0.5 + Math.random() * 0.5;
+                    fragment.appendChild(star);
+                }
+                starsContainer.appendChild(fragment);
             }
-            
+
+            createStars();
+
+            // Debounced resize handler
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    const newIsMobile = window.innerWidth <= 768;
+                    if (newIsMobile !== isMobile) {
+                        isMobile = newIsMobile;
+                        createStars();
+                    }
+                }, 250);
+            });
+
+            // Spaceships (reuse let isMobile from above, avoid redeclaring if possible or update)
+            // But logic below uses isMobile constant previously.
+            // I'll skip redeclaring isMobile since I declared it at top of listener.
+            // Wait, isMobile is used in loop? 
+            // In original code (line 639): const isMobile.
+            // I should remove the const declaration below.
+
             // Create spaceships only on desktop
-            const isMobile = window.innerWidth <= 768;
             const spaceshipCount = isMobile ? 0 : 4; // No spaceships on mobile
-            
+
             for (let i = 0; i < spaceshipCount; i++) {
                 const spaceship = document.createElement('div');
                 spaceship.classList.add('spaceship');
-                
+
 
                 // Position at random heights
                 spaceship.style.top = `${10 + Math.random() * 80}%`;
-                
+
                 // Randomize speed
                 const duration = 15 + Math.random() * 20;
                 spaceship.style.animationDuration = `${duration}s`;
-                
+
                 // Randomize delay
                 spaceship.style.animationDelay = `${Math.random() * 10}s`;
-                
+
                 // Randomize opacity
                 spaceship.style.opacity = 0.7 + Math.random() * 0.3;
-                
+
                 document.body.appendChild(spaceship);
             }
-            
+
             // Performance optimization
             const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             if (isReducedMotion) {
                 document.body.classList.add('reduced-motion');
             }
-            
+
             // Detect low-performance devices
             const isLowEnd = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
-            
+
             if (isLowEnd) {
                 // Remove some stars on low-end devices
                 const stars = document.querySelectorAll('.star');
@@ -677,16 +703,17 @@
                         stars[i].remove();
                     }
                 }
-                
+
                 // Remove animations that might cause lag
                 document.querySelectorAll('.spaceship').forEach(ship => {
                     if (Math.random() > 0.5) ship.remove();
                 });
-                
+
                 // Simplify other animations
                 document.documentElement.style.setProperty('--transition', 'none');
             }
         });
     </script>
 </body>
+
 </html>

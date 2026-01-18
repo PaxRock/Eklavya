@@ -5,6 +5,10 @@ import { OAuthProvider } from "appwrite";
 const app = document.getElementById("app");
 const loginBtn = document.getElementById("btn-siwg");
 
+if (!app || !loginBtn) {
+    throw new Error("Required elements 'app' or 'btn-siwg' not found.");
+}
+
 const successRedirect =
     import.meta.env.VITE_OAUTH_SUCCESS_URL || window.location.origin;
 const failureRedirect =
@@ -25,7 +29,10 @@ const loginSIWG = async () => {
 const init = async () => {
     try {
         const user = await account.get();
-        app.innerHTML = `<h3>Hi ${user.name || user.email} 👋</h3>`;
+        const heading = document.createElement('h3');
+        heading.textContent = `Hi ${user.name || user.email} 👋`;
+        app.innerHTML = '';
+        app.appendChild(heading);
     } catch (error) {
         console.error(error);
     }

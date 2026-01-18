@@ -310,7 +310,7 @@
                     if (result.success) {
                         document.getElementById('successCard').classList.remove('hidden');
                     } else {
-                        document.getElementById('errorMessage').textContent = result.error.message || "Invalid or expired link.";
+                        document.getElementById('errorMessage').textContent = result.error?.message || "Invalid or expired link.";
                         document.getElementById('errorCard').classList.remove('hidden');
                     }
                 } catch (error) {

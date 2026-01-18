@@ -977,6 +977,8 @@
         let dropInterval = 1000;
         let lastTime = 0;
         let animationId = null;
+        let isClearingLines = false;
+        let lineClearTimeoutId = null;
 
         class Piece {
             constructor(pieceData) {
@@ -1148,6 +1150,7 @@
         }
 
         function placePiece() {
+            if (isClearingLines) return;
             for (let y = 0; y < currentPiece.shape.length; y++) {
                 for (let x = 0; x < currentPiece.shape[y].length; x++) {
                     if (currentPiece.shape[y][x]) {
@@ -1161,44 +1164,50 @@
             }
 
             clearLines();
-            spawnPiece();
         }
 
         function clearLines() {
-            let linesCleared = 0;
-
-            for (let y = BOARD_HEIGHT - 1; y >= 0; y--) {
+            let linesToClear = [];
+            for (let y = 0; y < BOARD_HEIGHT; y++) {
                 if (board[y].every(cell => cell !== 0)) {
-                    // Line clear animation
-                    animateLineClear(y);
-                    board.splice(y, 1);
-                    board.unshift(Array(BOARD_WIDTH).fill(0));
-                    linesCleared++;
-                    y++; // Check the same line again
+                    linesToClear.push(y);
                 }
             }
 
-            if (linesCleared > 0) {
-                lines += linesCleared;
-                score += getLineScore(linesCleared) * level;
-                level = Math.floor(lines / 10) + 1;
-                dropInterval = Math.max(50, 1000 - (level - 1) * 50);
-                updateDisplay();
-            }
-        }
+            if (linesToClear.length > 0) {
+                isClearingLines = true;
 
-        function animateLineClear(y) {
-            // Flash effect for cleared line
-            for (let x = 0; x < BOARD_WIDTH; x++) {
-                board[y][x] = '#ffffff';
-            }
-            drawBoard();
+                // Flash effect
+                linesToClear.forEach(y => {
+                    for (let x = 0; x < BOARD_WIDTH; x++) {
+                        board[y][x] = '#ffffff';
+                    }
+                });
+                drawBoard();
 
-            setTimeout(() => {
-                for (let x = 0; x < BOARD_WIDTH; x++) {
-                    board[y][x] = 0;
-                }
-            }, 100);
+                if (lineClearTimeoutId) clearTimeout(lineClearTimeoutId);
+                lineClearTimeoutId = setTimeout(() => {
+                    // Remove lines
+                    const newBoard = board.filter((_, index) => !linesToClear.includes(index));
+                    while (newBoard.length < BOARD_HEIGHT) {
+                        newBoard.unshift(Array(BOARD_WIDTH).fill(0));
+                    }
+                    board = newBoard;
+
+                    const linesCleared = linesToClear.length;
+                    lines += linesCleared;
+                    score += getLineScore(linesCleared) * level;
+                    level = Math.floor(lines / 10) + 1;
+                    dropInterval = Math.max(50, 1000 - (level - 1) * 50);
+                    updateDisplay();
+
+                    isClearingLines = false;
+                    lineClearTimeoutId = null;
+                    spawnPiece();
+                }, 100);
+            } else {
+                spawnPiece();
+            }
         }
 
         function getLineScore(linesCleared) {
@@ -1233,7 +1242,7 @@
         }
 
         function gameLoop(currentTime) {
-            if (!gameRunning || paused) {
+            if (!gameRunning || paused || isClearingLines) {
                 lastTime = currentTime;
                 animationId = requestAnimationFrame(gameLoop);
                 return;
@@ -1256,6 +1265,10 @@
 
         function startGame() {
             if (animationId) cancelAnimationFrame(animationId);
+            if (lineClearTimeoutId) {
+                clearTimeout(lineClearTimeoutId);
+                lineClearTimeoutId = null;
+            }
 
             board = Array(BOARD_HEIGHT).fill().map(() => Array(BOARD_WIDTH).fill(0));
             score = 0;
@@ -1264,6 +1277,7 @@
             dropInterval = 1000;
             gameRunning = true;
             paused = false;
+            isClearingLines = false;
             dropTime = 0;
 
             document.getElementById('gameOver').style.display = 'none';
@@ -1293,7 +1307,7 @@
                 return;
             }
 
-            if (!gameRunning || paused) return;
+            if (!gameRunning || paused || isClearingLines) return;
 
             switch (e.key) {
                 case 'ArrowLeft':
@@ -1340,13 +1354,14 @@
 
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
+                if (Date.now() - lastTouchTime < 500) return;
                 const action = btn.dataset.action;
                 handleMobileAction(action);
             });
         });
 
         function handleMobileAction(action) {
-            if (!gameRunning || paused) {
+            if (!gameRunning || paused || isClearingLines) {
                 if (action === 'pause') togglePause();
                 return;
             }

@@ -8,7 +8,7 @@ A simple React application demonstrating phone authentication using Appwrite's a
 
 Before you begin, ensure you have the following installed:
 
--   Node.js (v14 or higher)
+-   Node.js (v18 or higher)
 -   npm or yarn
 -   An Appwrite instance (cloud or self-hosted)
 
@@ -18,7 +18,9 @@ Before you begin, ensure you have the following installed:
 
 ```bash
 git clone <repository-url>
-cd cd appwrite-otp
+cd Appwrite-OTP-master
+# Note: Use the actual directory name created by git clone if it differs
+
 ```
 
 2. Install dependencies
@@ -66,6 +68,8 @@ src/
 │   ├── Signin.jsx          # Phone number input page
 │   └── Verify.jsx          # OTP verification page
 └── data/
+    └── images/
+        └── verify.png
 ```
 
 ## Contributing

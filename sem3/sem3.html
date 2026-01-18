@@ -4,14 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Semester III - Project Eklavya: Resources and Notes">
     <title>Semester III - Project Eklavya</title>
     <link rel="icon" type="image/png" href="/files/logo/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800&family=Press+Start+2P&family=Russo+One&display=swap"
+        rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
         * {
             margin: 0;
             padding: 0;
@@ -202,7 +203,7 @@
             position: relative;
         }
 
-       
+
 
         .semester-badge {
             position: absolute;
@@ -261,6 +262,10 @@
             position: relative;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             box-shadow:
                 0 10px 20px rgba(0, 0, 0, 0.3),
                 0 0 0 1px rgba(38, 196, 133, 0.3),
@@ -332,10 +337,12 @@
                 width: 98vw;
                 padding: 1.5rem 0.5rem;
             }
+
             .buttons-grid {
                 flex-direction: column;
                 gap: 1.2rem;
             }
+
             .button {
                 height: 60px;
                 font-size: 1.2rem;
@@ -388,7 +395,7 @@
             }
         }
 
-        @media (prefers-reduced-motion) {
+        @media (prefers-reduced-motion: reduce) {
 
             .star,
             .spaceship,
@@ -541,18 +548,10 @@
         <div class="semester-badge">Fall 2025</div>
         <h1 class="heading">SEMESTER III</h1>
         <div class="buttons-grid">
-            <a href="/sem3/Notes/notes.html" class="button-link">
-                <button class="button">NOTES</button>
-            </a>
-            <a href="/sem3/Experiments/experiments.html" class="button-link">
-                <button class="button">EXPERIMENTS</button>
-            </a>
-            <a href="/sem3/Question Bank/qb.html" class="button-link">
-                <button class="button">QUESTION BANKS</button>
-            </a>
-            <a href="/sem3/Others/others.html" class="button-link">
-                <button class="button">OTHERS</button>
-            </a>
+            <a href="/sem3/Notes/notes.html" class="button">NOTES</a>
+            <a href="/sem3/Experiments/experiments.html" class="button">EXPERIMENTS</a>
+            <a href="/sem3/Question%20Bank/qb.html" class="button">QUESTION BANKS</a>
+            <a href="/sem3/Others/others.html" class="button">OTHERS</a>
         </div>
     </div>
 
@@ -562,32 +561,49 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Create stars with varied sizes
             const starsContainer = document.getElementById('stars');
-            const starCount = window.innerWidth <= 768 ? 75 : 150; // Fewer stars on mobile
+            let isMobile = window.innerWidth <= 768; // Changed to let for updates
 
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
+            function createStars() {
+                starsContainer.innerHTML = '';
+                const starCount = window.innerWidth <= 768 ? 75 : 150;
 
-                // Random positioning
-                star.style.top = `${Math.random() * 100}%`;
-                star.style.left = `${Math.random() * 100}%`;
-
-                // Random size (smaller range for better performance)
-                const size = 1 + Math.random() * 2;
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-
-                // Random animation delay
-                star.style.animationDelay = `${Math.random() * 4}s`;
-
-                // Vary brightness
-                star.style.opacity = 0.5 + Math.random() * 0.5;
-
-                starsContainer.appendChild(star);
+                const fragment = document.createDocumentFragment();
+                for (let i = 0; i < starCount; i++) {
+                    const star = document.createElement('div');
+                    star.classList.add('star');
+                    star.style.top = `${Math.random() * 100}%`;
+                    star.style.left = `${Math.random() * 100}%`;
+                    const size = 1 + Math.random() * 2;
+                    star.style.width = `${size}px`;
+                    star.style.height = `${size}px`;
+                    star.style.animationDelay = `${Math.random() * 4}s`;
+                    star.style.opacity = 0.5 + Math.random() * 0.5;
+                    fragment.appendChild(star);
+                }
+                starsContainer.appendChild(fragment);
             }
 
+            createStars();
+
+            // Debounced resize handler
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    const newIsMobile = window.innerWidth <= 768;
+                    if (newIsMobile !== isMobile) {
+                        isMobile = newIsMobile;
+                        createStars();
+                    }
+                }, 250);
+            });
+
             // Create spaceships only on desktop
-            const isMobile = window.innerWidth <= 768;
+            // Use existing isMobile variable from outer scope or re-evaluate if it changed?
+            // Actually, createStars updates stars. Spaceships are created once on load.
+            // But existing code uses `const isMobile`.
+            // I'll reuse the `isMobile` from top of script (which I changed to let).
+
             const spaceshipCount = isMobile ? 0 : 4; // No spaceships on mobile
 
             for (let i = 0; i < spaceshipCount; i++) {

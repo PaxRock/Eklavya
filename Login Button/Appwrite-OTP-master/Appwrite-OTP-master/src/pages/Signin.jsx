@@ -5,23 +5,25 @@ import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
     const [phone, setPhone] = useState("");
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError(null);
 
         try {
             const token = await account.createPhoneToken(ID.unique(), phone);
-            console.log(token);
-            navigate(`/verify?token=${token.userId}`);
+            navigate(`/verify?userId=${token.userId}`);
         } catch (error) {
-            console.log(error);
+            setError(error.message || "Failed to send verification code");
         }
     };
 
     return (
         <form onSubmit={handleSubmit}>
             <h3>Signin with your phone number</h3>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
             <input
                 type="tel"
                 placeholder="+1234567890"
